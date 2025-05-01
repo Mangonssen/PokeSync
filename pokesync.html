@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéSync</title>
+
+    <link rel="stylesheet" href="pokesync.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div class="main-container">
+
+    <div class="logo-wrapper">
+        <img src="logo.png" alt="PokéSync Logo" class="logo">
+    </div>
+
+<!-- BOTTOM LEFT BUTTON PANEL-->
+    <div class="button-container">
+        <fieldset>
+            <legend>Controls</legend>
+            <button type="button" id="saveButton">Save Sync</button>
+            <button type="button" id="loadButton">Load Sync</button>
+            <button type="button" id="resetButton">Reset</button>
+            <button type="button" id="settingsButton">Settings</button>
+        </fieldset>
+    </div>
+
+<!-- WRAPPER FOR SYNX-->
+    <div class="content-container">
+        <table id="syncListA" class="list">
+            <thead id="headings">
+                <td>
+                    <div class="title-wrapper">
+                        <div class="player-bounding-box">
+                            <img class="player-sprite" id="player-sprite-A">
+                        </div>
+                        <h1 id="hA" class="sync-heading"></h1>
+                    </div>
+                </td>
+                <td>
+                    <div class="title-wrapper">
+                        <div class="player-bounding-box">
+                            <img class="player-sprite" id="player-sprite-B">
+                        </div>
+                        <h1 id="hB" class="sync-heading"></h1>    
+                    </div>
+                </td>                        
+            </thead>
+            <tbody id="sync-lists">
+                <td>
+                    <ul id="sync-list-A" class="list"></ul>
+                </td>
+                <td>
+                    <ul id="sync-list-B" class="list"></ul>
+                </td>
+            </tbody>
+            <tfoot id="add-button">
+                <td>+</td>
+            </tfoot>
+        </table>
+            
+                
+            
+        </div>
+
+        
+        
+</div>
+
+
+<div class="settings-window" id="settings-window">
+    <div class="settings-head">
+        <div class="settings-head-content-wrapper">
+            <div class="head-part-A">
+                <h1>Settings</h1>
+            </div>
+            <div class="head-part-B">
+                <button type="button" id="settings-close-button">X</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+    
+    <div class="settings-body">
+        <form id="settings-form">
+            <input type="text" id="player-name-A" placeholder="Enter Player A's Name">
+            <input type="text" id="player-name-B" placeholder="Enter Player B's Name">
+            <button type="submit" id="settings-save-button">Save</button>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="pokesync.js"></script>
+</body>
+</html>
