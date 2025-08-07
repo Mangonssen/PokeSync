@@ -1,10 +1,192 @@
+:root {
+    --primary-color: #d01313;
+    --secondary-color: #730909;
+    --background-color: #00000090;
+    --white-reduced-op: #FFFFFF15;
+    --text-color: white;
+    --border-color: #FFFFFF15;
+
+    --margin: 2rem 3rem 2rem 3rem;
+    --padding-single: 1rem;
+    --border-radius-container: 10px;
+    --border-radius: 5px;
+
+
+    --font-button: "Power Clear", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 html {
 
     font-family: "Power Clear";
-    background-image: url('./background.png');
-    color: white;
+    background-image: url('/background.png');
+    color: var(--text-color);
 }
 
+.main-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80vh;
+    margin: var(--margin);
+}
+
+.logo-control-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.vertical-hr {
+    width: 3px;
+    background-color: var(--white-reduced-op);
+    margin: 0 2rem;
+}
+
+.content-container {
+    display: flex;
+
+}
+
+.settings-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: var(--padding-single);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px dotted var(--text-color);
+    border-radius: var(--border-radius-container);
+
+    z-index: 2;
+}
+
+.settings-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1rem;
+}
+
+.settings-head button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    padding: 1rem;
+}
+
+.settings-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: start;
+    object-fit: contain;
+}
+
+.logo {
+    width: 75%;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+}
+
+.controls fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    padding: 0;
+    border-top: 1px dotted var(--text-color);
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px dotted var(--text-color);
+    padding: .5rem 0 1rem 0;
+
+}
+
+.controls fieldset legend {
+    font-family: var(--font-button);
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    padding-right: 1rem;
+}
+
+.controls button {
+    padding: 1rem 3rem 1rem 3rem;
+}
+
+input {
+    font-family: var(--font-button);
+    font-size: 1rem;
+    background: none;
+    border: 2px solid var(--white-reduced-op);
+    color: var(--text-color);
+
+    height: 100%;
+
+    padding: 0 1rem;
+    margin-bottom: .5rem;
+
+    border-radius: 5px;
+}
+
+button {
+    font-family: var(--font-button);
+    font-size: 1rem;
+    background-color: var(--white-reduced-op);
+    border: none;
+    color: var(--text-color);
+
+    padding: .75rem 2rem;
+
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color .2s ease;
+}
+
+
+button.hover-primary:hover {
+    background-color: var(--primary-color);
+}
+
+button.hover-white:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+}
+
+hr {
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.svg-icon {
+    width: .5rem;
+    height: auto;
+    fill: var(--text-color);
+}
+
+
+/*
 .main-container {
 
     display: flex;
@@ -12,14 +194,18 @@ html {
 
     width: 100%;
 }
+*/
 
+/*
 .logo-wrapper {
 
     display: flex;
     margin: 20px;
     align-items: start;
 }
+*/
 
+/*
 .logo-wrapper img {
 
     padding: 20px;
@@ -27,7 +213,9 @@ html {
 
     object-fit: contain;
 }
+*/
 
+/*
 .content-container {
 
     display: flex;
@@ -40,7 +228,9 @@ html {
 
     margin: 20px;
 }
+*/
 
+/*
 h1 {
     font-family: "Power Clear";
     font-size: 60px;
@@ -51,9 +241,9 @@ h1 {
 
     color: white;
 }
+*/
 
-
-
+/*
 .sync-container {
 
     display: flex;
@@ -63,7 +253,9 @@ h1 {
     min-width: 500px;
     min-height: 60vh;
 }
+*/
 
+/*
 .sync-list {
 
     display: flex;
@@ -76,13 +268,17 @@ h1 {
 
 
 }
+*/
 
+/*
 .sync-list img {
 
     width: 75px;
     display: block;
 }
+*/
 
+/*
 .button-container {
 
     display: flex;
@@ -100,7 +296,9 @@ h1 {
 
     min-width: 200px;
 }
+*/
 
+/*
 fieldset {
 
     display: flex;
@@ -115,7 +313,9 @@ fieldset {
 
     justify-content: center;
 }
+*/
 
+/*
 legend {
 
     font-family: "Power Clear";
@@ -125,7 +325,9 @@ legend {
     margin: 10px;
 
 }
+*/
 
+/*
 button {
 
     font-family: "Power Clear";
@@ -142,15 +344,27 @@ button {
     cursor: pointer;
 
     border-radius: 5px;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.25s ease;
 }
+*/
 
+/*
 button:hover {
 
-    background-color: #ff3333;
+    background-color: #d01313;
     box-shadow: 0px 0px 5px 5px #00000010;
 }
+*/
 
+/*
+button:active {
+
+    background-color: #730909;
+    box-shadow: 0px 0px 5px 5px #00000010;
+}
+*/
+
+/*
 ul {
 
     padding: 10px;
@@ -164,7 +378,9 @@ ul {
 
     margin: 0;
 }
+*/
 
+/*
 li {
 
     font-family: "Power Clear";
@@ -183,9 +399,9 @@ li {
 
     object-fit: contain;
 }
+*/
 
-
-
+/*
 .list {
 
     display: inline-block;
@@ -193,11 +409,15 @@ li {
     background-color: #00a7ff00;
     border-radius: 5px;
 }
+*/
 
+/*
 .sync-label {
     margin-left: 20px;
 }
+*/
 
+/*
 .list-item-container {
 
 
@@ -216,8 +436,9 @@ li {
 
     margin-bottom: 10px;
 }
+*/
 
-
+/*
 .list-item-container:hover {
 
     cursor: pointer;
@@ -227,8 +448,9 @@ li {
     background-position: center;
     background-repeat: no-repeat;
 }
+*/
 
-
+/*
 .empty-container {
 
 
@@ -243,7 +465,9 @@ li {
 
     margin-bottom: 10px;
 }
+*/
 
+/*
 .content-wrapper {
 
     min-width: 100%;
@@ -255,7 +479,9 @@ li {
 
     position: relative;
 }
+*/
 
+/*
 img[class="sprite"] {
 
     min-height: 80px;
@@ -267,7 +493,9 @@ img[class="sprite"] {
 
     image-rendering: crisp-edges;
 }
+*/
 
+/*
 .reset-screen {
 
     position: fixed;
@@ -288,7 +516,9 @@ img[class="sprite"] {
     border: 1px solid white;
 
 }
+*/
 
+/*
 .reset-wrapper {
 
     display: flex;
@@ -302,7 +532,9 @@ img[class="sprite"] {
 
 
 }
+*/
 
+/*
 .button-wrapper {
 
     display: flex;
@@ -312,13 +544,17 @@ img[class="sprite"] {
 
     margin-top: 20px;
 }
+*/
 
+/*
 .button-wrapper button {
 
     min-width: 50px;
 }
+*/
 
-.settings-window {
+
+/* .settings-window {
 
     position: fixed;
     z-index: 2;
@@ -342,6 +578,8 @@ img[class="sprite"] {
 
 }
 
+
+
 .settings-head {
 
     display: flex;
@@ -354,15 +592,18 @@ img[class="sprite"] {
     position: relative;
     width: 100%;
 }
+ */
 
+/*
 .head-part-A {
 
     display: block;
     width: 95%;
     align-items: center;
 }
+*/
 
-
+/*
 input {
 
     font-family: "Power Clear";
@@ -381,7 +622,9 @@ input {
 
     border-radius: 5px;
 }
+*/
 
+/*
 .heading-input {
     border: none;
     text-align: center;
@@ -390,7 +633,9 @@ input {
 
 
 }
+*/
 
+/*
 .sync-tools-list {
 
     display: flex;
@@ -402,13 +647,17 @@ input {
     margin-top: 100px;
     position: relative;
 }
+*/
 
+/*
 .add-sync-button {
 
     padding-left: 15px;
     padding-right: 15px;
 }
+*/
 
+/*
 .add-sync-button-wrapper {
 
     height: 100px;
@@ -416,18 +665,23 @@ input {
 
     position: relative;
 }
+*/
 
-#h1,
-#h2 {
+/*
+#h1, #h2 {
 
     padding: 10px;
 }
+*/
 
+/*
 thead {
 
     text-align: center;
 }
+*/
 
+/*
 tfoot {
 
     display: flex;
@@ -438,7 +692,9 @@ tfoot {
 
 
 }
+*/
 
+/*
 tfoot tr {
 
     background-image: url('./addbutton.png');
@@ -464,7 +720,9 @@ tfoot tr {
 
 
 }
+*/
 
+/*
 tfoot tr:hover {
 
     background-image: url('./addbutton-hover.png');
@@ -474,10 +732,11 @@ tfoot tr:hover {
 
     opacity: 1;
 }
+*/
 
-
-.title-wrapper {
-
+/*
+.title-wrapper{
+    
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -485,7 +744,9 @@ tfoot tr:hover {
 
     margin-bottom: 20px;
 }
+*/
 
+/*
 .player-bounding-box {
 
     display: flex;
@@ -496,7 +757,9 @@ tfoot tr:hover {
     width: 20px;
     margin-right: 20px;
 }
+*/
 
+/*
 .player-sprite {
 
     cursor: pointer;
@@ -504,29 +767,40 @@ tfoot tr:hover {
 
     margin-right: 20px;
 }
+*/
 
+/*
 .player-sprite:hover {
 
     transform: scale(1.1);
     box-shadow: 0px 0px 5px 5px #00000010;
 }
+*/
 
+/*
 .settings-window {
     display: none;
 }
+*/
 
+/*
 .settings-head {
     display: flex;
     flex-direction: column;
 }
+*/
 
+/*
 .settings-head-content-wrapper {
     width: 100%;
     display: flex;
 }
+*/
 
+/*
 .settings-head hr {
     width: 100%;
 
     opacity: 0.2;
 }
+*/
