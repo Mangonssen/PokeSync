@@ -33,40 +33,89 @@
             <div class="sync-container">
                 <div class="sync">
                     <div class="player">
-                        <div class="player-bounding-box">
+                        <div class="player-sprite-container">
                             <img class="player-sprite" id="player-sprite-A">
                         </div>
                         <h1 id="heading-player-A" class="sync-heading">Player A</h1>
                     </div>
                     <ul id="sync-list-A" class="sync-list">
-                        <li id="sync-item-A-1" class="sync-item">Sync Item A1</li>
-                        <li id="sync-item-A-2" class="sync-item">Sync Item A2</li>
-                        <li id="sync-item-A-3" class="sync-item">Sync Item A3</li>
-                        <li id="sync-item-A-4" class="sync-item">Sync Item A4</li>
-                        <li id="sync-item-A-5" class="sync-item">Sync Item A5</li>
-                        <li id="sync-item-A-6" class="sync-item">Sync Item A6</li>
+                        <li id="sync-item-A-1" class="sync-item">
+                            <img src="item1.png" alt="Item 1" class="pokemon-sprite">
+                            <p>Sync Item A1</p>
+                        </li>
+                        <li id="sync-item-A-2" class="sync-item">
+                            <img src="item2.png" alt="Item 2" class="pokemon-sprite">
+                            <p>Sync Item A2</p>
+                        </li>
+                        <li id="sync-item-A-3" class="sync-item">
+                            <img src="item3.png" alt="Item 3" class="pokemon-sprite">
+                            <p>Sync Item A3</p>
+                        </li>
+                        <li id="sync-item-A-4" class="sync-item">
+                            <img src="item4.png" alt="Item 4" class="pokemon-sprite">
+                            <p>Sync Item A4</p>
+                        </li>
+                        <li id="sync-item-A-5" class="sync-item">
+                            <img src="item5.png" alt="Item 5" class="pokemon-sprite">
+                            <p>Sync Item A5</p>
+                        </li>
+                        <li id="sync-item-A-6" class="sync-item">
+                            <img src="item6.png" alt="Item 6" class="pokemon-sprite">
+                            <p>Sync Item A6</p>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="sync-container">
                 <div class="sync">
                     <div class="player">
-                        <div class="player-bounding-box">
-                            <img class="player-sprite" id="player-sprite-A">
+                        <div class="player-sprite-container">
+                            <img class="player-sprite" id="player-sprite-B">
                         </div>
-                        <h1 id="heading-player-A" class="sync-heading">Player A</h1>
+                        <h1 id="heading-player-B" class="sync-heading">Player B</h1>
                     </div>
-                    <ul id="sync-list-A" class="sync-list">
-                        <li id="sync-item-A-1" class="sync-item">Sync Item A1</li>
-                        <li id="sync-item-A-2" class="sync-item">Sync Item A2</li>
-                        <li id="sync-item-A-3" class="sync-item">Sync Item A3</li>
-                        <li id="sync-item-A-4" class="sync-item">Sync Item A4</li>
-                        <li id="sync-item-A-5" class="sync-item">Sync Item A5</li>
-                        <li id="sync-item-A-6" class="sync-item">Sync Item A6</li>
+                    <ul id="sync-list-B" class="sync-list">
+                        <li id="sync-item-B-1" class="sync-item">
+                            <img src="item1.png" alt="Item 1" class="pokemon-sprite">
+                            <p>Sync Item B1</p>
+                        </li>
+                        <li id="sync-item-B-2" class="sync-item">
+                            <img src="item2.png" alt="Item 2" class="pokemon-sprite">
+                            <p>Sync Item B2</p>
+                        </li>
+                        <li id="sync-item-B-3" class="sync-item">
+                            <img src="item3.png" alt="Item 3" class="pokemon-sprite">
+                            <p>Sync Item B3</p>
+                        </li>
+                        <li id="sync-item-B-4" class="sync-item">
+                            <img src="item4.png" alt="Item 4" class="pokemon-sprite">
+                            <p>Sync Item B4</p>
+                        </li>
+                        <li id="sync-item-B-5" class="sync-item">
+                            <img src="item5.png" alt="Item 5" class="pokemon-sprite">
+                            <p>Sync Item B5</p>
+                        </li>
+                        <li id="sync-item-B-6" class="sync-item">
+                            <img src="item6.png" alt="Item 6" class="pokemon-sprite">
+                            <p>Sync Item B6</p>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </div>
+            <div class="joker-container">
+                <div class="joker" id="joker-switch">
+                    <img src="joker-switch.png" alt="Joker: Switch" class="joker-img">
+                    <p class="joker-description">Switch</p>
+                </div>
+                <div class="joker" id="joker-reroll">
+                    <img src="joker-reroll.png" alt="Joker: Reroll" class="joker-img">
+                    <p class="joker-description">Reroll</p>
+                </div>
+                <div class="joker" id="joker-revive">
+                    <img src="joker-revive.png" alt="Joker: Revive" class="joker-img">
+                    <p class="joker-description">Revive</p>
+                </div>
+            </div>
 
 
         <div class="settings-window" id="settings-window">
@@ -78,8 +127,10 @@
             </div>
             <div class="settings-body">
                 <form id="settings-form">
-                    <input type="text" id="player-name-A" placeholder="Player A's Name">
-                    <input type="text" id="player-name-B" placeholder="Player B's Name">
+                    <div class="settings-body-inputs">
+                        <input type="text" id="player-name-A" placeholder="Player A's Name">
+                        <input type="text" id="player-name-B" placeholder="Player B's Name">
+                    </div>
                     <button type="submit" class="hover-white" id="settings-save-button">Save</button>
                 </form>
             </div>
