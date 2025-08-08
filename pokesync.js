@@ -1,7 +1,7 @@
 import { Sync } from './Sync.js';
 
 //SYNC ARRAYS
-var sync = {one: new Sync("Pikachu", "Lotad"), two: undefined, three: undefined, four: undefined, five: undefined, six: undefined};
+var sync = { one: new Sync("Pikachu", "Lotad"), two: undefined, three: undefined, four: undefined, five: undefined, six: undefined };
 
 //POKEMON RESOURCE LIST
 const pokemonData = [
@@ -665,115 +665,97 @@ var namePlayerB;
 var isSettingsOpen = false;
 var isResetOpen = false;
 
-var spriteIDPlayerA = 0;
-var spriteIDPlayerB = 0;
+//SPRITE BOOLEANS
+var femalePlayerA = false;
+var femalePlayerB = false;
+
+//JOKER BOOLEANS
+var isRerollUsed = false;
+var isSacrificeUsed = false;
+var isReviveUsed = false;
 
 //SEARCH FOR NUMBER IN RESOURCE LIST
-function searchPokeNO(pokemon) {
-    
+function searchPokeNO(pkmnSync) {
+
     for (let i = 0; i < pokemonData.length; i++) {
-        
-        if (pokemonData[i].name === pokemon) {
+
+        if (pokemonData[i].name === pkmnSync) {
 
             if (pokemonData[i].number === "000") {
                 console.log("empty slot");
             } else {
-            console.log("found number " + pokemonData[i].number + " for " + pokemon);
-            return pokemonData[i].number;
+                console.log("found number " + pokemonData[i].number + " for " + pkmnSync);
+                return pokemonData[i].number;
             }
         }
-    } 
+    }
 }
 
 //RENDER BOTH SYNCS
 function renderSync() {
-    
+
     var ulA = document.getElementById('sync-list-A');
     var ulB = document.getElementById('sync-list-B');
-    
+
     for (const key in sync) {
         if (sync.hasOwnProperty(key)) {
 
-            var pokemon = sync[key];
-            if (pokemon !== undefined) {
-                var slotA = pokemon.getA();
-                var slotB = pokemon.getB();
+            //READ SYNC FROM ARRAY
+            var pkmnSync = sync[key];
+
+            //GET POKEMON NAME FROM READ SYNC
+            if (pkmnSync !== undefined) {
+                var slotA = pkmnSync.getA();
+                var slotB = pkmnSync.getB();
             } else {
                 var slotA = "UNDEFINED";
                 var slotB = "UNDEFINED";
             }
 
-            //DIV FOR LIST ITEM A
-            var liDivA = document.createElement('div');    
-            liDivA.className = 'list-item-container';
-
-            //DIV FOR LIST ITEM B
-            var liDivB = document.createElement('div');
-            liDivB.className = 'list-item-container';
-
-            //LIST ITEMS A & B
-            var liA = document.createElement('li');
-            var liB = document.createElement('li');
-
-            //IMAGE ELEMENTS A & B
-            var imgA = document.createElement('img');
-            var imgB = document.createElement('img');
-
-            //WRAPPER ELEMENTS A & B (FOR IMAGE AND TEXT)
-            var wrapperA = document.createElement('div');
-            var wrapperB = document.createElement('div');
-
-            wrapperA.className = 'content-wrapper';
-            wrapperA.id = 'wrapper';
-
-            wrapperB.className = 'content-wrapper';
-            wrapperB.id = 'wrapper';
-
             //SEARCH FOR POKEMON NUMBER A & B
             let pokeNOa = searchPokeNO(slotA);
             let pokeNOb = searchPokeNO(slotB);
 
-            console.log("PokeNO (A): " + pokeNOa);
-            console.log("PokeNO (B): " + pokeNOb);
 
-            //CONSTRUCT SPRITE URL
-            imgA.src = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOa + '.gif';
-            imgB.src = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOb + '.gif';
-                
-            
+            //CONSTRUCT SPRITE UL W/ POKEMON NUMBER
+            var srcA = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOa + '.gif';
+            var srcB = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOb + '.gif';
+
             if (sync[key] !== undefined) {
 
-                //TEXT NODES FOR LIST ITEMS^
-                var labelA = document.createElement("p");
-                labelA.textContent = sync[key].getA();
-                labelA.className = 'sync-label';
-                wrapperA.appendChild(labelA);
-                wrapperA.appendChild(imgA);
-                liA.appendChild(wrapperA);
+                // Save position of element scoped by the loop
 
-                var labelB = document.createElement("p");
-                labelB.textContent = sync[key].getB();
-                labelB.className = 'sync-label';
-                wrapperB.appendChild(labelB);
-                wrapperB.appendChild(imgB);
-                liB.appendChild(wrapperB);
-            
-            //BLANK CARD IF UNSET
-            } else {
+                const keyMap = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
+                var numericPosition = keyMap[key] || key;
 
-                liDivA.className = 'empty-container';
-                liDivB.className = 'empty-container';
+                var position = numericPosition;
+
+                console.log("Numeric Position:" + numericPosition);
+
+                var listItemA = "sync-item-A-" + position++;
+                var listItemB = "sync-item-B-" + position++;
+
+
+                //SET SPRITES FOR TARGETED LIST ITEMS
+                // Get the list item elements by their IDs
+                var liA = document.getElementById(listItemA);
+                var liB = document.getElementById(listItemB);
+
+                liA.className = 'sync-item';
+                liB.className = 'sync-item';
+
+                // Make sure the elements exist and have the expected children
+                if (liA && liA.children.length >= 2 && liB && liB.children.length >= 2) {
+                    liA.children[0].src = srcA;
+                    liB.children[0].src = srcB;
+
+                    // Set description for targeted LI
+                    liA.children[1].innerHTML = slotA;
+                    liB.children[1].innerHTML = slotB;
+                }
+
+                //BLANK CARD IF UNSET
             }
-
-            imgA.className = "sprite";
-            imgB.className = "sprite";
-
-            ulA.appendChild(liDivA);
-            
-            liDivB.appendChild(wrapperB);
-            ulB.appendChild(liDivB);
-            ulB.appendChild(liB);
-
         }
     }
 }
@@ -782,7 +764,7 @@ function renderSync() {
 
 
 
-            
+
 
 //REFRESH BOTH SYNCS
 function refreshSync() {
@@ -792,7 +774,7 @@ function refreshSync() {
     ulA.innerHTML = '';
     ulB.innerHTML = '';
     renderSync();
-    
+
 }
 
 
@@ -802,18 +784,17 @@ function renderHeadingA() {
 
     //SPRITE
     const playerSpriteA = document.getElementById('player-sprite-A');
-    if (spriteIDPlayerA === 0) {
+
+    if (!femalePlayerA) {
         playerSpriteA.src = 'https://www.pokewiki.de/images/4/4d/Overworldsprite_Warren_SW.png';
-        playerSpriteA.style.height = '45px';
         playerSpriteA.style.imageRendering = 'crisp-edges';
     } else {
         playerSpriteA.src = 'https://www.pokewiki.de/images/1/16/Overworldsprite_Lotta_SW.png';
-        playerSpriteA.style.height = '47px';
         playerSpriteA.style.imageRendering = 'crisp-edges';
     }
 
     //HEADING
-    const headingA = document.getElementById('hA');
+    const headingA = document.getElementById('heading-player-A');
 
     if (namePlayerA === undefined) {
         namePlayerA = "Player A";
@@ -823,56 +804,88 @@ function renderHeadingA() {
 }
 
 //MALE-FEMALE SWITCH PLAYER A
-document.getElementById('player-sprite-A').addEventListener('click', function() {
-    console.log("Player A sprite was clicked...");
-    if (spriteIDPlayerA === 0) {
-        spriteIDPlayerA = 1;
-    } else {
-        spriteIDPlayerA = 0;
-    }
+document.getElementById('player-sprite-A').addEventListener('click', function () {
+    femalePlayerA = !femalePlayerA;
     renderHeadingA();
-    console.log("Rendered heading A");
 });
 
 //RENDER HEADING B (PLAYER B)
 function renderHeadingB() {
     const playerSpriteB = document.getElementById('player-sprite-B');
-    if (spriteIDPlayerB === 0) {
+    if (!femalePlayerB) {
         //MALE PLAYER SPRITE
         playerSpriteB.src = 'https://www.pokewiki.de/images/4/4d/Overworldsprite_Warren_SW.png';
-        playerSpriteB.style.height = '45px';
         playerSpriteB.style.imageRendering = 'crisp-edges';
     } else {
         //FEMALE PLAYER SPRITE
         playerSpriteB.src = 'https://www.pokewiki.de/images/1/16/Overworldsprite_Lotta_SW.png';
-        playerSpriteB.style.height = '50px';
         playerSpriteB.style.imageRendering = 'crisp-edges';
     }
-    const headingB = document.getElementById('hB');
+    const headingB = document.getElementById('heading-player-B');
 
     //NAME PLAYER B IF NO NAME IS SET
     if (namePlayerB === undefined) {
         namePlayerB = "Player B";
-    //NAME TAKEN FROM VARIABLE IF SET
+        //NAME TAKEN FROM VARIABLE IF SET
     }
     headingB.innerHTML = namePlayerB;
 }
 
 //MALE-FEMALE SWITCH PLAYER B
-document.getElementById('player-sprite-B').addEventListener('click', function() {
-    console.log("Player B sprite was clicked...");
-    if (spriteIDPlayerB === 0) {
-        spriteIDPlayerB = 1;
-    } else {
-        spriteIDPlayerB = 0;
-    }
+document.getElementById('player-sprite-B').addEventListener('click', function () {
+    femalePlayerB = !femalePlayerB;
     renderHeadingB();
-    console.log("Rendered heading B");
 });
 
-function renderHeadings () {
+function renderHeadings() {
     renderHeadingA();
     renderHeadingB();
+}
+
+//JOKER INTERACTION
+
+const jokerButtons = document.querySelectorAll('.joker');
+
+for (let i = 0; i < jokerButtons.length; i++) {
+    jokerButtons[i].addEventListener('click', function () {
+
+        if (this.id === 'joker-reroll') {
+            
+            if (!isRerollUsed) {
+                this.style.opacity = '0.25';
+                this.style.filter = 'grayscale(100%)';
+                this.style.cursor = 'default';
+            } else {
+                this.style.opacity = '1';
+                this.style.filter = 'none';
+                this.style.cursor = 'pointer';
+            }
+            isRerollUsed = !isRerollUsed;
+            
+        } else if (this.id === 'joker-sacrifice') {
+            if (!isSacrificeUsed) {
+                this.style.opacity = '0.25';
+                this.style.filter = 'grayscale(100%)';
+                this.style.cursor = 'default';
+            } else {
+                this.style.opacity = '1';
+                this.style.filter = 'none';
+                this.style.cursor = 'pointer';
+            }
+            isSacrificeUsed = !isSacrificeUsed;
+        } else if (this.id === 'joker-revive') {
+            if (!isReviveUsed) {
+                this.style.opacity = '0.25';
+                this.style.filter = 'grayscale(100%)';
+                this.style.cursor = 'default';
+            } else {
+                this.style.opacity = '1';
+                this.style.filter = 'none';
+                this.style.cursor = 'pointer';
+            }
+            isReviveUsed = !isReviveUsed;
+        }
+    });
 }
 
 //DEBUG FUNCTION
@@ -888,7 +901,7 @@ function debugPlease() {
 
 //RESET SYNCLIST POPUP
 function resetSyncList() {
-    
+
     console.log("Resetting syncList...");
 
     const resetScreen = document.createElement('div');
@@ -912,10 +925,10 @@ function resetSyncList() {
     resetScreen.appendChild(resetWrapper);
     document.body.appendChild(resetScreen);
 
-    document.getElementById('confirmReset').addEventListener('click', function() {
-        
+    document.getElementById('confirmReset').addEventListener('click', function () {
+
         console.log("Resetting SyncList...");
-        
+
         sync = {
             one: undefined,
             two: undefined,
@@ -925,11 +938,11 @@ function resetSyncList() {
             six: undefined
         };
         refreshSync();
-        resetScreen.style.display = 'none';
+        resetContainer.style.display = 'none';
     });
 
-    document.getElementById('cancelReset').addEventListener('click', function() {
-        resetScreen.style.display = 'none';
+    document.getElementById('reset').addEventListener('click', function () {
+        resetContainer.style.display = 'none';
     });
 }
 
@@ -962,22 +975,22 @@ function popUpSettings() {
 
 const settingsCloseButton = document.getElementById("settings-close-button");
 
-settingsCloseButton.addEventListener('click', function() {
+settingsCloseButton.addEventListener('click', function () {
     console.log("Closing settings...");
     const settingsScreen = document.getElementById('settings-window');
     settingsScreen.style.display = 'none';
 });
 
-document.getElementById("settings-form").addEventListener('submit', function(event) {
+document.getElementById("settings-form").addEventListener('submit', function (event) {
     event.preventDefault();
 
     namePlayerA = document.getElementById('player-name-A').value;
     namePlayerB = document.getElementById('player-name-B').value;
 
-    if(namePlayerA.trim() === '') {
+    if (namePlayerA.trim() === '') {
         namePlayerA = "PlayerA";
     }
-    if(namePlayerB.trim() === '') {
+    if (namePlayerB.trim() === '') {
         namePlayerB = "PlayerB";
     }
 
@@ -986,7 +999,7 @@ document.getElementById("settings-form").addEventListener('submit', function(eve
     document.getElementById("hB").textContent = namePlayerB;
 });
 
-document.getElementById("settings-form").addEventListener("keydown", function(event) {
+document.getElementById("settings-form").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         document.getElementById("settings-window").style.display = "none";
     }
@@ -1029,8 +1042,10 @@ function addSync(pkmnA, pkmnB) {
 
 renderHeadings();
 renderSync();
+console.log("Reroll: " + isRerollUsed);
+console.log("Sacrifice: " + isSacrificeUsed);
+console.log("Revive: " + isReviveUsed);
 
 document.getElementById('settingsButton').addEventListener('click', popUpSettings);
 document.getElementById('resetButton').addEventListener('click', resetSyncList);
 
-document.getElementById('wrapper').addEventListener('click', pkmnOptions);

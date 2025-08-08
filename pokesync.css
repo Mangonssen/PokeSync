@@ -27,7 +27,6 @@
 }
 
 html {
-
     font-family: var(--font-main);
     background-image: url('/background.png');
     color: var(--text-color);
@@ -38,9 +37,10 @@ html {
 .main-container {
     display: flex;
     flex-direction: row;
-    width: 100%;
     height: 80vh;
     margin: var(--margin);
+
+    gap: 2.5rem;
 }
 
 .logo-control-container {
@@ -52,15 +52,22 @@ html {
 .vertical-hr {
     width: 3px;
     background-color: var(--white-reduced-op);
-    margin: 0 2rem;
 }
 
 .content-container {
     display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    height: 100%;
+    width: 100%;
 
 }
 
 .settings-window {
+    background-image: url('../background.png');
+    background-position: bottom;
+
     position: fixed;
     top: 50%;
     left: 50%;
@@ -144,7 +151,7 @@ html {
 }
 
 .controls button {
-    padding: 1rem 3rem 1rem 3rem;
+    padding: 1rem 2rem 1rem 2rem;
 }
 
 input {
@@ -206,20 +213,31 @@ h1 {
 
 /*Sync-related things*/
 
+.index-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    height: 100%;
+}
+
 .sync-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    
+
+    height: 100%;
+
     gap: 1rem;
 }
 
 .sync {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: end;
+    gap: 1rem;
 
-    outline: 1px solid red;
+    height: 100%;
 }
 
 .sync-heading {
@@ -232,28 +250,58 @@ h1 {
     flex-direction: row;
     align-items: center;
 
+    height: 2rem;
+    width: 100%;
+
     gap: .5rem;
 }
 
 .player-sprite-container {
-    
-    display: flex;
-    overflow: hidden;
 
-    outline: lime 1px solid;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    aspect-ratio: 1/1;
+
 }
 
 .player-sprite {
     height: 2rem;
     width: auto;
 
-    margin: .25rem;
 
     object-fit: contain;
 }
 
-.sync-list {
+.index-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: .5rem;
 
+    padding: 0;
+    margin: 0;
+
+    height: 100%;
+    list-style: none;
+
+    font-size: var(--font-size-title);
+
+}
+
+.index-item {
+   height: 5rem;
+   opacity: .2;
+}
+
+.sync-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: .5rem;
+
+    padding: 0;
+    margin: 0;
 }
 
 .sync-item {
@@ -262,20 +310,72 @@ h1 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: .5rem;
 
-    background-image: url('/li-background.png');
-    aspect-ratio: 6/1;
-    background-size: cover;
+    height: 5rem;
+    aspect-ratio: 346/126;
+
+    font-size: var(--font-size-text);
+
+    padding: 0 1rem;
+
+    background-image: url('../item-background.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sync-item:hover {
+    background-image: url('../item-background-hover.png');
+
+}
+
+.empty {
+    opacity: 0.5;
 }
 
 .pokemon-sprite {
     width: 50px;
     height: auto;
     object-fit: contain;
+    image-rendering: crisp-edges
+}
+
+.joker-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100%;
+    width: 100%;
 }
 
 .joker {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    padding: .5rem 1rem;
+    border-radius: var(--border-radius);
+
+    width: 100%;
+
+    font-size: var(--font-size-title);
+
+    cursor: pointer;
+}
+
+.joker:hover {
+    background-color: #FFFFFF10;
+}
+
+.joker-img {
+    width: 3.5rem;
+    height: auto;
+    image-rendering: crisp-edges;
+    border: 2px solid #284f5d;
+}
+
+.joker-description {
+    margin: 0;
 }

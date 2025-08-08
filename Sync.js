@@ -21,4 +21,12 @@ export class Sync {
     getB() {
         return this.B;
     }
+
+    setA(pokemonA) {
+        this.A = pokemonA;
+    }
+
+    setB(pokemonB) {
+        this.B = pokemonB;
+    }
 }
