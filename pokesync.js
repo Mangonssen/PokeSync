@@ -850,7 +850,7 @@ for (let i = 0; i < jokerButtons.length; i++) {
     jokerButtons[i].addEventListener('click', function () {
 
         if (this.id === 'joker-reroll') {
-            
+
             if (!isRerollUsed) {
                 this.style.opacity = '0.25';
                 this.style.filter = 'grayscale(100%)';
@@ -861,7 +861,7 @@ for (let i = 0; i < jokerButtons.length; i++) {
                 this.style.cursor = 'pointer';
             }
             isRerollUsed = !isRerollUsed;
-            
+
         } else if (this.id === 'joker-sacrifice') {
             if (!isSacrificeUsed) {
                 this.style.opacity = '0.25';
@@ -904,28 +904,11 @@ function resetSyncList() {
 
     console.log("Resetting syncList...");
 
-    const resetScreen = document.createElement('div');
-    resetScreen.className = 'resetScreen';
+    var resetContainer = document.getElementById('reset-window');
 
-    const resetWrapper = document.createElement('div');
-    resetWrapper.className = 'resetWrapper';
+    resetContainer.style.display = 'flex';
 
-    const buttonWrapper = document.createElement('div');
-    buttonWrapper.className = 'buttonWrapper';
-
-    resetWrapper.innerHTML = `
-    <h1> Reset SyncList? </h1>
-    `
-
-    buttonWrapper.innerHTML = `
-    <button id="confirmReset"> Yes </button>
-    <button id="cancelReset"> No </button>
-    `
-    resetWrapper.appendChild(buttonWrapper);
-    resetScreen.appendChild(resetWrapper);
-    document.body.appendChild(resetScreen);
-
-    document.getElementById('confirmReset').addEventListener('click', function () {
+    document.getElementById('reset-confirm').addEventListener('click', function () {
 
         console.log("Resetting SyncList...");
 
@@ -941,7 +924,7 @@ function resetSyncList() {
         resetContainer.style.display = 'none';
     });
 
-    document.getElementById('reset').addEventListener('click', function () {
+    document.getElementById('reset-cancel').addEventListener('click', function () {
         resetContainer.style.display = 'none';
     });
 }

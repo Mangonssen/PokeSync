@@ -127,6 +127,9 @@
                 </div>
             </div>
             <div class="joker-container">
+
+                <fieldset>
+                    <legend>Jokers</legend>
                 <div class="joker" id="joker-reroll">
                     <img src="../jokers/joker-reroll.png" alt="Joker: Reroll" class="joker-img">
                     <p class="joker-description">Reroll</p>
@@ -139,17 +142,15 @@
                     <img src="../jokers/joker-revive.png" alt="Joker: Revive" class="joker-img">
                     <p class="joker-description">Revive</p>
                 </div>
-            </div>
-
-
-            <div class="settings-window" id="settings-window">
-                <div class="settings-head">
+            </fieldset>
+            <div class="popup-window" id="settings-window">
+                <div class="popup-head">
                     <h1>Settings</h1>
-                    <button type="button" class="hover-primary" id="settings-close-button">
+                    <button type="button" class="hover-primary" id="popup-close-button">
                         <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
                     </button>
                 </div>
-                <div class="settings-body">
+                <div class="popup-body">
                     <form id="settings-form">
                         <div class="settings-body-inputs">
                             <input type="text" id="player-name-A" placeholder="Player A's Name">
@@ -160,14 +161,14 @@
                 </div>
             </div>
 
-            <div class="reset-window" id="reset-window">
-                <div class="reset-head">
+            <div class="popup-window" id="reset-window">
+                <div class="popup-head">
                     <h1>Reset?</h1>
                     <button type="button" class="hover-primary" id="settings-close-button">
                         <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
                     </button>
                 </div>
-                <div class="reset-body">
+                <div class="popup-body"></div>
                     <p>Are you sure you want to reset the syncs?</p>
                     <form id="reset-form">
                         <button type="submit" class="hover-white" id="reset-confirm">Confirm</button>

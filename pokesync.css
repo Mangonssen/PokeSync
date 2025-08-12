@@ -64,7 +64,7 @@ html {
 
 }
 
-.settings-window {
+.popup-window {
     background-image: url('../background.png');
     background-position: bottom;
 
@@ -84,7 +84,7 @@ html {
     z-index: 2;
 }
 
-.settings-head {
+.popup-head {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -93,7 +93,7 @@ html {
     margin-bottom: 1rem;
 }
 
-.settings-head button {
+.popup-head button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,12 +101,12 @@ html {
     padding: 1rem;
 }
 
-.settings-body {
+.popup-body {
     display: flex;
     flex-direction: column;
 }
 
-.settings-body-inputs {
+.popup-body-inputs {
     display: flex;
     flex-direction: column;
     gap: .1rem;
@@ -128,7 +128,7 @@ html {
     flex-direction: column;
 }
 
-.controls fieldset {
+fieldset {
     display: flex;
     flex-direction: column;
     gap: .25rem;
@@ -141,7 +141,7 @@ html {
 
 }
 
-.controls fieldset legend {
+fieldset legend {
     font-family: var(--font-main);
     font-size: var(--font-size-title);
     text-transform: uppercase;
