@@ -1,8 +1,8 @@
 export class Sync {
 
-    constructor(A, B) {
-        this.A = A;
-        this.B = B;
+    constructor(pokemonA, pokemonB) {
+        this.pokemonA = pokemonA;
+        this.pokemonB = pokemonB;
         this.alive = true;
     }
 
@@ -14,19 +14,19 @@ export class Sync {
         return this.alive;
     }
 
-    getA() {
-        return this.A;
+    getPokemonA() {
+        return this.pokemonA;
     }
 
-    getB() {
-        return this.B;
+    getPokemonB() {
+        return this.pokemonB;
     }
 
-    setA(pokemonA) {
-        this.A = pokemonA;
+    setPokemonA(pokemonA) {
+        this.pokemonA = pokemonA;
     }
 
-    setB(pokemonB) {
-        this.B = pokemonB;
+    setPokemonB(pokemonB) {
+        this.pokemonB = pokemonB;
     }
 }

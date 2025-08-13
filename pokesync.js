@@ -1,7 +1,7 @@
 import { Sync } from './Sync.js';
 
 //SYNC ARRAYS
-var sync = { one: new Sync("Pikachu", "Lotad"), two: undefined, three: undefined, four: undefined, five: undefined, six: undefined };
+var syncs = { one: new Sync("Pikachu", "Lotad"), two: undefined, three: undefined, four: undefined, five: undefined, six: undefined };
 
 //POKEMON RESOURCE LIST
 const pokemonData = [
@@ -694,19 +694,20 @@ function searchPokeNO(pkmnSync) {
 //RENDER BOTH SYNCS
 function renderSync() {
 
+    //HTML Sync List Elements
     var ulA = document.getElementById('sync-list-A');
     var ulB = document.getElementById('sync-list-B');
 
-    for (const key in sync) {
-        if (sync.hasOwnProperty(key)) {
+    for (const key in syncs) {
+        if (syncs.hasOwnProperty(key)) {
 
             //READ SYNC FROM ARRAY
-            var pkmnSync = sync[key];
+            var pkmnSync = syncs[key];
 
             //GET POKEMON NAME FROM READ SYNC
             if (pkmnSync !== undefined) {
-                var slotA = pkmnSync.getA();
-                var slotB = pkmnSync.getB();
+                var slotA = pkmnSync.getPokemonA();
+                var slotB = pkmnSync.getPokemonB();
             } else {
                 var slotA = "UNDEFINED";
                 var slotB = "UNDEFINED";
@@ -721,7 +722,7 @@ function renderSync() {
             var srcA = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOa + '.gif';
             var srcB = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOb + '.gif';
 
-            if (sync[key] !== undefined) {
+            if (syncs[key] !== undefined) {
 
                 // Save position of element scoped by the loop
 
@@ -741,8 +742,8 @@ function renderSync() {
                 var liA = document.getElementById(listItemA);
                 var liB = document.getElementById(listItemB);
 
-                liA.className = 'sync-item';
-                liB.className = 'sync-item';
+                liA.className = 'item';
+                liB.className = 'item';
 
                 // Make sure the elements exist and have the expected children
                 if (liA && liA.children.length >= 2 && liB && liB.children.length >= 2) {
@@ -797,7 +798,7 @@ function renderHeadingA() {
     const headingA = document.getElementById('heading-player-A');
 
     if (namePlayerA === undefined) {
-        namePlayerA = "Player A";
+        namePlayerA = "PLAYER A";
     }
 
     headingA.innerHTML = namePlayerA;
@@ -825,7 +826,7 @@ function renderHeadingB() {
 
     //NAME PLAYER B IF NO NAME IS SET
     if (namePlayerB === undefined) {
-        namePlayerB = "Player B";
+        namePlayerB = "PLAYER B";
         //NAME TAKEN FROM VARIABLE IF SET
     }
     headingB.innerHTML = namePlayerB;
@@ -888,17 +889,6 @@ for (let i = 0; i < jokerButtons.length; i++) {
     });
 }
 
-//DEBUG FUNCTION
-function debugPlease() {
-    debugIndex++;
-    debug = pokemonData[debugIndex].name;
-    sync['oneA'] = debug;
-    console.log("Index: " + debugIndex);
-    console.log("Pokemon: " + debug);
-    console.log("Currently displaying: " + pokemonData[debugIndex].name);
-    refreshSync();
-}
-
 //RESET SYNCLIST POPUP
 function resetSyncList() {
 
@@ -912,7 +902,7 @@ function resetSyncList() {
 
         console.log("Resetting SyncList...");
 
-        sync = {
+        syncs = {
             one: undefined,
             two: undefined,
             three: undefined,
@@ -925,6 +915,10 @@ function resetSyncList() {
     });
 
     document.getElementById('reset-cancel').addEventListener('click', function () {
+        resetContainer.style.display = 'none';
+    });
+
+    document.getElementById('reset-close-button').addEventListener('click', function () {
         resetContainer.style.display = 'none';
     });
 }
@@ -997,24 +991,24 @@ function addSync(pkmnA, pkmnB) {
     let pokemonA = searchPokeNO(pkmnA);
     let pokemonB = searchPokeNO(pkmnB);
 
-    if (sync.oneA === "UNDEFINED") {
-        sync.oneA = pkmnA;
-        sync.oneB = pkmnB;
-    } else if (sync.twoA === "UNDEFINED") {
-        sync.twoA = pkmnA;
-        sync.twoB = pkmnB;
-    } else if (sync.threeA === "UNDEFINED") {
-        sync.threeA = pkmnA;
-        sync.threeB = pkmnB;
-    } else if (sync.fourA === "UNDEFINED") {
-        sync.fourA = pkmnA;
-        sync.fourB = pkmnB;
-    } else if (sync.fiveA === "UNDEFINED") {
-        sync.fiveA = pkmnA;
-        sync.fiveB = pkmnB;
-    } else if (sync.sixA === "UNDEFINED") {
-        sync.sixA = pkmnA;
-        sync.sixB = pkmnB;
+    if (syncs.oneA === "UNDEFINED") {
+        syncs.oneA = pkmnA;
+        syncs.oneB = pkmnB;
+    } else if (syncs.twoA === "UNDEFINED") {
+        syncs.twoA = pkmnA;
+        syncs.twoB = pkmnB;
+    } else if (syncs.threeA === "UNDEFINED") {
+        syncs.threeA = pkmnA;
+        syncs.threeB = pkmnB;
+    } else if (syncs.fourA === "UNDEFINED") {
+        syncs.fourA = pkmnA;
+        syncs.fourB = pkmnB;
+    } else if (syncs.fiveA === "UNDEFINED") {
+        syncs.fiveA = pkmnA;
+        syncs.fiveB = pkmnB;
+    } else if (syncs.sixA === "UNDEFINED") {
+        syncs.sixA = pkmnA;
+        syncs.sixB = pkmnB;
     } else {
         console.log("SyncList is full...");
         box.push({ pkmnA, pkmnB });

@@ -11,13 +11,16 @@
 </head>
 
 <body>
-    <div class="main-container">
-        <div class="logo-control-container">
-            <div class="logo-wrapper">
-                <img src="logo.png" alt="PokéSync Logo" class="logo">
-            </div>
+    <header>
+        <div class="logo-wrapper">
+            <img src="./svg/pokesync-logo.png" alt="PokéSync Logo" class="logo">
+            <p class="version">v1.0 by Magno</p>
+        </div>
+    </header>
 
-            <!-- BOTTOM LEFT BUTTON PANEL-->
+    <div class="main-container">
+
+        <div class="control-container">
             <div class="controls">
                 <fieldset>
                     <legend>Controls</legend>
@@ -28,108 +31,111 @@
                 </fieldset>
             </div>
         </div>
-        <div class="content-container">
+
+        <div class="sync-list-container">
+
             <div class="index-container">
-                <div class="index">
-                    <h1 class="index-heading"> </h1>
-                    <ul id="index-list" class="index-list">
-                        <li id="index-item-1" class="index-item">
-                            <p>1</p>
-                        </li>
-                        <li id="index-item-2" class="index-item">
-                            <p>2</p>
-                        </li>
-                        <li id="index-item-3" class="index-item">
-                            <p>3</p>
-                        </li>
-                        <li id="index-item-4" class="index-item">
-                            <p>4</p>
-                        </li>
-                        <li id="index-item-5" class="index-item">
-                            <p>5</p>
-                        </li>
-                        <li id="index-item-6" class="index-item">
-                            <p>6</p>
-                        </li>
-                    </ul>
-                </div>
+
+                <p class="index-heading">#</p>
+                <ul id="index-list" class="list index-list">
+                    <li id="index-item-1" class="index-item item">
+                        <p>1</p>
+                    </li>
+                    <li id="index-item-2" class="index-item item">
+                        <p>2</p>
+                    </li>
+                    <li id="index-item-3" class="index-item item">
+                        <p>3</p>
+                    </li>
+                    <li id="index-item-4" class="index-item item">
+                        <p>4</p>
+                    </li>
+                    <li id="index-item-5" class="index-item item">
+                        <p>5</p>
+                    </li>
+                    <li id="index-item-6" class="index-item item">
+                        <p>6</p>
+                    </li>
+                </ul>
             </div>
+
             <div class="sync-container">
+
                 <div class="sync">
                     <div class="player">
                         <div class="player-sprite-container">
                             <img class="player-sprite" id="player-sprite-A" src="https://placehold.co/1x32">
                         </div>
-                        <h1 id="heading-player-A" class="sync-heading">Player A</h1>
+                        <h1 id="heading-player-A" class="sync-heading">PLAYER A</h1>
                     </div>
-                    <ul id="sync-list-A" class="sync-list">
-                        <li id="sync-item-A-1" class="sync-item empty">
+                    <ul id="sync-list-A" class="list">
+                        <li id="sync-item-A-1" class="item empty">
                             <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-A-2" class="sync-item empty">
+                        <li id="sync-item-A-2" class="item empty">
                             <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-A-3" class="sync-item empty">
+                        <li id="sync-item-A-3" class="item empty">
                             <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-A-4" class="sync-item empty">
+                        <li id="sync-item-A-4" class="item empty">
                             <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-A-5" class="sync-item empty">
+                        <li id="sync-item-A-5" class="item empty">
                             <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-A-6" class="sync-item empty">
+                        <li id="sync-item-A-6" class="item empty">
                             <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
                             <p></p>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="sync-container">
                 <div class="sync">
                     <div class="player">
                         <div class="player-sprite-container">
                             <img class="player-sprite" id="player-sprite-B" src="https://placehold.co/1x32">
                         </div>
-                        <h1 id="heading-player-B" class="sync-heading">Player B</h1>
+                        <h1 id="heading-player-B" class="sync-heading">PLAYER B</h1>
                     </div>
-                    <ul id="sync-list-B" class="sync-list">
-                        <li id="sync-item-B-1" class="sync-item empty">
+                    <ul id="sync-list-B" class="list">
+                        <li id="sync-item-B-1" class="item empty">
                             <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-B-2" class="sync-item empty">
+                        <li id="sync-item-B-2" class="item empty">
                             <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-B-3" class="sync-item empty">
+                        <li id="sync-item-B-3" class="item empty">
                             <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-B-4" class="sync-item empty">
+                        <li id="sync-item-B-4" class="item empty">
                             <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-B-5" class="sync-item empty">
+                        <li id="sync-item-B-5" class="item empty">
                             <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
                             <p></p>
                         </li>
-                        <li id="sync-item-B-6" class="sync-item empty">
+                        <li id="sync-item-B-6" class="item empty">
                             <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
                             <p></p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="joker-container">
+        </div>
 
-                <fieldset>
-                    <legend>Jokers</legend>
+        <div class="joker-container">
+
+            <fieldset>
+                <legend>Jokers</legend>
                 <div class="joker" id="joker-reroll">
                     <img src="../jokers/joker-reroll.png" alt="Joker: Reroll" class="joker-img">
                     <p class="joker-description">Reroll</p>
@@ -143,10 +149,14 @@
                     <p class="joker-description">Revive</p>
                 </div>
             </fieldset>
+
+
+
+
             <div class="popup-window" id="settings-window">
                 <div class="popup-head">
                     <h1>Settings</h1>
-                    <button type="button" class="hover-primary" id="popup-close-button">
+                    <button type="button" class="hover-primary" id="settings-close-button">
                         <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
                     </button>
                 </div>
@@ -164,20 +174,21 @@
             <div class="popup-window" id="reset-window">
                 <div class="popup-head">
                     <h1>Reset?</h1>
-                    <button type="button" class="hover-primary" id="settings-close-button">
+                    <button type="button" class="hover-primary" id="reset-close-button">
                         <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
                     </button>
                 </div>
-                <div class="popup-body"></div>
+                <div class="popup-body">
                     <p>Are you sure you want to reset the syncs?</p>
-                    <form id="reset-form">
-                        <button type="submit" class="hover-white" id="reset-confirm">Confirm</button>
-                        <button type="button" class="ghost" id="reset-cancel">Cancel</button>
-                    </form>
                 </div>
+                <form id="reset-form">
+                    <button type="submit" class="hover-white" id="reset-confirm">Confirm</button>
+                    <button type="button" class="ghost" id="reset-cancel">Cancel</button>
+                </form>
             </div>
+        </div>
 
-            <script type="module" src="pokesync.js"></script>
+        <script type="module" src="pokesync.js"></script>
 </body>
 
 </html>
