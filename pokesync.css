@@ -10,6 +10,7 @@
     --white-reduced-op: #FFFFFF15;
     --text-color: white;
     --border-color: #FFFFFF15;
+    --container: #021c2a;
 
     --margin-top: 2rem;
     --margin-side: 3rem;
@@ -181,7 +182,8 @@ fieldset legend {
 }
 
 .controls button {
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 1rem 0;
+    width: auto;
 }
 
 input {
@@ -202,7 +204,7 @@ input {
 button {
     font-family: var(--font-main);
     font-size: var(--font-size-text);
-    background-color: var(--white-reduced-op);
+    background-color: var(--container);
     border: none;
     color: var(--text-color);
 
@@ -232,6 +234,10 @@ button.hover-primary:hover {
 button.hover-white:hover {
     background-color: var(--text-color);
     color: var(--background-color);
+}
+
+.control-icon {
+    width: 2.5rem;
 }
 
 hr {
