@@ -1,32 +1,137 @@
 export class Sync {
 
-    constructor(pokemonA, pokemonB) {
-        this.pokemonA = pokemonA;
-        this.pokemonB = pokemonB;
-        this.alive = true;
+    constructor(playerA, playerB, pkmnSyncs, teamPlayerA, teamPlayerB, rerollUsed, sacrificeUsed, reviveUsed, active) {
+        this.playerA = playerA;
+        this.playerB = playerB;
+        this.pkmnSyncs = pkmnSyncs;
+        this.teamPlayerA = teamPlayerA;
+        this.teamPlayerB = teamPlayerB;
+        this.rerollUsed = rerollUsed;
+        this.sacrificeUsed = sacrificeUsed;
+        this.reviveUsed = reviveUsed;
+        this.active = active;
     }
 
-    kill() {
-        this.alive = false;
+    constructor() {
+        this.playerA = "PLAYER A";
+        this.playerB = "PLAYER B";
+        this.pkmnSyncs = [];
+        this.pkmnPlayerA = [];
+        this.pkmnPlayerB = [];
+        this.teamPlayerA = [];
+        this.teamPlayerB = [];
+        this.rerollUsed = false;
+        this.sacrificeUsed = false;
+        this.reviveUsed = false;
+        this.active = true;
     }
 
-    isAlive() {
-        return this.alive;
+    //returns all vars
+    getSyncData() {
+        return {
+            playerA: this.playerA,
+            playerB: this.playerB,
+            pkmnPlayerA: this.pkmnPlayerA,
+            pkmnPlayerB: this.pkmnPlayerB,
+            teamPlayerA: this.teamPlayerA,
+            teamPlayerB: this.teamPlayerB,
+            rerollUsed: this.rerollUsed,
+            sacrificeUsed: this.sacrificeUsed,
+            reviveUsed: this.reviveUsed,
+            active: this.active
+        };
     }
 
-    getPokemonA() {
-        return this.pokemonA;
+    getPlayerA() {
+        return this.playerA;
     }
 
-    getPokemonB() {
-        return this.pokemonB;
+    getPlayerB() {
+        return this.playerB;
     }
 
-    setPokemonA(pokemonA) {
-        this.pokemonA = pokemonA;
+    getPkmnPlayerA() {
+        return this.pkmnPlayerA;
     }
 
-    setPokemonB(pokemonB) {
-        this.pokemonB = pokemonB;
+    getPkmnPlayerB() {
+        return this.pkmnPlayerB;
     }
+
+    getTeamPlayerA() {
+        return this.teamPlayerA;
+    }
+
+    getTeamPlayerB() {
+        return this.teamPlayerB;
+    }
+
+    getRerollUsed() {
+        return this.rerollUsed;
+    }
+
+    getSacrificeUsed() {
+        return this.sacrificeUsed;
+    }
+
+    getReviveUsed() {
+        return this.reviveUsed;
+    }
+
+    getActive() {
+        return this.active;
+    }
+
+    setPlayerA(playerA) {
+        this.playerA = playerA;
+    }
+
+    setPlayerB(playerB) {
+        this.playerB = playerB;
+    }
+
+    setPkmnPlayerA(pkmnPlayerA) {
+        this.pkmnPlayerA = pkmnPlayerA;
+    }
+
+    setPkmnPlayerB(pkmnPlayerB) {
+        this.pkmnPlayerB = pkmnPlayerB;
+    }
+
+    setTeamPlayerA(teamPlayerA) {
+        this.teamPlayerA = teamPlayerA;
+    }
+
+    setTeamPlayerB(teamPlayerB) {
+        this.teamPlayerB = teamPlayerB;
+    }
+
+    setRerollUsed(rerollUsed) {
+        this.rerollUsed = rerollUsed;
+    }
+
+    setSacrificeUsed(sacrificeUsed) {
+        this.sacrificeUsed = sacrificeUsed;
+    }
+
+    setReviveUsed(reviveUsed) {
+        this.reviveUsed = reviveUsed;
+    }
+
+    setActive(active) {
+        this.active = active;
+    }
+
+    getPkmnSyncs() {
+        return this.pkmnSyncs;
+    }
+
+
+    //non-getter/setter methods
+
+    killSync(index) {
+        this.pkmnSyncs.splice(index, 1);
+    }
+
+    
 }

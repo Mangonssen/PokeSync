@@ -1,8 +1,17 @@
+//class import
+import { PokePair} from './PokePair.js';
 import { Sync } from './Sync.js';
 
-//SYNC ARRAYS
-var syncs = { one: new Sync("Pikachu", "Lotad"), two: undefined, three: undefined, four: undefined, five: undefined, six: undefined };
+//function import
+import { renderHeadings } from './player-heading.js';
 
+
+var testSync = new Sync();
+
+
+
+//SYNC ARRAYS
+var syncs = testSync.get
 //POKEMON RESOURCE LIST
 const pokemonData = [
     { name: "UNDEFINED", number: "000" },
@@ -665,15 +674,6 @@ var namePlayerB;
 var isSettingsOpen = false;
 var isResetOpen = false;
 
-//SPRITE BOOLEANS
-var femalePlayerA = false;
-var femalePlayerB = false;
-
-//JOKER BOOLEANS
-var isRerollUsed = false;
-var isSacrificeUsed = false;
-var isReviveUsed = false;
-
 //SEARCH FOR NUMBER IN RESOURCE LIST
 function searchPokeNO(pkmnSync) {
 
@@ -694,20 +694,19 @@ function searchPokeNO(pkmnSync) {
 //RENDER BOTH SYNCS
 function renderSync() {
 
-    //HTML Sync List Elements
     var ulA = document.getElementById('sync-list-A');
     var ulB = document.getElementById('sync-list-B');
 
-    for (const key in syncs) {
-        if (syncs.hasOwnProperty(key)) {
+    for (const key in sync) {
+        if (sync.hasOwnProperty(key)) {
 
             //READ SYNC FROM ARRAY
-            var pkmnSync = syncs[key];
+            var pkmnSync = sync[key];
 
             //GET POKEMON NAME FROM READ SYNC
             if (pkmnSync !== undefined) {
-                var slotA = pkmnSync.getPokemonA();
-                var slotB = pkmnSync.getPokemonB();
+                var slotA = pkmnSync.getA();
+                var slotB = pkmnSync.getB();
             } else {
                 var slotA = "UNDEFINED";
                 var slotB = "UNDEFINED";
@@ -722,7 +721,7 @@ function renderSync() {
             var srcA = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOa + '.gif';
             var srcB = 'https://projectpokemon.org/images/sprites-models/bw-animated/' + pokeNOb + '.gif';
 
-            if (syncs[key] !== undefined) {
+            if (sync[key] !== undefined) {
 
                 // Save position of element scoped by the loop
 
@@ -738,22 +737,12 @@ function renderSync() {
 
 
                 //SET SPRITES FOR TARGETED LIST ITEMS
-                // Get the list item elements by their IDs
-                var liA = document.getElementById(listItemA);
+                listItemA.children.item(0).src = srcA;
+                listItemB.children.item(0).src = srcB;
                 var liB = document.getElementById(listItemB);
-
-                liA.className = 'item';
-                liB.className = 'item';
-
-                // Make sure the elements exist and have the expected children
-                if (liA && liA.children.length >= 2 && liB && liB.children.length >= 2) {
-                    liA.children[0].src = srcA;
-                    liB.children[0].src = srcB;
-
-                    // Set description for targeted LI
-                    liA.children[1].innerHTML = slotA;
-                    liB.children[1].innerHTML = slotB;
-                }
+                //SET DESCRIPTION FOR TARGETED LI
+                listItemA.children.item(1).innerHTML = slotA;
+                listItemB.children.item(1).innerHTML = slotB;
 
                 //BLANK CARD IF UNSET
             }
@@ -761,167 +750,18 @@ function renderSync() {
     }
 }
 
-
-
-
-
-
-
-//REFRESH BOTH SYNCS
-function refreshSync() {
-    console.log("REFRESHING...");
-    var ulA = document.getElementById('syncListA');
-    var ulB = document.getElementById('syncListB');
-    ulA.innerHTML = '';
-    ulB.innerHTML = '';
-    renderSync();
-
+//DEBUG FUNCTION
+function debugPlease() {
+    debugIndex++;
+    debug = pokemonData[debugIndex].name;
+    sync['oneA'] = debug;
+    console.log("Index: " + debugIndex);
+    console.log("Pokemon: " + debug);
+    console.log("Currently displaying: " + pokemonData[debugIndex].name);
+    refreshSync();
 }
 
 
-
-//RENDER HEADING A (PLAYER A)
-function renderHeadingA() {
-
-    //SPRITE
-    const playerSpriteA = document.getElementById('player-sprite-A');
-
-    if (!femalePlayerA) {
-        playerSpriteA.src = 'https://www.pokewiki.de/images/4/4d/Overworldsprite_Warren_SW.png';
-        playerSpriteA.style.imageRendering = 'crisp-edges';
-    } else {
-        playerSpriteA.src = 'https://www.pokewiki.de/images/1/16/Overworldsprite_Lotta_SW.png';
-        playerSpriteA.style.imageRendering = 'crisp-edges';
-    }
-
-    //HEADING
-    const headingA = document.getElementById('heading-player-A');
-
-    if (namePlayerA === undefined) {
-        namePlayerA = "PLAYER A";
-    }
-
-    headingA.innerHTML = namePlayerA;
-}
-
-//MALE-FEMALE SWITCH PLAYER A
-document.getElementById('player-sprite-A').addEventListener('click', function () {
-    femalePlayerA = !femalePlayerA;
-    renderHeadingA();
-});
-
-//RENDER HEADING B (PLAYER B)
-function renderHeadingB() {
-    const playerSpriteB = document.getElementById('player-sprite-B');
-    if (!femalePlayerB) {
-        //MALE PLAYER SPRITE
-        playerSpriteB.src = 'https://www.pokewiki.de/images/4/4d/Overworldsprite_Warren_SW.png';
-        playerSpriteB.style.imageRendering = 'crisp-edges';
-    } else {
-        //FEMALE PLAYER SPRITE
-        playerSpriteB.src = 'https://www.pokewiki.de/images/1/16/Overworldsprite_Lotta_SW.png';
-        playerSpriteB.style.imageRendering = 'crisp-edges';
-    }
-    const headingB = document.getElementById('heading-player-B');
-
-    //NAME PLAYER B IF NO NAME IS SET
-    if (namePlayerB === undefined) {
-        namePlayerB = "PLAYER B";
-        //NAME TAKEN FROM VARIABLE IF SET
-    }
-    headingB.innerHTML = namePlayerB;
-}
-
-//MALE-FEMALE SWITCH PLAYER B
-document.getElementById('player-sprite-B').addEventListener('click', function () {
-    femalePlayerB = !femalePlayerB;
-    renderHeadingB();
-});
-
-function renderHeadings() {
-    renderHeadingA();
-    renderHeadingB();
-}
-
-//JOKER INTERACTION
-
-const jokerButtons = document.querySelectorAll('.joker');
-
-for (let i = 0; i < jokerButtons.length; i++) {
-    jokerButtons[i].addEventListener('click', function () {
-
-        if (this.id === 'joker-reroll') {
-
-            if (!isRerollUsed) {
-                this.style.opacity = '0.25';
-                this.style.filter = 'grayscale(100%)';
-                this.style.cursor = 'default';
-            } else {
-                this.style.opacity = '1';
-                this.style.filter = 'none';
-                this.style.cursor = 'pointer';
-            }
-            isRerollUsed = !isRerollUsed;
-
-        } else if (this.id === 'joker-sacrifice') {
-            if (!isSacrificeUsed) {
-                this.style.opacity = '0.25';
-                this.style.filter = 'grayscale(100%)';
-                this.style.cursor = 'default';
-            } else {
-                this.style.opacity = '1';
-                this.style.filter = 'none';
-                this.style.cursor = 'pointer';
-            }
-            isSacrificeUsed = !isSacrificeUsed;
-        } else if (this.id === 'joker-revive') {
-            if (!isReviveUsed) {
-                this.style.opacity = '0.25';
-                this.style.filter = 'grayscale(100%)';
-                this.style.cursor = 'default';
-            } else {
-                this.style.opacity = '1';
-                this.style.filter = 'none';
-                this.style.cursor = 'pointer';
-            }
-            isReviveUsed = !isReviveUsed;
-        }
-    });
-}
-
-//RESET SYNCLIST POPUP
-function resetSyncList() {
-
-    console.log("Resetting syncList...");
-
-    var resetContainer = document.getElementById('reset-window');
-
-    resetContainer.style.display = 'flex';
-
-    document.getElementById('reset-confirm').addEventListener('click', function () {
-
-        console.log("Resetting SyncList...");
-
-        syncs = {
-            one: undefined,
-            two: undefined,
-            three: undefined,
-            four: undefined,
-            five: undefined,
-            six: undefined
-        };
-        refreshSync();
-        resetContainer.style.display = 'none';
-    });
-
-    document.getElementById('reset-cancel').addEventListener('click', function () {
-        resetContainer.style.display = 'none';
-    });
-
-    document.getElementById('reset-close-button').addEventListener('click', function () {
-        resetContainer.style.display = 'none';
-    });
-}
 
 //POKEMON OPTIONS
 function pkmnOptions(e) {
@@ -984,40 +824,11 @@ document.getElementById("settings-form").addEventListener("keydown", function (e
 
 
 
-//ADD SYNC
-
-function addSync(pkmnA, pkmnB) {
-
-    let pokemonA = searchPokeNO(pkmnA);
-    let pokemonB = searchPokeNO(pkmnB);
-
-    if (syncs.oneA === "UNDEFINED") {
-        syncs.oneA = pkmnA;
-        syncs.oneB = pkmnB;
-    } else if (syncs.twoA === "UNDEFINED") {
-        syncs.twoA = pkmnA;
-        syncs.twoB = pkmnB;
-    } else if (syncs.threeA === "UNDEFINED") {
-        syncs.threeA = pkmnA;
-        syncs.threeB = pkmnB;
-    } else if (syncs.fourA === "UNDEFINED") {
-        syncs.fourA = pkmnA;
-        syncs.fourB = pkmnB;
-    } else if (syncs.fiveA === "UNDEFINED") {
-        syncs.fiveA = pkmnA;
-        syncs.fiveB = pkmnB;
-    } else if (syncs.sixA === "UNDEFINED") {
-        syncs.sixA = pkmnA;
-        syncs.sixB = pkmnB;
-    } else {
-        console.log("SyncList is full...");
-        box.push({ pkmnA, pkmnB });
-    }
-}
 
 
 
-renderHeadings();
+
+
 renderSync();
 console.log("Reroll: " + isRerollUsed);
 console.log("Sacrifice: " + isSacrificeUsed);
