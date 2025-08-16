@@ -1,21 +1,11 @@
-export class Sync {
+import { PokePair } from './PokePair.js';
 
-    constructor(playerA, playerB, pkmnSyncs, teamPlayerA, teamPlayerB, rerollUsed, sacrificeUsed, reviveUsed, active) {
-        this.playerA = playerA;
-        this.playerB = playerB;
-        this.pkmnSyncs = pkmnSyncs;
-        this.teamPlayerA = teamPlayerA;
-        this.teamPlayerB = teamPlayerB;
-        this.rerollUsed = rerollUsed;
-        this.sacrificeUsed = sacrificeUsed;
-        this.reviveUsed = reviveUsed;
-        this.active = active;
-    }
+export class Sync {
 
     constructor() {
         this.playerA = "PLAYER A";
         this.playerB = "PLAYER B";
-        this.pkmnSyncs = [];
+        this.pokePairs = [];
         this.pkmnPlayerA = [];
         this.pkmnPlayerB = [];
         this.teamPlayerA = [];
@@ -122,8 +112,8 @@ export class Sync {
         this.active = active;
     }
 
-    getPkmnSyncs() {
-        return this.pkmnSyncs;
+    getPokePairs() {
+        return this.pokePairs;
     }
 
 
@@ -133,5 +123,9 @@ export class Sync {
         this.pkmnSyncs.splice(index, 1);
     }
 
-    
+    addPair(pokemonA, pokemonB) {
+        let newPair = new PokePair(pokemonA, pokemonB);
+        console.log("Adding new pair: " + pokemonA + " & " + pokemonB);
+        this.pokePairs.push(newPair);
+    }
 }

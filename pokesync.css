@@ -10,7 +10,9 @@
     --white-reduced-op: #FFFFFF15;
     --text-color: white;
     --border-color: #FFFFFF15;
+
     --container: #021c2a;
+    --container-accent: #284f5d;
 
     --margin-top: 2rem;
     --margin-side: 3rem;
@@ -62,10 +64,10 @@ header {
 
 .control-container {
     display: flex;
-    flex-direction: column;
-    justify-content: end;
+    align-items: center;
 
-    width: 25%;
+    flex: 1;
+
 }
 
 .sync-list-container {
@@ -76,7 +78,9 @@ header {
     gap: 1rem;
 
     height: 100%;
-    width: 50%;
+    
+
+    flex: 1;
 }
 
 .joker-container {
@@ -85,7 +89,8 @@ header {
     justify-content: end;
 
     height: 100%;
-    width: 25%;
+
+    flex: 1;
 }
 
 
@@ -157,6 +162,28 @@ header {
 .controls {
     display: flex;
     flex-direction: column;
+    gap: .75rem;
+
+}
+
+.control-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    aspect-ratio: 1/1;
+    width: 4rem;
+
+    margin: 0;
+    padding: .5rem;
+    border-radius: 0;
+
+    outline: var(--container-accent) 2px solid;
+}
+
+.control-icon {
+    width: 75%;
+
 }
 
 fieldset {
@@ -179,11 +206,6 @@ fieldset legend {
     letter-spacing: 0.1em;
 
     padding-right: 1rem;
-}
-
-.controls button {
-    padding: 1rem 0;
-    width: auto;
 }
 
 input {
@@ -236,9 +258,6 @@ button.hover-white:hover {
     color: var(--background-color);
 }
 
-.control-icon {
-    width: 2.5rem;
-}
 
 hr {
     width: 100%;
@@ -416,8 +435,8 @@ h1 {
 }
 
 .pokemon-sprite {
-    width: 50px;
-    height: auto;
+    height: 3em;
+    width: auto;
     object-fit: contain;
     image-rendering: crisp-edges
 }
