@@ -18,6 +18,8 @@
     --margin-side: 3rem;
     --margin-bottom: 2rem;
 
+    --margin-synclist-left: 5rem;
+
     --padding-single: 1rem;
     --border-radius-container: 10px;
     --border-radius: 5px;
@@ -36,6 +38,7 @@
 body {
     margin-left: var(--margin-side);
     margin-right: var(--margin-side);
+
 }
 
 html {
@@ -48,26 +51,19 @@ html {
 
 header {
     display: flex;
-    padding-top: var(--margin-top);
     height: 10dvh;
 }
 
 .main-container {
     display: flex;
     flex-direction: row;
-    height: 80dvh;
-
-    justify-content: space-between;
-
-    gap: 2.5rem;
+    width: 100%;
+    height: 100%;
 }
 
 .control-container {
     display: flex;
     align-items: center;
-
-    flex: 1;
-
 }
 
 .sync-list-container {
@@ -76,11 +72,9 @@ header {
     justify-content: center;
 
     gap: 1rem;
-
     height: 100%;
-    
 
-    flex: 1;
+    margin-left: var(--margin-synclist-left);
 }
 
 .joker-container {
@@ -89,8 +83,7 @@ header {
     justify-content: end;
 
     height: 100%;
-
-    flex: 1;
+    min-width: 25rem;
 }
 
 
@@ -438,7 +431,7 @@ h1 {
     height: 3em;
     width: auto;
     object-fit: contain;
-    image-rendering: crisp-edges
+    image-rendering: crisp-edges;
 }
 
 

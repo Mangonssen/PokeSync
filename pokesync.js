@@ -10,9 +10,7 @@ testSync.addPair("Bulbasaur", "Charmander");
 testSync.addPair("Squirtle", "Pidgey");
 testSync.addPair("Oshawott", "Rattata");
 testSync.addPair("Pikachu", "Eevee");
-testSync.addPair("Jigglypuff", "Meowth");
-testSync.addPair("Psyduck", "Machop");
-testSync.addPair("Zubat", "Geodude");
+
 
 //SYNC ARRAYS
 
@@ -73,6 +71,9 @@ function renderSync() {
 
                 let listItemA = document.getElementById(stringA);
                 let listItemB = document.getElementById(stringB);
+
+                listItemA.style.opacity = 1;
+                listItemB.style.opacity = 1;
 
                 console.log(listItemA + " || " + listItemB);
 
