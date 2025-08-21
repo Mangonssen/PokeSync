@@ -1,3 +1,6 @@
+import { Sync } from './Sync.js';
+import { testSync } from './pokesync.js';
+
 const jokerButtons = document.querySelectorAll('.joker');
 
 for (let i = 0; i < jokerButtons.length; i++) {
@@ -5,7 +8,7 @@ for (let i = 0; i < jokerButtons.length; i++) {
 
         if (this.id === 'joker-reroll') {
 
-            if (!isRerollUsed) {
+            if (!testSync.getRerollUsed()) {
                 this.style.opacity = '0.25';
                 this.style.filter = 'grayscale(100%)';
                 this.style.cursor = 'default';
@@ -14,10 +17,10 @@ for (let i = 0; i < jokerButtons.length; i++) {
                 this.style.filter = 'none';
                 this.style.cursor = 'pointer';
             }
-            isRerollUsed = !isRerollUsed;
+            testSync.setRerollUsed(!testSync.getRerollUsed());
 
         } else if (this.id === 'joker-sacrifice') {
-            if (!isSacrificeUsed) {
+            if (!testSync.getSacrificeUsed()) {
                 this.style.opacity = '0.25';
                 this.style.filter = 'grayscale(100%)';
                 this.style.cursor = 'default';
@@ -26,9 +29,9 @@ for (let i = 0; i < jokerButtons.length; i++) {
                 this.style.filter = 'none';
                 this.style.cursor = 'pointer';
             }
-            isSacrificeUsed = !isSacrificeUsed;
+            testSync.setSacrificeUsed(!testSync.getSacrificeUsed());
         } else if (this.id === 'joker-revive') {
-            if (!isReviveUsed) {
+            if (!testSync.getReviveUsed()) {
                 this.style.opacity = '0.25';
                 this.style.filter = 'grayscale(100%)';
                 this.style.cursor = 'default';
@@ -37,7 +40,7 @@ for (let i = 0; i < jokerButtons.length; i++) {
                 this.style.filter = 'none';
                 this.style.cursor = 'pointer';
             }
-            isReviveUsed = !isReviveUsed;
+            testSync.setReviveUsed(!testSync.getReviveUsed());
         }
     });
 }

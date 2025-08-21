@@ -4,8 +4,10 @@ import { Sync } from './Sync.js';
 //function import
 import { renderHeadings } from './player-heading.js';
 import { searchPokeNO } from './pokemon-database.js';
+import { resetSyncList } from './synclist.js';
 
-var testSync = new Sync();
+
+export var testSync = new Sync();
 testSync.addPair("Bulbasaur", "Charmander");
 testSync.addPair("Squirtle", "Pidgey");
 testSync.addPair("Oshawott", "Rattata");
@@ -164,13 +166,7 @@ document.getElementById("settings-form").addEventListener("keydown", function (e
 });
 
 
-
-
-
 renderSync();
-console.log("Reroll: " + isRerollUsed);
-console.log("Sacrifice: " + isSacrificeUsed);
-console.log("Revive: " + isReviveUsed);
 
 document.getElementById('settingsButton').addEventListener('click', popUpSettings);
 document.getElementById('resetButton').addEventListener('click', resetSyncList);
