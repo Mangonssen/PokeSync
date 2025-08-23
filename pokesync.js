@@ -1,5 +1,5 @@
 //class import
-import { Sync } from './Sync.js';
+import { Sync } from './sync.js';
 
 //function import
 import { renderHeadings } from './player-heading.js';
@@ -9,7 +9,7 @@ import { resetSyncList } from './synclist.js';
 
 export var testSync = new Sync();
 testSync.addPair("Bulbasaur", "Charmander");
-testSync.addPair("Squirtle", "Pidgey");
+testSync.addPair("Squirtle", "Giratina");
 testSync.addPair("Oshawott", "Rattata");
 testSync.addPair("Pikachu", "Eevee");
 
@@ -68,11 +68,19 @@ function renderSync() {
                 console.log("Numeric Position:" + position);
 
 
-                let stringA = "sync-item-A-" + position;
-                let stringB = "sync-item-B-" + position;
+                let itemStringA = "sync-item-A-" + position;
+                let itemStringB = "sync-item-B-" + position;
 
-                let listItemA = document.getElementById(stringA);
-                let listItemB = document.getElementById(stringB);
+                let contentStringA = "sync-item-A-" + position +"-content";
+                let contentStringB = "sync-item-B-" + position +"-content";
+
+                //wrapper
+                let listItemA = document.getElementById(itemStringA);
+                let listItemB = document.getElementById(itemStringB);
+
+                //sprite + pokemon name
+                let listContentA = document.getElementById(contentStringA);
+                let listContentB = document.getElementById(contentStringB);
 
                 listItemA.style.opacity = 1;
                 listItemB.style.opacity = 1;
@@ -82,12 +90,12 @@ function renderSync() {
                 console.log("Children of list item A")
 
                 //SET SPRITES FOR TARGETED LIST ITEMS
-                listItemA.children.item(0).src = srcA;
-                listItemB.children.item(0).src = srcB;
-                var liB = document.getElementById(listItemB);
+                listContentA.children.item(0).src = srcA;
+                listContentB.children.item(0).src = srcB;
+
                 //SET DESCRIPTION FOR TARGETED LI
-                listItemA.children.item(1).innerHTML = slotA;
-                listItemB.children.item(1).innerHTML = slotB;
+                listContentA.children.item(1).innerHTML = slotA;
+                listContentB.children.item(1).innerHTML = slotB;
             }
         }
     }

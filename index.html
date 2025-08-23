@@ -11,111 +11,125 @@
 </head>
 
 <body>
-    <header>
+    <div class="main-container">
+
         <div class="logo-wrapper">
-            <img src="./svg/pokesync-logo.png" alt="PokéSync Logo" class="logo">
+            <img src="./svg/pokesync-logo.png" alt="PokéSync Logo" class="logo" width="412px" height="88px">
             <p class="version">v1.0 by Magno</p>
         </div>
-    </header>
 
-    <div class="main-container">
         <div class="sync-list-container">
 
-            <div class="index-container">
+            <div class="sync-col">
+                <div class="player" id="player-A">
+                    <div class="player-sprite-container">
+                        <img class="player-sprite" id="player-sprite-A" src="https://placehold.co/1x32">
+                    </div>
+                    <h1 id="heading-player-A" class="sync-heading">PLAYER A</h1>
+                </div>
+                <ul id="sync-list-A" class="list">
 
-                <p class="index-heading">#</p>
-                <ul id="index-list" class="list index-list">
-                    <li id="index-item-1" class="index-item item">
-                        <p>1</p>
+                    <li id="sync-item-A-1" class="item empty">
+                        <div class="item-content" id="sync-item-A-1-content">
+                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
-                    <li id="index-item-2" class="index-item item">
-                        <p>2</p>
+
+                    <li id="sync-item-A-2" class="item empty">
+                        <div class="item-content" id="sync-item-A-2-content">
+                            <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
-                    <li id="index-item-3" class="index-item item">
-                        <p>3</p>
+
+                    <li id="sync-item-A-3" class="item empty">
+                        <div class="item-content" id="sync-item-A-3-content">
+                            <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
-                    <li id="index-item-4" class="index-item item">
-                        <p>4</p>
+
+                    <li id="sync-item-A-4" class="item empty">
+                        <div class="item-content" id="sync-item-A-4-content">
+                            <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
-                    <li id="index-item-5" class="index-item item">
-                        <p>5</p>
+
+                    <li id="sync-item-A-5" class="item empty">
+                        <div class="item-content" id="sync-item-A-5-content">
+                            <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
-                    <li id="index-item-6" class="index-item item">
-                        <p>6</p>
+
+                    <li id="sync-item-A-6" class="item empty">
+                        <div class="item-content" id="sync-item-A-6-content">
+                            <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
                     </li>
                 </ul>
             </div>
-
-            <div class="sync-container">
-
-                <div class="sync">
-                    <div class="player">
-                        <div class="player-sprite-container">
-                            <img class="player-sprite" id="player-sprite-A" src="https://placehold.co/1x32">
-                        </div>
-                        <h1 id="heading-player-A" class="sync-heading">PLAYER A</h1>
+            <div class="sync-col">
+                <div class="player" id="player-B">
+                    <div class="player-sprite-container">
+                        <img class="player-sprite" id="player-sprite-B" src="https://placehold.co/1x32">
                     </div>
-                    <ul id="sync-list-A" class="list">
-                        <li id="sync-item-A-1" class="item empty">
-                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-2" class="item empty">
-                            <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-3" class="item empty">
-                            <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-4" class="item empty">
-                            <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-5" class="item empty">
-                            <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-6" class="item empty">
-                            <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                    </ul>
+                    <h1 id="heading-player-B" class="sync-heading">PLAYER B</h1>
                 </div>
-                <div class="sync">
-                    <div class="player">
-                        <div class="player-sprite-container">
-                            <img class="player-sprite" id="player-sprite-B" src="https://placehold.co/1x32">
+
+                <ul id="sync-list-B" class="list">
+                    <li id="sync-item-B-1" class="item empty">
+                        <div class="item-content" id="sync-item-B-1-content">
+                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
+                            <p class="pokemon-name"></p>
                         </div>
-                        <h1 id="heading-player-B" class="sync-heading">PLAYER B</h1>
-                    </div>
-                    <ul id="sync-list-B" class="list">
-                        <li id="sync-item-B-1" class="item empty">
-                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-2" class="item empty">
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                    <li id="sync-item-B-2" class="item empty">
+                        <div class="item-content" id="sync-item-B-2-content">
                             <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-3" class="item empty">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                    <li id="sync-item-B-3" class="item empty">
+                        <div class="item-content" id="sync-item-B-3-content">
                             <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-4" class="item empty">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                    <li id="sync-item-B-4" class="item empty">
+                        <div class="item-content" id="sync-item-B-4-content">
                             <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-5" class="item empty">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                    <li id="sync-item-B-5" class="item empty">
+                        <div class="item-content" id="sync-item-B-5-content">
                             <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-6" class="item empty">
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                    <li id="sync-item-B-6" class="item empty">
+                        <div class="item-content" id="sync-item-B-6-content">
                             <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                    </ul>
-                </div>
+                            <p class="pokemon-name"></p>
+                        </div>
+                        <img src="item-background.png" class="sync-item-background">
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -196,10 +210,15 @@
                 </button>
             </div>
         </div>
+    </div>
 
-        <script type="module" src="player-heading.js"></script>
-        <script type="module" src="jokers.js"></script>
-        <script type="module" src="pokesync.js"></script>
+
+
+
+
+    <script type="module" src="player-heading.js"></script>
+    <script type="module" src="jokers.js"></script>
+    <script type="module" src="pokesync.js"></script>
 </body>
 
 </html>
