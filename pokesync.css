@@ -81,7 +81,7 @@ html {
 .main-container {
     display: grid;
     grid-template-columns: auto 20%;
-    grid-template-rows: 15% 70% 15%;
+    grid-template-rows: 15% 70% 10% 5%;
 
     height: 90%;
     width: 100%;
@@ -96,7 +96,31 @@ html {
     justify-content: start;
     gap: .5rem;
 
+    height: 100%;
+    width: 100%;
+
     grid-area: 3 / 2 / 4 / 3;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(4, 20%);
+    gap: 1rem;
+}
+
+.control-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+
+    outline: #ffffff25 .15rem solid;
+    border-radius: 0;
+}
+
+.control-icon {
+    width: 2rem;
+    filter: grayscale(100%) brightness(500%);
 }
 
 .sync-list-container {
@@ -149,7 +173,7 @@ html {
 
     /* aspect-ratio: 346/126; */
 
-    flex: 1;
+    height: 15%;
 
     display: flex;
     flex-direction: row;
@@ -172,13 +196,13 @@ html {
 
 .pokemon-sprite {
     
-    height: 30%;
+    height: 75%;
     image-rendering: crisp-edges;
 }
 
 .pokemon-name {
     position: absolute;
-    left: 55%;
+    left: 35%;
 
     font-size: 1.5rem;
     text-shadow: 1px 1px 1px rgb(156, 136, 136);
@@ -310,28 +334,7 @@ img.sync-item-background {
 
 }
 
-.controls {
-    height: 50%;
-    display: grid;
-    grid-template-columns: repeat(4, 20%);
-    gap: 1rem;
-}
 
-.control-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-
-    aspect-ratio: 1/1;
-    outline: #ffffff25 .15rem solid;
-    border-radius: 0;
-}
-
-.control-icon {
-    width: 2.25rem;
-    filter: grayscale(100%) brightness(500%);
-}
 
 .legend-box {
     display: flex;
