@@ -9,7 +9,7 @@ import { resetSyncList } from './synclist.js';
 
 export var testSync = new Sync();
 testSync.addPair("Bulbasaur", "Charmander");
-testSync.addPair("Squirtle", "Giratina");
+testSync.addPair("Squirtle", "Serperior");
 testSync.addPair("Oshawott", "Rattata");
 testSync.addPair("Pikachu", "Eevee");
 
