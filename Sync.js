@@ -1,16 +1,16 @@
 export class Sync {
 
-    constructor(playerA, playerB, pkmnSyncs, teamPlayerA, teamPlayerB, rerollUsed, sacrificeUsed, reviveUsed, active) {
-        this.playerA = playerA;
-        this.playerB = playerB;
-        this.pkmnSyncs = pkmnSyncs;
-        this.teamPlayerA = teamPlayerA;
-        this.teamPlayerB = teamPlayerB;
-        this.rerollUsed = rerollUsed;
-        this.sacrificeUsed = sacrificeUsed;
-        this.reviveUsed = reviveUsed;
-        this.active = active;
-    }
+    // constructor(playerA, playerB, pkmnSyncs, teamPlayerA, teamPlayerB, rerollUsed, sacrificeUsed, reviveUsed, active) {
+    //     this.playerA = playerA;
+    //     this.playerB = playerB;
+    //     this.pkmnSyncs = pkmnSyncs;
+    //     this.teamPlayerA = teamPlayerA;
+    //     this.teamPlayerB = teamPlayerB;
+    //     this.rerollUsed = rerollUsed;
+    //     this.sacrificeUsed = sacrificeUsed;
+    //     this.reviveUsed = reviveUsed;
+    //     this.active = active;
+    // }
 
     constructor() {
         this.playerA = "PLAYER A";
@@ -133,5 +133,5 @@ export class Sync {
         this.pkmnSyncs.splice(index, 1);
     }
 
-    
+
 }

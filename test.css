@@ -1,0 +1,60 @@
+.testcontainer {
+    --cut: min(45%, 1rem);
+    --border-width: 2px;
+    --border-color: #6b9eb9;
+    --bg-color: #b2e5ff;
+    --bg-accent: #6b9eb9;
+
+
+    --clip-path: polygon(
+        var(--cut) 0,
+        calc(100% - var(--cut)) 0,
+        100% var(--cut),
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        var(--cut) 100%,
+        0 calc(100% - var(--cut)),
+        0 var(--cut)
+    );
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    width: 20rem;
+
+    padding: .25rem 2rem;
+    height: 5rem;
+
+    color: white;
+    background: var(--bg-color);
+
+    clip-path: var(--clip-path);
+}
+
+/* äußere "Border" */
+.testcontainer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--border-color);
+    clip-path: var(--clip-path);
+    z-index: -2;
+}
+
+/* innerer Bereich (schneidet die Mitte frei) */
+.testcontainer::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-width);
+    background: linear-gradient(-40deg, var(--bg-color) 35%, var(--bg-accent) 35%,var(--bg-accent) 60%, var(--bg-color) 60%);
+    clip-path: var(--clip-path);
+    z-index: -1;
+}
+
+#sprite {
+    aspect-ratio: 1/1;
+    height: 2rem;
+    background: red;
+}
