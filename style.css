@@ -1,5 +1,5 @@
 @layer reset {
-
+    /* see https://www.joshwcomeau.com/css/custom-css-reset/ */
     /* 1. Use a more-intuitive box-sizing model */
     *,
     *::before,
@@ -91,20 +91,20 @@
 
 @layer components {
     .box {
-        --cut: min(45%, 1rem);
-        --border-width: 2px;
-        --_color: var(--color, oklch(81.015% 0.09685 255.453));
-        --border-color: oklch(from var(--_color) l c h / 0.75);
-        --bg-color: oklch(from var(--_color) 0.8 c h / 0.5);
-        --bg-accent: oklch(from var(--_color) 0.65 c h / 0.5);
-        --clip-path: polygon(var(--cut) 0,
-                calc(100% - var(--cut)) 0,
-                100% var(--cut),
-                100% calc(100% - var(--cut)),
-                calc(100% - var(--cut)) 100%,
-                var(--cut) 100%,
-                0 calc(100% - var(--cut)),
-                0 var(--cut));
+        --box-cut: min(45%, 1rem);
+        --box-border-width: 2px;
+        --box-color: var(--color, oklch(81.015% 0.09685 255.453));
+        --box-border-color: oklch(from var(--box-color) l c h / 0.1);
+        --box-bg-color: oklch(from var(--box-color) 0.8 c h / 0.25);
+        --box-bg-accent: oklch(from var(--box-color) 0.6 c h / 0.25);
+        --clip-path: polygon(var(--box-cut) 0,
+                calc(100% - var(--box-cut)) 0,
+                100% var(--box-cut),
+                100% calc(100% - var(--box-cut)),
+                calc(100% - var(--box-cut)) 100%,
+                var(--box-cut) 100%,
+                0 calc(100% - var(--box-cut)),
+                0 var(--box-cut));
         position: relative;
         display: flex;
         align-items: center;
@@ -119,17 +119,37 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: var(--border-color);
-        clip-path: var(--clip-path);
+        background: var(--box-border-color);
+        mask: var(--clip-path);
         z-index: -2;
     }
 
     .box::after {
         content: '';
         position: absolute;
-        inset: var(--border-width);
-        background: linear-gradient(-40deg, var(--bg-color) 35%, var(--bg-accent) 35%, var(--bg-accent) 60%, var(--bg-color) 60%);
+        inset: var(--box-border-width);
+        background: linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
         clip-path: var(--clip-path);
         z-index: -1;
     }
+}
+
+:root{
+    color-scheme: dark;
+    /* TODO: Hauptfarbe besser machen */
+    --main-color: oklch(12.292% 0.01077 271.399);
+    --box-bg-color: oklch(from var(--main-color) 12% 0.011 h);
+    /* TODO: accent color */
+    --accent-color: red;
+    accent-color: var(--accent-color);
+}
+
+body{
+    background-color: var(--box-bg-color);
+    background-image: url("./svg/background-grid.svg");
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
