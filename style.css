@@ -91,10 +91,16 @@
 
 @layer components {
     .box{
-        --border-color: red;
-        --border-width: 3px;
+        /* Need to be Given */
+        --_box-color: var(--color, blue);
+        --border-width: 2px;
         --box-cut: min(45%, 1rem);
-        --box-cut-height: calc(var(--box-cut) / sqrt(2) + var(--border-width));
+
+        /* Calculated */
+        --box-bg-accent: oklch(from var(--_box-color) 33% 0.18794 h / 0.2);
+        --box-bg-color: oklch(from var(--_box-color) 45% 0.3133 h / 0.2);
+        --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
+        --box-cut-height: calc(var(--box-cut) / sqrt(2));
         --clip-path: polygon(var(--box-cut) 0,
                 calc(100% - var(--box-cut)) 0,
                 100% var(--box-cut),
@@ -103,12 +109,15 @@
                 var(--box-cut) 100%,
                 0 calc(100% - var(--box-cut)),
                 0 var(--box-cut));
+
+        /* Styling */
         background:
             linear-gradient(45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
             linear-gradient(-45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
             linear-gradient(135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
             linear-gradient(-135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            blue;
+            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%)
+            ;
         background-clip: border-box;
         border-width: var(--border-width);
         border-style: solid;
@@ -121,75 +130,7 @@
         clip-path: var(--clip-path);
         width: 60ch;
         height: 5rem;
-
     }
-    /* .box {
-        --box-cut: min(45%, 1rem);
-        --box-border-width: 2px;
-        --box-color: var(--color, oklch(81.015% 0.09685 255.453));
-        --box-border-color: oklch(from var(--box-color) l c 0 / 0.5);
-        --box-bg-color: oklch(from var(--box-color) 0.8 c h / 0.25);
-        --box-bg-accent: oklch(from var(--box-color) 0.6 c h / 0.25);
-        --clip-path: polygon(var(--box-cut) 0,
-                calc(100% - var(--box-cut)) 0,
-                100% var(--box-cut),
-                100% calc(100% - var(--box-cut)),
-                calc(100% - var(--box-cut)) 100%,
-                var(--box-cut) 100%,
-                0 calc(100% - var(--box-cut)),
-                0 var(--box-cut));
-        --clip-path-inner: polygon(
-                calc(var(--box-cut) + var(--box-border-width)) var(--box-border-width),
-                calc(100% - var(--box-cut) - var(--box-border-width)) var(--box-border-width),
-
-                calc(100% - var(--box-border-width)) calc(var(--box-cut) + var(--box-border-width)),
-                calc(100% - var(--box-border-width)) calc(100% - var(--box-cut) - var(--box-border-width)),
-
-                calc(100% - var(--box-cut) - var(--box-border-width)) calc(100% - var(--box-border-width)),
-                calc(var(--box-cut) + var(--box-border-width)) calc(100% - var(--box-border-width)),
-
-                var(--box-border-width) calc(100% - var(--box-cut) - var(--box-border-width)),
-                var(--box-border-width) calc(var(--box-cut) + var(--box-border-width))
-            );
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: .25rem 2rem;
-        clip-path: var(--clip-path);
-        width: 60ch;
-        height: 5rem;
-    }
-
-    .box::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: var(--box-border-color);
-
-        -webkit-mask:
-            var(--clip-path),
-            var(--clip-path-inner);
-
-        -webkit-mask-composite: not;
-
-        mask:
-            var(--clip-path),
-            var(--clip-path-inner);
-
-        mask-composite: not;
-
-        z-index: -2;
-    }
-
-    .box::after {
-        content: '';
-        position: absolute;
-        inset: var(--box-border-width);
-        background: linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
-        clip-path: var(--clip-path);
-        z-index: -1;
-    } */
 }
 
 :root{
