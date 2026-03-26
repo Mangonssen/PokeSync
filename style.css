@@ -1,3 +1,8 @@
+@font-face{
+    font-family: "BW";
+    src: url("./pokemon-b-w.otf");
+}
+
 @layer reset {
     /* see https://www.joshwcomeau.com/css/custom-css-reset/ */
     /* 1. Use a more-intuitive box-sizing model */
@@ -90,7 +95,7 @@
 }
 
 @layer components {
-    .box{
+    [class|="box"]{
         /* Need to be Given */
         --_box-color: var(--color, blue);
         --border-width: 2px;
@@ -98,7 +103,7 @@
 
         /* Calculated */
         --box-bg-accent: oklch(from var(--_box-color) 33% 0.18794 h / 0.2);
-        --box-bg-color: oklch(from var(--_box-color) 45% 0.3133 h / 0.2);
+        --box-bg-color: oklch(from var(--_box-color) 65% 0.3133 h / 0.2);
         --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
         --box-cut-height: calc(var(--box-cut) / sqrt(2));
         --clip-path: polygon(var(--box-cut) 0,
@@ -108,28 +113,33 @@
                 calc(100% - var(--box-cut)) 100%,
                 var(--box-cut) 100%,
                 0 calc(100% - var(--box-cut)),
-                0 var(--box-cut));
+                0 var(--box-cut))
+            ;
 
         /* Styling */
         background:
-            linear-gradient(45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%)
+                linear-gradient(45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+                linear-gradient(-45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+                linear-gradient(135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+                linear-gradient(-135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+                linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%)
             ;
         background-clip: border-box;
+        clip-path: var(--clip-path);
         border-width: var(--border-width);
         border-style: solid;
         border-color: var(--border-color);
-        position: relative;
+
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: .25rem 2rem;
-        clip-path: var(--clip-path);
-        width: 60ch;
-        height: 5rem;
+        padding: .5rem 2rem;
+    }
+    .box-gray{
+        --_box-color: gray;
+        --box-bg-accent: oklch(from var(--_box-color) 33% c h / 0.2);
+        --box-bg-color: oklch(from var(--_box-color) 65% c h / 0.2);
+        --border-color: oklch(from var(--_box-color) 65% c h / 1);
     }
 }
 
@@ -141,6 +151,7 @@
     /* TODO: accent color */
     --accent-color: red;
     accent-color: var(--accent-color);
+    font-family: BW;
 }
 
 body{
@@ -148,7 +159,25 @@ body{
     background-image: url("./svg/background-grid.svg");
     background-repeat: repeat;
     background-blend-mode: soft-light;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
     gap: 1rem;
+}
+header,footer{
+    flex-grow: 1;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+    gap: 3rem;
+}
+#Players{
+    display: flex;
+    gap: 1rem;
+}
+aside fieldset legend{
+    font-size: 1.5rem;
 }
