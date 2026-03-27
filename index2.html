@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokeSsync</title>
+    <title>PokeSync</title>
     <script type="module" src="index.mjs"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,6 +16,7 @@
             <h1 class="sr-only">PokeSync</h1>
             <p>v1.0 by Mangonssen & LPTimey</p>
         </hgroup>
+        <input type="text" list="pokedex-list">
     </header>
     <main>
         <aside>
@@ -41,7 +42,7 @@
                         ABCDEFGHIKLMNOPQRSTUVWXYZ
                     </li>
                     <li class="box">
-                        <form><button type="button">+</button></form>
+                        <form id="player1add"><button type="button">+</button></form>
                     </li>
                 </ul>
             </section>
@@ -54,7 +55,7 @@
                         HAHAHAHAHAHAHAH
                     </li>
                     <li class="box">
-                        <form><button type="button">+</button></form>
+                        <form id="player2add"><button type="button">+</button></form>
                     </li>
                 </ul>
             </section>
@@ -78,7 +79,8 @@
             </form>
         </aside>
     </main>
-    <footer></footer>
+    <footer>
+    </footer>
 </body>
 
 </html>

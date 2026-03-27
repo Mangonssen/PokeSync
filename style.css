@@ -1,6 +1,6 @@
 @font-face{
-    font-family: "BW";
-    src: url("./pokemon-b-w.otf");
+    font-family: "BaW";
+    src: url("./kvn-pokemon-gen-5.otf");
 }
 
 @layer reset {
@@ -160,7 +160,7 @@
     /* TODO: accent color */
     --accent-color: red;
     accent-color: var(--accent-color);
-    font-family: BW;
+    font-family: 'BaW';
 }
 
 body{
