@@ -96,10 +96,11 @@
 }
 
 @layer layout {
-    ::selection{
+    ::selection {
         background-color: var(--accent-color);
         color: black;
     }
+
     [contenteditable] {
         position: relative;
 
@@ -135,7 +136,7 @@
 @layer components {
     [class|="box"] {
         /* Need to be Given */
-        --_box-color: var(--color, blue);
+        --_box-color: var(--color, var(--accent-color, blue));
         --border-width: 2px;
         --box-cut: min(45%, 1rem);
 
@@ -219,7 +220,8 @@ header,
 footer {
     flex-grow: 1;
 }
-#logo img{
+
+#logo img {
     height: 5rem;
 }
 
@@ -254,16 +256,19 @@ main {
 
 aside fieldset {
     display: grid;
-    ul{
+
+    ul {
         display: grid;
         gap: 0.5rem;
         align-items: center;
         justify-items: center;
     }
+
     img {
         height: 2.5rem;
         width: auto;
     }
+
     legend {
         font-size: 1.5rem;
     }
