@@ -1,5 +1,5 @@
 "use strict"
-import { getPokedexEntries, getSpriteURL } from "./datatypes.mjs"
+import { getPokedexEntries, getSpriteURL, exportState } from "./datatypes.mjs"
 
 async function main() {
     /** @type {HTMLUListElement} */
@@ -7,10 +7,16 @@ async function main() {
     /** @type {HTMLFormElement} */
     const Player1Add = document.getElementById("player1add");
 
+    Player1Add.addEventListener("submit",(e)=>{e.preventDefault();console.log("clicked")})
+
     /** @type {HTMLUListElement} */
     const Player2List = document.getElementById("player2pokemon");
     /** @type {HTMLFormElement} */
     const Player2Add = document.getElementById("player2add");
+
+    /** @type {HTMLButtonElement} */
+    const exportButton = document.querySelector('button[aria-label="export"]');
+    exportButton.addEventListener("click",exportState)
 
     const pokedex = await getPokedexEntries();
 

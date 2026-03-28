@@ -4,201 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéSync</title>
-
-    <link rel="stylesheet" href="pokesync.css">
+    <title>PokeSync</title>
+    <script type="module" src="index.mjs"></script>
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="icon.ico" type="image/x-icon">
 </head>
 
 <body>
     <header>
-        <div class="logo-wrapper">
-            <img src="./svg/pokesync-logo.png" alt="PokéSync Logo" class="logo">
-            <p class="version">v1.0 by Magno</p>
-        </div>
+        <hgroup>
+            <picture id="logo"><img src="pokesync-logo.png" alt=""></picture>
+            <h1 class="sr-only">PokeSync</h1>
+            <p>v1.0 by Mangonssen & LPTimey</p>
+        </hgroup>
+        <input type="text" list="pokedex-list">
     </header>
-
-    <main class="main-container">
-
-        <div class="control-container">
-            <div class="controls">
-                <fieldset>
+    <main>
+        <aside>
+            <form>
+                <fieldset class="box-gray">
                     <legend>Controls</legend>
-                    <button type="button" class="hover-primary control-button" id="saveButton">
-                        <img src="./controls/save.png" alt="SAVE" class="control-icon">
-                    </button>
-                    <button type="button" class="hover-primary control-button" id="loadButton">
-                        <img src="./controls/load.png" alt="LOAD" class="control-icon">
-                    </button>
-                    <button type="button" class="hover-primary control-button" id="resetButton">
-                        <img src="./controls/reset.png" alt="RESET" class="control-icon">
-                    </button>
-                    <button type="button" class="hover-primary control-button" id="settingsButton">
-                        <img src="./controls/settings.png" alt="SETTINGS" class="control-icon">
-                    </button>
+                    <ul>
+                        <li><button aria-label="save"><img src="icons/controls/save.png" alt="save-icon"
+                                    width="80" height="80">save</button></li>
+                        <li><button aria-label="export"><img src="" alt="export-icon"
+                                    width="80" height="80">export</button></li>
+                        <li><button aria-label="open"><img src="icons/controls/load.png" alt="open-icon"
+                                    width="80" height="80">open</button></li>
+                        <li><button aria-label="reset"><img src="icons/controls/reset.png" alt="reset-icon"
+                                    width="80" height="80">reset</button></li>
+                        <li><button aria-label="settings"><img src="icons/controls/settings.png"
+                                    alt="settings-icon" width="80" height="80">settings</button></li>
+                    </ul>
                 </fieldset>
-            </div>
-        </div>
-
-        <div class="sync-list-container">
-
-            <div class="index-container">
-
-                <p class="index-heading">#</p>
-                <ul id="index-list" class="list index-list">
-                    <li id="index-item-1" class="index-item item">
-                        <p>1</p>
+            </form>
+        </aside>
+        <div id="players">
+            <section>
+                <h2 contenteditable="">
+                    Player 1
+                </h2>
+                <ul id="player1pokemon">
+                    <li class="box" style="--color: red">
+                        ABCDEFGHIKLMNOPQRSTUVWXYZ
                     </li>
-                    <li id="index-item-2" class="index-item item">
-                        <p>2</p>
-                    </li>
-                    <li id="index-item-3" class="index-item item">
-                        <p>3</p>
-                    </li>
-                    <li id="index-item-4" class="index-item item">
-                        <p>4</p>
-                    </li>
-                    <li id="index-item-5" class="index-item item">
-                        <p>5</p>
-                    </li>
-                    <li id="index-item-6" class="index-item item">
-                        <p>6</p>
+                    <li class="box">
+                        <form id="player1add"><button>+ Add new Pokémon</button></form>
                     </li>
                 </ul>
-            </div>
-
-            <div class="sync-container">
-
-                <div class="sync">
-                    <div class="player">
-                        <div class="player-sprite-container">
-                            <img class="player-sprite" id="player-sprite-A" src="https://placehold.co/1x32">
-                        </div>
-                        <h1 id="heading-player-A" class="sync-heading">PLAYER A</h1>
-                    </div>
-                    <ul id="sync-list-A" class="list">
-                        <li id="sync-item-A-1" class="item empty">
-                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
-                            <p></p>
+            </section>
+            <section>
+                <h2 contenteditable="">
+                    Player 2
+                </h2>
+                <ul id="player2pokemon">
+                    <li class="box" style="--color: red">
+                        HAHAHAHAHAHAHAH
+                    </li>
+                    <li class="box">
+                        <form id="player2add"><button>+ Add new Pokémon</button></form>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <aside>
+            <form>
+                <fieldset class="box-gray">
+                    <legend>Jokers</legend>
+                    <ul>
+                        <li>
+                            <button>
+                                <img src="icons/jokers/joker-reroll.png" alt="reroll-icon" width="80" height="80">
+                                <p>reroll</p>
+                            </button>
                         </li>
-                        <li id="sync-item-A-2" class="item empty">
-                            <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
-                            <p></p>
+                        <li>
+                            <button>
+                                <img src="icons/jokers/joker-sacrifice.png" alt="sacrifice-icon" width="80" height="80">
+                                <p>sacrifice</p>
+                            </button>
                         </li>
-                        <li id="sync-item-A-3" class="item empty">
-                            <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-4" class="item empty">
-                            <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-5" class="item empty">
-                            <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-A-6" class="item empty">
-                            <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
-                            <p></p>
+                        <li>
+                            <button>
+                                <img src="icons/jokers/joker-revive.png" alt="revive-icon" width="80" height="80">
+                                <p>revive</p>
+                            </button>
                         </li>
                     </ul>
-                </div>
-                <div class="sync">
-                    <div class="player">
-                        <div class="player-sprite-container">
-                            <img class="player-sprite" id="player-sprite-B" src="https://placehold.co/1x32">
-                        </div>
-                        <h1 id="heading-player-B" class="sync-heading">PLAYER B</h1>
-                    </div>
-                    <ul id="sync-list-B" class="list">
-                        <li id="sync-item-B-1" class="item empty">
-                            <img src="question-mark.png" alt="Item 1" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-2" class="item empty">
-                            <img src="question-mark.png" alt="Item 2" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-3" class="item empty">
-                            <img src="question-mark.png" alt="Item 3" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-4" class="item empty">
-                            <img src="question-mark.png" alt="Item 4" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-5" class="item empty">
-                            <img src="question-mark.png" alt="Item 5" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                        <li id="sync-item-B-6" class="item empty">
-                            <img src="question-mark.png" alt="Item 6" class="pokemon-sprite">
-                            <p></p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="joker-container">
-
-            <fieldset>
-                <legend>Jokers</legend>
-                <div class="joker" id="joker-reroll">
-                    <img src="../jokers/joker-reroll.png" alt="Joker: Reroll" class="joker-img">
-                    <p class="joker-description">Reroll</p>
-                </div>
-                <div class="joker" id="joker-sacrifice">
-                    <img src="../jokers/joker-sacrifice.png" alt="Joker: Sacrifice" class="joker-img">
-                    <p class="joker-description">Sacrifice</p>
-                </div>
-                <div class="joker" id="joker-revive">
-                    <img src="../jokers/joker-revive.png" alt="Joker: Revive" class="joker-img">
-                    <p class="joker-description">Revive</p>
-                </div>
-            </fieldset>
-
-
-
-
-            <div class="popup-window" id="settings-window">
-                <div class="popup-head">
-                    <h1>Settings</h1>
-                    <button type="button" class="hover-primary" id="settings-close-button">
-                        <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
-                    </button>
-                </div>
-                <div class="popup-body">
-                    <form id="settings-form">
-                        <div class="settings-body-inputs">
-                            <input type="text" id="player-name-A" placeholder="Player A's Name">
-                            <input type="text" id="player-name-B" placeholder="Player B's Name">
-                        </div>
-                        <button type="submit" class="hover-white" id="settings-save-button">Save</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="popup-window" id="reset-window">
-                <div class="popup-head">
-                    <h1>Reset?</h1>
-                    <button type="button" class="hover-primary" id="reset-close-button">
-                        <img src="../svg/X.svg" alt="Close Settings" class="svg-icon">
-                    </button>
-                </div>
-                <div class="popup-body">
-                    <p>Are you sure you want to reset the syncs?</p>
-                </div>
-                <form id="reset-form">
-                    <button type="submit" class="hover-white" id="reset-confirm">Confirm</button>
-                    <button type="button" class="ghost" id="reset-cancel">Cancel</button>
-                </form>
-            </div>
-        </div>
-
-        <script type="module" src="player-heading.js"></script>
-        <script type="module" src="jokers.js"></script>
-        <script type="module" src="pokesync.js"></script>
+                </fieldset>
+            </form>
+        </aside>
+    </main>
+    <footer>
+    </footer>
 </body>
 
 </html>

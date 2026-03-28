@@ -1,9 +1,10 @@
-@font-face{
+@font-face {
     font-family: "BaW";
-    src: url("./kvn-pokemon-gen-5.otf");
+    src: url("./pokemon-b-w.otf");
 }
 
 @layer reset {
+
     /* see https://www.joshwcomeau.com/css/custom-css-reset/ */
     /* 1. Use a more-intuitive box-sizing model */
     *,
@@ -83,16 +84,44 @@
         isolation: isolate;
     }
 
-    button{
+    button {
         border: none;
         background-color: transparent;
+        cursor: pointer;
     }
-    ul{
+
+    ul {
         list-style: none;
     }
 }
 
 @layer layout {
+    ::selection{
+        background-color: var(--accent-color);
+        color: black;
+    }
+    [contenteditable] {
+        position: relative;
+
+        &::before {
+            position: relative;
+            display: inline-block;
+            content: url("icons/temp/edit_24dp_E3E3E3_FILL0_wght300_GRAD200_opsz24.svg");
+            bottom: -0.2em;
+            padding-left: 0.5ch;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0.05rem;
+            background-color: rgb(from currentColor r g b / 0.5);
+        }
+    }
+
     .grid {
         display: grid;
     }
@@ -104,14 +133,14 @@
 }
 
 @layer components {
-    [class|="box"]{
+    [class|="box"] {
         /* Need to be Given */
         --_box-color: var(--color, blue);
         --border-width: 2px;
         --box-cut: min(45%, 1rem);
 
         /* Calculated */
-        --box-bg-accent: oklch(from var(--_box-color) 33% 0.18794 h / 0.2);
+        --box-bg-accent: oklch(from var(--_box-color) 45% 0.18794 h / 0.2);
         --box-bg-color: oklch(from var(--_box-color) 65% 0.3133 h / 0.2);
         --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
         --box-cut-height: calc(var(--box-cut) / sqrt(2));
@@ -122,17 +151,15 @@
                 calc(100% - var(--box-cut)) 100%,
                 var(--box-cut) 100%,
                 0 calc(100% - var(--box-cut)),
-                0 var(--box-cut))
-            ;
+                0 var(--box-cut));
 
         /* Styling */
         background:
-                linear-gradient(45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-                linear-gradient(-45deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-                linear-gradient(135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-                linear-gradient(-135deg,var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-                linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%)
-            ;
+            linear-gradient(45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
         background-clip: border-box;
         clip-path: var(--clip-path);
         border-width: var(--border-width);
@@ -144,28 +171,41 @@
         gap: 1rem;
         padding: .5rem 2rem;
     }
-    .box-gray{
+
+    .box-gray {
         --_box-color: gray;
-        --box-bg-accent: oklch(from var(--_box-color) 33% c h / 0.2);
+        --box-bg-accent: oklch(from var(--_box-color) 45% c h / 0.2);
         --box-bg-color: oklch(from var(--_box-color) 65% c h / 0.2);
         --border-color: oklch(from var(--_box-color) 65% c h / 1);
     }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
 }
 
-:root{
+:root {
     color-scheme: dark;
     /* TODO: Hauptfarbe besser machen */
     --main-color: oklch(12.292% 0.01077 271.399);
-    --box-bg-color: oklch(from var(--main-color) 12% 0.011 h);
-    /* TODO: accent color */
-    --accent-color: red;
+    --bg-color: oklch(from var(--main-color) 12% 0.011 h);
+    --accent-color: #95e1f6;
+    /* --accent-color: red; */
     accent-color: var(--accent-color);
     font-family: 'BaW';
 }
 
-body{
-    background-color: var(--box-bg-color);
-    background-image: url("./svg/background-grid.svg");
+body {
+    background-color: var(--bg-color);
+    background-image: url("./background-grid.svg"), linear-gradient(transparent 50%, oklch(from var(--accent-color) 60% 0.05 h));
     background-repeat: repeat;
     background-blend-mode: soft-light;
     display: grid;
@@ -174,30 +214,57 @@ body{
     gap: 1rem;
     padding: 1rem;
 }
-header,footer{
+
+header,
+footer {
     flex-grow: 1;
 }
-main{
+#logo img{
+    height: 5rem;
+}
+
+main {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-inline: auto;
     gap: 3rem;
 }
-#players{
+
+#players {
     display: flex;
     gap: 0.75rem;
+
+    h2 {
+        margin-bottom: 1rem;
+    }
 }
-#player2pokemon{
-    margin-top: 1rem;
+
+#player2pokemon {
+    margin-top: 2rem;
 }
+
 #player1pokemon,
-#player2pokemon{
+#player2pokemon {
     display: grid;
     grid-auto-rows: 5rem;
     grid-template-columns: minmax(13rem, 1fr);
     gap: 0.75rem;
 }
-aside fieldset legend{
-    font-size: 1.5rem;
+
+aside fieldset {
+    display: grid;
+    ul{
+        display: grid;
+        gap: 0.5rem;
+        align-items: center;
+        justify-items: center;
+    }
+    img {
+        height: 2.5rem;
+        width: auto;
+    }
+    legend {
+        font-size: 1.5rem;
+    }
 }

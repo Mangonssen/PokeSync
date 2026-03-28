@@ -3,7 +3,8 @@
 export const LOCAL_STORAGE_KEYS = Object.freeze({
     pokeAPI: "pokeAPI",
     pokedex: "pokedex",
-    sprites: "poke-sprites"
+    sprites: "poke-sprites",
+    state: "game-state",
 });
 
 /**
@@ -190,4 +191,40 @@ function initState(init) {
     }
 }
 
-export const state = initState()
+/**
+ * 
+ * @returns {State}
+ */
+export function loadState(){
+    return localStorage.getItem(LOCAL_STORAGE_KEYS.state) || initState();
+}
+
+export function saveState(){
+    localStorage.setItem(LOCAL_STORAGE_KEYS.state,state);
+}
+
+export function clearState(){
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.state);
+}
+
+/**
+ * 
+ * @param {boolean} [andSave=false] - false by default
+ */
+export function exportState(andSave=false){
+    if (andSave){saveState()}
+    downloadObjectAsJson(state,`GameState_${new Date().toLocaleDateString()}`)
+}
+
+/// UTIL
+function downloadObjectAsJson(exportObj, exportName) {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+export const state = loadState();
