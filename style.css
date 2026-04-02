@@ -276,10 +276,15 @@ aside fieldset {
     }
 
     button {
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         align-items: center;
-        gap: 0.25rem;
+        gap: 0.25rem .5rem;
+    }
+
+    button p {
+        font-size: 1.25rem;
+        text-align: left;
     }
 
     legend {
