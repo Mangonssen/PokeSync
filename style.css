@@ -107,9 +107,9 @@
         &::before {
             position: relative;
             display: inline-block;
-            content: url("icons/temp/edit_24dp_E3E3E3_FILL0_wght300_GRAD200_opsz24.svg");
+            content: url("assets/img/other/edit-text.svg");
             bottom: -0.2em;
-            padding-left: 0.5ch;
+            padding: 0 0.5ch 0 0.5ch;
         }
 
         &::after {
@@ -269,10 +269,6 @@ aside fieldset {
 
         height: 4rem;
         width: auto;
-
-        &:hover {
-            animation: wiggle 1s ease-in-out infinite;
-        }
     }
 
     button {
@@ -280,6 +276,23 @@ aside fieldset {
         grid-template-columns: 1fr 1fr;
         align-items: center;
         gap: 0.25rem .5rem;
+
+        &:hover {
+
+            img {
+                animation: wiggle .4s ease-in-out infinite;
+            }
+        }
+
+        &.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(50%) brightness(50%);
+
+            img {
+                animation: none;
+            }
+        }
     }
 
     button p {
@@ -293,11 +306,23 @@ aside fieldset {
 }
 
 @keyframes wiggle {
-            25% {
-                transform: rotate(3deg);
-            }
+    0% {
+        transform: rotate(0deg);
+    }
 
-            75% {
-                transform: rotate(-3deg);
-            }
-        }
+    25% {
+        transform: rotate(2deg);
+    }
+
+    50% {
+        transform: rotate(0eg);
+    }
+
+    75% {
+        transform: rotate(-2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
