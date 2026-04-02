@@ -3,6 +3,8 @@
 ## Code
 
 * declutter datatypes and extract to clearer units
+* use Signals in the separate Fields
+* use Wrappers for get and set instead of \[0\]() and \[1\](val)
 
 ## Font
 

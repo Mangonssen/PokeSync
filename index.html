@@ -27,22 +27,22 @@
                     <legend>Controls</legend>
                     <ul>
                         <li><button type="button" aria-label="save"><img src="assets/img/controls/save-x10.png" alt="save-icon"
-                                    width="320" height="320"><p>save</p></button></li>
+                                    width="320" height="320">save</button></li>
                         <li><button type="button" aria-label="export"><img src="assets/img/controls/export-x10.png" alt="export-icon"
-                                    width="320" height="320"><p>export</p></button></li>
+                                    width="320" height="320">export</button></li>
                         <li><button type="button" aria-label="open"><img src="assets/img/controls/open-x10.png" alt="open-icon"
-                                    width="320" height="320"><p>open</p></button></li>
+                                    width="320" height="320">open</button></li>
                         <li><button type="button" aria-label="reset"><img src="assets/img/controls/reset-x10.png" alt="reset-icon"
-                                    width="320" height="320"><p>reset</p></button></li>
+                                    width="320" height="320">reset</button></li>
                         <li><button type="button" aria-label="settings" commandFor="settings" command="show-modal"><img src="assets/img/controls/settings-x10.png" alt="settings-icon"
-                                    width="320" height="320"><p>settings</p></button></li>
+                                    width="320" height="320">settings</button></li>
                     </ul>
                 </fieldset>
             </form>
         </aside>
         <div id="players">
             <section>
-                <h2 contenteditable="">Player 1</h2>
+                <h2 contenteditable="" id="player1name">Player 1</h2>
                 <ul id="player1pokemon">
                     <li class="box" style="--color: red">
                         ABCDEFGHIKLMNOPQRSTUVWXYZ
@@ -53,7 +53,7 @@
                 </ul>
             </section>
             <section>
-                <h2 contenteditable="">Player 2</h2>
+                <h2 contenteditable="" id="player2name">Player 2</h2>
                 <ul id="player2pokemon">
                     <li class="box" style="--color: red">
                         HAHAHAHAHAHAHAH
@@ -70,21 +70,21 @@
                     <legend>Jokers</legend>
                     <ul>
                         <li>
-                            <button type="button">
+                            <button type="button" id="joker-reroll">
                                 <img src="assets/img/jokers/joker-reroll-x10.png" alt="reroll-icon" width="280" height="280">
-                                <p>reroll</p>
+                                reroll
                             </button>
                         </li>
                         <li>
-                            <button type="button" disabled>
+                            <button type="button" id="joker-sacrifice" disabled>
                                 <img src="assets/img/jokers/joker-sacrifice-x10.png" alt="sacrifice-icon" width="280" height="280">
-                                <p>sacrifice</p>
+                                sacrifice
                             </button>
                         </li>
                         <li>
-                            <button type="button">
+                            <button type="button" id="joker-revive">
                                 <img src="assets/img/jokers/joker-revive-x10.png" alt="revive-icon" width="280" height="280">
-                                <p>revive</p>
+                                revive
                             </button>
                         </li>
                     </ul>

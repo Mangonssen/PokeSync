@@ -1,5 +1,7 @@
 "use strict";
 
+import { useSignal } from "./signal.mjs";
+
 export const LOCAL_STORAGE_KEYS = Object.freeze({
     pokeAPI: "pokeAPI",
     pokedex: "pokedex",
@@ -70,7 +72,7 @@ export async function getPokedexEntries() {
         localStorage.setItem(LOCAL_STORAGE_KEYS.pokedex, JSON.stringify(pokedex));
         return pokedex
     }
-    catch(error) {
+    catch (error) {
         console.error(error);
 
         try {
@@ -176,34 +178,45 @@ export async function getSpriteURL(kind) {
 /**
  * 
  * @param {Partial<State>} [init] 
- * @returns {State}
+ * @returns {Signal<State>}
  */
 function initState(init) {
-    return {
-        player1: "Player1",
-        player2: "Player2",
-        syncsIsAlive: [],
-        rerollUsed: false,
-        sacrificeUsed: false,
-        reviveUsed: false,
-        runAlive: true,
-        ...init
-    }
+    return useSignal(/** @type {State} */(
+        {
+            player1: { name: "Player1", kind: "male" },
+            player2: { name: "Player2", kind: "female" },
+            syncsIsAlive: [],
+            rerollUsed: false,
+            sacrificeUsed: false,
+            reviveUsed: false,
+            runAlive: true,
+            ...init
+        }
+    ))
 }
 
 /**
  * 
- * @returns {State}
+ * @returns {Signal<State>}
  */
-export function loadState(){
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.state) || initState();
+export function loadState() {
+    let loaded = localStorage.getItem(LOCAL_STORAGE_KEYS.state);
+    if (loaded){
+        console.log("state from Local")
+        return useSignal(JSON.parse(loaded));
+    }
+    return initState();
 }
 
-export function saveState(){
-    localStorage.setItem(LOCAL_STORAGE_KEYS.state,state);
+export function importState(json){
+    state[1](json)
 }
 
-export function clearState(){
+export function saveState() {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.state, JSON.stringify(state[0]()));
+}
+
+export function clearState() {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.state);
 }
 
@@ -211,14 +224,14 @@ export function clearState(){
  * 
  * @param {boolean} [andSave=false] - false by default
  */
-export function exportState(andSave=false){
-    if (andSave){saveState()}
-    downloadObjectAsJson(state,`GameState_${new Date().toLocaleDateString()}`)
+export function exportState(andSave = false) {
+    if (andSave) { saveState() }
+    downloadObjectAsJson(state[0](), `GameState_${new Date().toLocaleDateString()}`)
 }
 
 /// UTIL
 function downloadObjectAsJson(exportObj, exportName) {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var dataStr = "data:text/json;charset=utf-8," + JSON.stringify(exportObj);
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", exportName + ".json");
@@ -227,4 +240,6 @@ function downloadObjectAsJson(exportObj, exportName) {
     downloadAnchorNode.remove();
 }
 
-export const state = loadState();
+export let state = loadState();
+window.getState = state[0];
+window.setState = state[1];
