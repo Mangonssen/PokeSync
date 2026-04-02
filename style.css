@@ -284,12 +284,12 @@ aside fieldset {
             }
         }
 
-        &.disabled {
-            opacity: 0.4;
+        &[disabled] {
             cursor: not-allowed;
-            filter: grayscale(50%) brightness(50%);
 
             img {
+                opacity: 0.4;
+                filter: grayscale(75%);
                 animation: none;
             }
         }
@@ -306,7 +306,7 @@ aside fieldset {
 }
 
 @keyframes wiggle {
-    0% {
+    0%, 50%, 100% {
         transform: rotate(0deg);
     }
 
@@ -314,15 +314,7 @@ aside fieldset {
         transform: rotate(2deg);
     }
 
-    50% {
-        transform: rotate(0eg);
-    }
-
     75% {
         transform: rotate(-2deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
     }
 }
