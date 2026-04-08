@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "BaW";
-    src: url("./pokemon-b-w.otf");
+    font-family: "pokesync";
+    src: url("./assets/font/pokesync.ttf") format("truetype");
 }
 
 @layer reset {
@@ -202,7 +202,7 @@
 
     /* --accent-color: red; */
     accent-color: var(--accent-color);
-    font-family: 'BaW';
+    font-family: 'pokesync';
 }
 
 body {
