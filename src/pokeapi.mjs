@@ -1,20 +1,8 @@
 "use strict";
 
-import { useSignal } from "./signal.mjs";
+import { LOCAL_STORAGE_KEYS } from "./datatypes.mjs";
+/** @import { PokedexEntry, Pokemon } from "./datatypes.mjs" */
 
-export const LOCAL_STORAGE_KEYS = Object.freeze({
-    pokeAPI: "pokeAPI",
-    pokedex: "pokedex",
-    sprites: "poke-sprites",
-    state: "game-state",
-});
-
-/**
- * @typedef {Object} PokedexEntry
- * @property {string} name
- * @property {[string, (string|undefined)]} type - Tuple: primary type and optional secondary type
- * @property {number} number
- */
 
 async function getPokeAPI() {
     // https://pokeapi.co/
@@ -47,7 +35,7 @@ async function getPokeAPI() {
     console.log(json);
     let ps = json.data.pokemon;
 
-    let pokemon = ps.map((p) =>
+    let pokemon = ps.map((/** @type {{ name: any; id: any; pokemontypes: { type: { name: any; }; }[]; }} */ p) =>
     ({
         name: p.name,
         number: p.id,
@@ -61,7 +49,7 @@ async function getPokeAPI() {
 }
 
 /**
- * @returns {PokedexEntry[]}
+ * @returns {Promise<PokedexEntry[]>}
  */
 export async function getPokedexEntries() {
     let cached = localStorage.getItem(LOCAL_STORAGE_KEYS.pokedex);
@@ -78,7 +66,7 @@ export async function getPokedexEntries() {
         try {
             let _pokedexEntrys = await fetch("./pokedex.json").then((resp) => resp.json());
 
-            _pokedexEntrys.map(element => {
+            _pokedexEntrys.map((/** @type {{ number: any; }} */ element) => {
                 return { ...element, number: Number(element.number) };
             });
             localStorage.setItem(LOCAL_STORAGE_KEYS.pokedex, JSON.stringify(_pokedexEntrys));
@@ -91,11 +79,6 @@ export async function getPokedexEntries() {
 }
 
 /**
- * @typedef {Object} Pokemon
- * @property {number} kind
- * @property {string} [nickname]
- */
-/**
  * 
  * @param {Pokemon} pokemon 
  * @returns {Promise<undefined|PokedexEntry>}
@@ -105,6 +88,11 @@ export async function getPokemonKind(pokemon) {
     return pokedex[pokemon.kind]
 }
 
+/**
+ * 
+ * @param {*} kind 
+ * @returns 
+ */
 export async function getSpriteURL(kind) {
     const gen5SpriteURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${kind}.gif`
     const defaultSpriteURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${kind}.png`
@@ -120,7 +108,11 @@ export async function getSpriteURL(kind) {
         return cache[kind];
     }
 
-    // Helper: prüft ob Bild existiert
+    /**
+     * Helper: prüft ob Bild existiert
+     * @param {string} url 
+     * @returns 
+     */
     async function imageExists(url) {
         try {
             const res = await fetch(url, { method: "HEAD" });
@@ -148,98 +140,3 @@ export async function getSpriteURL(kind) {
 
     return finalURL;
 }
-
-
-/**
- * @typedef {"male"|"female"} Gender
- */
-
-/**
- * @typedef {Object} Player
- * @property {Gender} kind
- * @property {string} name
- */
-
-/**
- * @typedef {[Pokemon, Pokemon, boolean]} SyncTuple
- */
-
-/**
- * @typedef {Object} State
- * @property {Player} player1
- * @property {Player} player2
- * @property {SyncTuple[]} syncsIsAlive
- * @property {boolean} rerollUsed
- * @property {boolean} sacrificeUsed
- * @property {boolean} reviveUsed
- * @property {boolean} runAlive
- */
-
-/**
- * 
- * @param {Partial<State>} [init] 
- * @returns {Signal<State>}
- */
-function initState(init) {
-    return useSignal(/** @type {State} */(
-        {
-            player1: { name: "Player1", kind: "male" },
-            player2: { name: "Player2", kind: "female" },
-            syncsIsAlive: [],
-            rerollUsed: false,
-            sacrificeUsed: false,
-            reviveUsed: false,
-            runAlive: true,
-            ...init
-        }
-    ))
-}
-
-/**
- * 
- * @returns {Signal<State>}
- */
-export function loadState() {
-    let loaded = localStorage.getItem(LOCAL_STORAGE_KEYS.state);
-    if (loaded){
-        console.log("state from Local")
-        return useSignal(JSON.parse(loaded));
-    }
-    return initState();
-}
-
-export function importState(json){
-    state[1](json)
-}
-
-export function saveState() {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.state, JSON.stringify(state[0]()));
-}
-
-export function clearState() {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.state);
-}
-
-/**
- * 
- * @param {boolean} [andSave=false] - false by default
- */
-export function exportState(andSave = false) {
-    if (andSave) { saveState() }
-    downloadObjectAsJson(state[0](), `GameState_${new Date().toLocaleDateString()}`)
-}
-
-/// UTIL
-function downloadObjectAsJson(exportObj, exportName) {
-    var dataStr = "data:text/json;charset=utf-8," + JSON.stringify(exportObj);
-    var downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
-    document.body.appendChild(downloadAnchorNode); // required for firefox
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-}
-
-export let state = loadState();
-window.getState = state[0];
-window.setState = state[1];

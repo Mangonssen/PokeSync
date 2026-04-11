@@ -1,4 +1,10 @@
-// Code written by Tim; Docs By Claude Haiku 4.5 through duck.ai
+/**
+ * @typedef {((...args: any[]) => void) & { cleanup?: () => void }} Dependency
+ */
+
+/**
+ * @type {Dependency | null}
+ */
 let currentDependent = null;
 
 /**
@@ -31,7 +37,7 @@ let currentDependent = null;
  */
 export function useSignal(init) {
     let state = init;
-    /** @type {Set<Function>} */
+    /** @type {Set<Dependency>} */
     let deps = new Set();
 
     return [
@@ -46,6 +52,9 @@ export function useSignal(init) {
             state = val;
             deps.forEach(dep => {
                 try {
+                    if (dep.cleanup) {
+                        dep.cleanup();
+                    }
                     dep();
                 } catch (error) {
                     console.error('Error in dependent effect:', error);
@@ -65,7 +74,7 @@ export function useSignal(init) {
  * @param {(...values: any[]) => void | (() => void)} fn - Effect function that receives
  *   the current values of each dependency as separate parameters. May optionally return 
  *   a cleanup function that runs before the effect re-executes.
- * @param {Array<Signal<any>>} depArray - Array of signals (Signal tuples) to watch.
+ * @param {Array<Signal<any>|Signal<any>[0]>} depArray - Array of signals (Signal tuples) or getters to watch.
  *   The getter function of each signal will be called and its value passed to fn.
  * 
  * @returns {void}
@@ -88,9 +97,10 @@ export function useSignal(init) {
  */
 export function useEffect(fn, depArray = []) {
     currentDependent = () => {
-        const values = depArray.map((dep) => dep[0]());
+        const values = depArray.map((dep) => typeof dep == "function" ? dep() : dep[0]());
         const cleanup = fn(...values);
         if (typeof cleanup === 'function') {
+            // @ts-ignore
             currentDependent.cleanup = cleanup;
         }
     };
