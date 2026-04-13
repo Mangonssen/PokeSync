@@ -1,6 +1,6 @@
 @font-face {
     font-family: "pokesync";
-    src: url("./assets/font/pokesync.ttf") format("truetype");
+    src: url("./assets/font/custom/pokesync.ttf") format("truetype");
 }
 
 @layer reset {
@@ -107,7 +107,7 @@
         &::before {
             position: relative;
             display: inline-block;
-            content: url("assets/img/other/edit-text.svg");
+            content: url("assets/img/icons/other/edit-text.svg");
             bottom: -0.2em;
             padding: 0 0.5ch 0 0.5ch;
         }
@@ -207,7 +207,7 @@
 
 body {
     background-color: var(--bg-color);
-    background-image: url("./background-grid.svg"), linear-gradient(transparent 50%, oklch(from var(--accent-color) 60% 0.05 h));
+    background-image: url("./assets/background-grid.svg"), linear-gradient(transparent 50%, oklch(from var(--accent-color) 60% 0.05 h));
     background-repeat: repeat;
     background-blend-mode: soft-light;
     display: grid;
