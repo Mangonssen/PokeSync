@@ -48,8 +48,13 @@ SacrificeButton.addEventListener("click", () => {
 });
 /** @type {HTMLButtonElement} */
 const ReviveButton = /***/(document.getElementById("joker-revive"));
+const ReviveGIF = /***/(ReviveButton.querySelector("img"));
 ReviveButton.addEventListener("click", () => {
-    setState({ ...getState(), reviveUsed: true });
+
+    if (ReviveGIF) {
+        ReviveGIF.src = "assets/img/icons/jokers/gif/joker-revive.gif";
+    }
+    setTimeout(() => { setState({ ...getState(), reviveUsed: true }); if(ReviveGIF) { ReviveGIF.src = "assets/img/icons/jokers/joker-revive-x10.png"; } }, 650);
 });
 // Render State
 useEffect(
@@ -79,7 +84,7 @@ openButton.addEventListener("click", () => {
     let input = document.createElement('input');
     input.type = 'file';
     input.onchange = _ => {
-        let files = Array.from(input.files??[]);
+        let files = Array.from(input.files ?? []);
         // console.log(files);
         files.shift()?.text().then(JSON.parse).then(importState)
     };
