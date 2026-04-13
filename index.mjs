@@ -7,8 +7,6 @@ import { clearState, exportState, getState, importState, saveState, setState } f
 
 /** @type {HTMLUListElement} */
 const Player1List = /***/(document.getElementById("player1pokemon"));
-/** @type {HTMLFormElement} */
-const Player1Add = /***/(document.getElementById("player1add"));
 /** @type {HTMLHeadingElement} */
 const Player1Name = /***/(document.getElementById("player1name"));
 Player1Name.addEventListener("keydown", (event) => {
@@ -22,12 +20,8 @@ Player1Name.addEventListener("keydown", (event) => {
     }
 })
 
-Player1Add.addEventListener("submit", (e) => { e.preventDefault(); console.log("clicked") })
-
 /** @type {HTMLUListElement} */
 const Player2List = /***/(document.getElementById("player2pokemon"));
-/** @type {HTMLFormElement} */
-const Player2Add = /***/(document.getElementById("player2add"));
 /** @type {HTMLHeadingElement} */
 const Player2Name = /***/(document.getElementById("player2name"));
 Player2Name.addEventListener("keydown", (event) => {
