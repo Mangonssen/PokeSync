@@ -233,7 +233,7 @@ export class Derived {
  * count.value = 1;
  * // Effect runs:0
  * // cleanup before next run
- * // Effect runs:0
+ * // Effect runs:1
  */
 export class Effect {
   /**
@@ -272,7 +272,7 @@ export class Effect {
    * count.value = 1;
    * // Effect runs:0
    * // cleanup before next run
-   * // Effect runs:0
+   * // Effect runs:1
    */
   constructor(func, andRun = true) {
     this._func = func;
