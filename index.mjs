@@ -1,8 +1,8 @@
 "use strict"
 
 import { getPokedexEntries, getSpriteURL } from "./src/pokeapi.mjs";
-import { useEffect } from "./src/signal.mjs";
-import { clearState, exportState, getState, importState, saveState, setState } from "./src/state.mjs";
+import { Effect } from "./src/signal.mjs";
+import { clearState, exportState, state, importState, saveState } from "./src/state.mjs";
 /** @import {State} from "./src/datatypes.mjs" */
 
 /** @type {HTMLUListElement} */
@@ -12,11 +12,8 @@ const Player1Name = /***/(document.getElementById("player1name"));
 Player1Name.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         event.preventDefault()
-        let old = getState();
         console.log("nameChange")
-        old.player1.name = Player1Name.innerText;
-        console.log(old)
-        setState(old)
+        state.player1.value.name = Player1Name.innerText;
     }
 })
 
@@ -27,11 +24,9 @@ const Player2Name = /***/(document.getElementById("player2name"));
 Player2Name.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         event.preventDefault()
-        let old = getState();
         console.log("nameChange")
-        old.player2.name = Player2Name.innerText;
-        console.log(old)
-        setState(old)
+        // TODO: check if this triggers effects
+        state.player2.value.name = Player2Name.innerText;
     }
 })
 
@@ -39,12 +34,12 @@ Player2Name.addEventListener("keydown", (event) => {
 /** @type {HTMLButtonElement} */
 const RerollButton = /***/(document.getElementById("joker-reroll"));
 RerollButton.addEventListener("click", () => {
-    setState({ ...getState(), rerollUsed: true });
+    state.rerollUsed.value = true;
 });
 /** @type {HTMLButtonElement} */
 const SacrificeButton = /***/(document.getElementById("joker-sacrifice"));
 SacrificeButton.addEventListener("click", () => {
-    setState({ ...getState(), sacrificeUsed: true });
+    state.sacrificeUsed.value = true;
 });
 /** @type {HTMLButtonElement} */
 const ReviveButton = /***/(document.getElementById("joker-revive"));
@@ -54,21 +49,19 @@ ReviveButton.addEventListener("click", () => {
     if (ReviveGIF) {
         ReviveGIF.src = "assets/img/icons/jokers/gif/joker-revive.gif";
     }
-    setTimeout(() => { setState({ ...getState(), reviveUsed: true }); if(ReviveGIF) { ReviveGIF.src = "assets/img/icons/jokers/joker-revive-x10.png"; } }, 650);
+    setTimeout(() => {
+        state.reviveUsed.value = true;
+        if (ReviveGIF) { ReviveGIF.src = "assets/img/icons/jokers/joker-revive-x10.png"; }
+    }, 650);
 });
 // Render State
-useEffect(
-    /**
-     * 
-     * @param {State} state 
-     */
-    (state) => {
-        Player1Name.innerText = state.player1.name;
-        Player2Name.innerText = state.player2.name;
-        RerollButton.disabled = state.rerollUsed;
-        SacrificeButton.disabled = state.sacrificeUsed;
-        ReviveButton.disabled = state.reviveUsed;
-    }, [getState]);
+new Effect(() => {
+    Player1Name.innerText = state.player1.value.name;
+    Player2Name.innerText = state.player2.value.name;
+    RerollButton.disabled = state.rerollUsed.value;
+    SacrificeButton.disabled = state.sacrificeUsed.value;
+    ReviveButton.disabled = state.reviveUsed.value;
+});
 
 /** @type {HTMLButtonElement} */
 const saveButton = /***/(document.querySelector('button[aria-label="save"]'));

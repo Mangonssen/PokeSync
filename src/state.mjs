@@ -1,18 +1,17 @@
 "use strict";
 
-import { useSignal } from "./signal.mjs";
+import { Signal } from "./signal.mjs";
 import { LOCAL_STORAGE_KEYS } from "./datatypes.mjs";
 import { downloadObjectAsJson } from "./utils.mjs";
-/** @import {Signal} from "./signal.mjs" */
-/** @import {State} from "./datatypes.mjs" */
+/** @import {State, UnsignalState} from "./datatypes.mjs" */
 
 /**
  * 
- * @param {Partial<State>} [init] 
- * @returns {Signal<State>}
+ * @param {Partial<UnsignalState>} [init] 
+ * @returns {State}
  */
 function initState(init) {
-    return useSignal(/** @type {State} */(
+    return Signal.SubSignal(/** @type {UnsignalState} */(
         {
             player1: { name: "Player1", kind: "male" },
             player2: { name: "Player2", kind: "female" },
@@ -28,13 +27,13 @@ function initState(init) {
 
 /**
  * 
- * @returns {Signal<State>}
+ * @returns {State}
  */
 export function loadState() {
     let loaded = localStorage.getItem(LOCAL_STORAGE_KEYS.state);
     if (loaded) {
         console.log("state from Local")
-        return useSignal(JSON.parse(loaded));
+        return /** @type {State} */(Signal.SubSignal(JSON.parse(loaded)));
     }
     return initState();
 }
@@ -44,11 +43,11 @@ export function loadState() {
  * @param {*} json 
  */
 export function importState(json) {
-    setState(json)
+    Signal.SubSignal(json)
 }
 
 export function saveState() {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.state, JSON.stringify(getState()));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.state, JSON.stringify(Signal.SubSignalValues(state)));
 }
 
 export function clearState() {
@@ -61,11 +60,10 @@ export function clearState() {
  */
 export function exportState(andSave = false) {
     if (andSave) { saveState() }
-    downloadObjectAsJson(getState(), `GameState_${new Date().toLocaleDateString()}`)
+    downloadObjectAsJson(Signal.SubSignalValues(state), `GameState_${new Date().toLocaleDateString()}`)
 }
 
-export const [getState, setState] = loadState();
+export const state = loadState();
+
 // @ts-ignore
-window.getState = getState;
-// @ts-ignore
-window.setState = setState;
+window.state = state;
