@@ -54,25 +54,33 @@ export const LOCAL_STORAGE_KEYS = Object.freeze({
  */
 
 /**
+ * The complete game state stored in memory and persisted to localStorage.
+ *
+ * @typedef {Object} State
+ * @property {Player} player1 - First player.
+ * @property {Player} player2 - Second player.
+ * @property {SyncTuple[]} syncsIsAlive - Array of active sync tuples.
+ * @property {boolean} rerollUsed - Flag indicating if a reroll has been used.
+ * @property {boolean} sacrificeUsed - Flag indicating if a sacrifice has been used.
+ * @property {boolean} reviveUsed - Flag indicating if a revive has been used.
+ * @property {boolean} runAlive - Flag indicating whether the game is currently running.
+ */
+
+/**
  * @template T
  * @typedef {T extends Signal<infer U> ? U : T} Unsignal
  */
 
-/**
- * The complete game state stored in memory and persisted to localStorage.
- *
- * @typedef {Object} State
- * @property {Signal<Player>} player1 - First player.
- * @property {Signal<Player>} player2 - Second player.
- * @property {Signal<SyncTuple[]>} syncsIsAlive - Array of active sync tuples.
- * @property {Signal<boolean>} rerollUsed - Flag indicating if a reroll has been used.
- * @property {Signal<boolean>} sacrificeUsed - Flag indicating if a sacrifice has been used.
- * @property {Signal<boolean>} reviveUsed - Flag indicating if a revive has been used.
- * @property {Signal<boolean>} runAlive - Flag indicating whether the game is currently running.
- */
-
-/**
+/** 
+ @template {Record<any,Signal<any>>} T
  @typedef {
-  {[K in keyof State]: Unsignal<State[K]>}
- } UnsignalState
- */
+  {[K in keyof T]: Unsignal<T[K]>}
+ } Unsignaled
+*/
+
+/** 
+ @template {Record<any,any>} T
+ @typedef {
+  {[K in keyof T]: Signal<T[K]>}
+ } Signaled
+*/

@@ -3,7 +3,7 @@
 import { getPokedexEntries, getSpriteURL } from "./src/pokeapi.mjs";
 import { Effect } from "./src/signal.mjs";
 import { clearState, exportState, state, importState, saveState } from "./src/state.mjs";
-/** @import {State} from "./src/datatypes.mjs" */
+/** @import {} from "./src/datatypes.mjs" */
 
 /** @type {HTMLUListElement} */
 const Player1List = /***/(document.getElementById("player1pokemon"));

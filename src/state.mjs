@@ -3,15 +3,15 @@
 import { Signal } from "./signal.mjs";
 import { LOCAL_STORAGE_KEYS } from "./datatypes.mjs";
 import { downloadObjectAsJson } from "./utils.mjs";
-/** @import {State, UnsignalState} from "./datatypes.mjs" */
+/** @import {State, Unsignaled, Signaled} from "./datatypes.mjs" */
 
 /**
  * 
- * @param {Partial<UnsignalState>} [init] 
- * @returns {State}
+ * @param {Partial<State>} [init] 
+ * @returns {Signaled<State>}
  */
 function initState(init) {
-    return Signal.SubSignal(/** @type {UnsignalState} */(
+    return Signal.SubSignal(/** @type {State} */(
         {
             player1: { name: "Player1", kind: "male" },
             player2: { name: "Player2", kind: "female" },
@@ -27,13 +27,13 @@ function initState(init) {
 
 /**
  * 
- * @returns {State}
+ * @returns {Signaled<State>}
  */
 export function loadState() {
     let loaded = localStorage.getItem(LOCAL_STORAGE_KEYS.state);
     if (loaded) {
         console.log("state from Local")
-        return /** @type {State} */(Signal.SubSignal(JSON.parse(loaded)));
+        return /** @type {Signaled<State>} */(Signal.SubSignal(JSON.parse(loaded)));
     }
     return initState();
 }
