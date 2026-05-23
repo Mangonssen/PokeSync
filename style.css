@@ -1,197 +1,10 @@
+@layer reset, components, layout;
+
 @font-face {
     font-family: "pokesync";
     src: url("./assets/font/custom/pokesync.ttf") format("truetype");
 }
 
-@layer reset {
-
-    /* see https://www.joshwcomeau.com/css/custom-css-reset/ */
-    /* 1. Use a more-intuitive box-sizing model */
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
-    /* 2. Remove default margin */
-    *:not(dialog) {
-        margin: 0;
-        padding: 0;
-    }
-
-    /* 3. Enable keyword animations */
-    @media (prefers-reduced-motion: no-preference) {
-        html {
-            interpolate-size: allow-keywords;
-        }
-    }
-
-    body {
-        /* 4. Increase line-height */
-        line-height: 1.5;
-        /* 5. Improve text rendering */
-        -webkit-font-smoothing: antialiased;
-    }
-
-    /* 6. Improve media defaults */
-    img,
-    picture,
-    video,
-    canvas,
-    svg {
-        display: block;
-        max-width: 100%;
-    }
-
-    /* 7. Inherit fonts for form controls */
-    input,
-    button,
-    textarea,
-    select {
-        font: inherit;
-    }
-
-    /* 8. Avoid text overflows */
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        overflow-wrap: break-word;
-    }
-
-    /* 9. Improve line wrapping */
-    p {
-        text-wrap: pretty;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        text-wrap: balance;
-    }
-
-    /*
-    10. Create a root stacking context
-    */
-    #root,
-    #__next {
-        isolation: isolate;
-    }
-
-    button {
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-    }
-
-    ul {
-        list-style: none;
-    }
-}
-
-@layer layout {
-    ::selection {
-        background-color: var(--accent-color);
-        color: black;
-    }
-
-    [contenteditable] {
-        position: relative;
-
-        &::before {
-            position: relative;
-            display: inline-block;
-            content: url("assets/img/icons/other/edit-text.svg");
-            bottom: -0.2em;
-            padding: 0 0.5ch 0 0.5ch;
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 0.05rem;
-            background-color: rgb(from currentColor r g b / 0.5);
-        }
-    }
-
-    .grid {
-        display: grid;
-    }
-
-    .auto-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(99%, var(--min, 30ch)), 1fr));
-    }
-}
-
-@layer components {
-    [class|="box"] {
-        /* Need to be Given */
-        --_box-color: var(--color, var(--accent-color, blue));
-        --border-width: 2px;
-        --box-cut: min(45%, 1rem);
-
-        /* Calculated */
-        --box-bg-accent: oklch(from var(--_box-color) 45% 0.18794 h / 0.2);
-        --box-bg-color: oklch(from var(--_box-color) 65% 0.3133 h / 0.2);
-        --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
-        --box-cut-height: calc(var(--box-cut) / sqrt(2));
-        --clip-path: polygon(var(--box-cut) 0,
-                calc(100% - var(--box-cut)) 0,
-                100% var(--box-cut),
-                100% calc(100% - var(--box-cut)),
-                calc(100% - var(--box-cut)) 100%,
-                var(--box-cut) 100%,
-                0 calc(100% - var(--box-cut)),
-                0 var(--box-cut));
-
-        /* Styling */
-        background:
-            linear-gradient(45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
-        background-clip: border-box;
-        clip-path: var(--clip-path);
-        border-width: var(--border-width);
-        border-style: solid;
-        border-color: var(--border-color);
-
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: .5rem 2rem;
-    }
-
-    .box-gray {
-        --_box-color: gray;
-        --box-bg-accent: oklch(from var(--_box-color) 45% c h / 0.2);
-        --box-bg-color: oklch(from var(--_box-color) 65% c h / 0.2);
-        --border-color: oklch(from var(--_box-color) 65% c h / 1);
-    }
-
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-    }
-}
 
 :root {
     color-scheme: dark;
@@ -326,5 +139,196 @@ aside fieldset {
 
     75% {
         transform: rotate(-2deg);
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+@layer layout {
+    ::selection {
+        background-color: var(--accent-color);
+        color: black;
+    }
+
+    [contenteditable] {
+        position: relative;
+
+        &::before {
+            position: relative;
+            display: inline-block;
+            content: url("assets/img/icons/other/edit-text.svg");
+            bottom: -0.2em;
+            padding: 0 0.5ch 0 0.5ch;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0.05rem;
+            background-color: rgb(from currentColor r g b / 0.5);
+        }
+    }
+
+    .grid {
+        display: grid;
+    }
+
+    .auto-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(99%, var(--min, 30ch)), 1fr));
+    }
+}
+
+@layer components {
+    [class|="box"] {
+        /* Need to be Given */
+        --_box-color: var(--color, var(--accent-color, blue));
+        --border-width: 2px;
+        --box-cut: min(45%, 1rem);
+
+        /* Calculated */
+        --box-bg-accent: oklch(from var(--_box-color) 45% 0.18794 h / 0.2);
+        --box-bg-color: oklch(from var(--_box-color) 65% 0.3133 h / 0.2);
+        --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
+        --box-cut-height: calc(var(--box-cut) / sqrt(2));
+        --clip-path: polygon(var(--box-cut) 0,
+                calc(100% - var(--box-cut)) 0,
+                100% var(--box-cut),
+                100% calc(100% - var(--box-cut)),
+                calc(100% - var(--box-cut)) 100%,
+                var(--box-cut) 100%,
+                0 calc(100% - var(--box-cut)),
+                0 var(--box-cut));
+
+        /* Styling */
+        background:
+            linear-gradient(45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
+            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
+        background-clip: border-box;
+        clip-path: var(--clip-path);
+        border-width: var(--border-width);
+        border-style: solid;
+        border-color: var(--border-color);
+
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: .5rem 2rem;
+    }
+
+    .box-gray {
+        --_box-color: gray;
+        --box-bg-accent: oklch(from var(--_box-color) 45% c h / 0.2);
+        --box-bg-color: oklch(from var(--_box-color) 65% c h / 0.2);
+        --border-color: oklch(from var(--_box-color) 65% c h / 1);
+    }
+}
+
+@layer reset {
+
+    /* see https://www.joshwcomeau.com/css/custom-css-reset/ */
+    /* 1. Use a more-intuitive box-sizing model */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        font: inherit;
+    }
+
+    /* 2. Remove default margin */
+    *:not(dialog) {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 3. Enable keyword animations */
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            interpolate-size: allow-keywords;
+        }
+    }
+
+    body {
+        /* 4. Increase line-height */
+        line-height: 1.5;
+        /* 5. Improve text rendering */
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* 6. Improve media defaults */
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
+
+    /* 7. Inherit fonts for form controls */
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    /* 8. Avoid text overflows */
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        overflow-wrap: break-word;
+    }
+
+    /* 9. Improve line wrapping */
+    p {
+        text-wrap: pretty;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        text-wrap: balance;
+    }
+
+    /*
+    10. Create a root stacking context
+    */
+    #root,
+    #__next {
+        isolation: isolate;
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
     }
 }
