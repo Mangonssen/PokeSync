@@ -2,16 +2,144 @@
 <html lang="en">
 
 <head>
+    <!-- =========================
+         Core
+    ========================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/site.webmanifest">
-    <title>PokeSync</title>
-    <script type="module" src="index.mjs"></script>
+
+    <title>PokéSync SoulLink Manager</title>
+
+    <meta name="description"
+        content="Manage your Pokémon SoulLink challenge with your partner. Track team status, progress, and rules in authentic Gen 5 style.">
+
+    <meta name="keywords"
+        content="Pokémon, Pokemon, Pokédex, Pokedex, Pokémon companion, Pokémon tracker, PokéSync, Soul, Soul Link, Link, Soul-Link, Nuzlock">
+
+    <meta name="author" content="Tim Ruland, Marc Obst">
+
+    <!-- Tell search engines how to index the page -->
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://example.com/">
+
+    <!-- =========================
+         PWA / Web App Manifest
+    ========================== -->
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <meta name="theme-color" content="#050609">
+    <meta name="color-scheme" content="dark">
+
+    <!-- iOS / Apple PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PokéSync">
+
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+    <!-- =========================
+         Favicons
+    ========================== -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+
+    <!-- =========================
+         Open Graph / Social SEO
+    ========================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PokéSync">
+    <meta property="og:title" content="PokéSync SoulLink Manager">
+    <meta property="og:description"
+        content="Manage your Pokémon SoulLink challenge with your partner. Track team status, progress, and rules in authentic Gen 5 style.">
+    <meta property="og:url" content="https://example.com/">
+    <meta property="og:image" content="https://example.com/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PokéSync SoulLink Manager">
+
+    <!-- =========================
+         Twitter / X Cards
+    ========================== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PokéSync SoulLink Manager">
+    <meta name="twitter:description"
+        content="Manage your Pokémon SoulLink challenge with your partner. Track team status, progress, and rules in authentic Gen 5 style.">
+    <meta name="twitter:image" content="https://example.com/images/og-image.png">
+    <meta name="twitter:image:alt" content="PokéSync SoulLink Manager">
+
+    <!-- =========================
+         Performance
+    ========================== -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+
+    <!-- =========================
+         Structured Data / JSON-LD
+    ========================== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PokéSync",
+        "alternateName": "PokeSync",
+        "url": "https://example.com/",
+        "description": "Manage your Pokémon SoulLink challenge with your partner. Track team status, progress, and rules in authentic Gen 5 style.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": "Requires JavaScript",
+        "author": [
+            {
+                "@type": "Person",
+                "name": "Tim Ruland"
+            },
+            {
+                "@type": "Person",
+                "name": "Marc Obst"
+            }
+        ],
+    }
+    </script>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="./assets/logo/pokesync-logo-icon.svg" type="image/x-icon">
+    <script type="module" src="index.mjs"></script>
 </head>
 
 <body>
+    <style>
+        div>div{
+            aspect-ratio: 1;
+        }
+    </style>
+
+    <div class="player1" style="display: flex; height: 10rem;">
+        <div style="background-color: var(--pokebox-border);"></div>
+        <div style="background-color: var(--pokebox-light);"></div>
+        <div style="background-color: var(--pokebox-dark);"></div>
+    </div>
+    <div class="player2" style="display: flex; height: 10rem;">
+        <div style="background-color: var(--pokebox-border);"></div>
+        <div style="background-color: var(--pokebox-light);"></div>
+        <div style="background-color: var(--pokebox-dark);"></div>
+    </div>
+    <div class="dead" style="display: flex; height: 10rem;">
+        <div style="background-color: var(--pokebox-border);"></div>
+        <div style="background-color: var(--pokebox-light);"></div>
+        <div style="background-color: var(--pokebox-dark);"></div>
+    </div>
+    <div class="inactive" style="display: flex; height: 10rem;">
+        <div style="background-color: var(--pokebox-border);"></div>
+        <div style="background-color: var(--pokebox-light);"></div>
+        <div style="background-color: var(--pokebox-dark);"></div>
+    </div>
+    <div style="display: flex; height: 10rem;">
+        <div style="background-color: var(--pokebox-border);"></div>
+        <div style="background-color: var(--pokebox-light);"></div>
+        <div style="background-color: var(--pokebox-dark);"></div>
+    </div>
+    <!-- 
     <header>
         <hgroup>
             <picture id="logo"><img src="./assets/img/logo/pokesync-logo.svg" alt=""></picture>
@@ -93,7 +221,7 @@
             <button type="button" aria-label="open-boxes" commandFor="pc-boxes" command="show-modal" class="box-gray">
                 Open Boxes
             </button>
-            
+
         </div>
         <aside>
             <form>
@@ -116,8 +244,8 @@
                         </li>
                         <li>
                             <button type="button" id="joker-revive">
-                                <img src="assets/img/icons/jokers/joker-revive-x10.png" alt="revive-icon"
-                                width="280" height="280">
+                                <img src="assets/img/icons/jokers/joker-revive-x10.png" alt="revive-icon" width="280"
+                                    height="280">
                                 revive
                             </button>
                         </li>
@@ -144,6 +272,7 @@
 
         </form>
     </dialog>
+    -->
 </body>
 
 </html>

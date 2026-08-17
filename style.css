@@ -1,4 +1,4 @@
-@layer reset, components, layout;
+@layer reset, components, layout, pokebox;
 
 @font-face {
     font-family: "pokesync";
@@ -13,10 +13,120 @@
     --bg-color: oklch(from var(--main-color) 12% 0.011 h);
     --accent-color: #95e1f6;
 
+    --gray: #808080;
+
     /* --accent-color: red; */
     accent-color: var(--accent-color);
     font-family: 'pokesync';
 }
+
+@layer pokebox {
+    :root {
+        --pokebox-hue-player1: 241.1594deg;
+        --pokebox-hue-player2: 90.31deg;
+        --pokebox-hue-dead: 22.54deg;
+
+        --pokebox-border-lightness: 0.797;
+        --pokebox-border-chroma: 0.113;
+
+        --pokebox-light-lightness: 0.701;
+        --pokebox-light-chroma: 0.165;
+        --pokebox-light-hue-shift: 2.5deg;
+
+        --pokebox-dark-lightness: 0.353;
+        --pokebox-dark-chroma: 0.109;
+        --pokebox-dark-hue-shift: 12deg;
+
+
+        --pokebox-border-player1: oklch(var(--pokebox-border-lightness) var(--pokebox-border-chroma) var(--pokebox-hue-player1));
+        --pokebox-light-player1: oklch(var(--pokebox-light-lightness) var(--pokebox-light-chroma) calc(var(--pokebox-hue-player1) + var(--pokebox-light-hue-shift)));
+        --pokebox-dark-player1: oklch(var(--pokebox-dark-lightness) var(--pokebox-dark-chroma) calc(var(--pokebox-hue-player1) + var(--pokebox-dark-hue-shift)));
+        --pokebox-inner-player1: oklch(from var(--pokebox-border-player1) l c h / 25%);
+        --pokebox-outer-player1: oklch(from var(--pokebox-border-player1) l c h / 90%);
+
+        --pokebox-border-player2: oklch(var(--pokebox-border-lightness) var(--pokebox-border-chroma) var(--pokebox-hue-player2));
+        --pokebox-light-player2: oklch(var(--pokebox-light-lightness) var(--pokebox-light-chroma) calc(var(--pokebox-hue-player2) + var(--pokebox-light-hue-shift)));
+        --pokebox-dark-player2: oklch(var(--pokebox-dark-lightness) var(--pokebox-dark-chroma) calc(var(--pokebox-hue-player2) + var(--pokebox-dark-hue-shift)));
+        --pokebox-inner-player2: oklch(from var(--pokebox-border-player2) l c h / 25%);
+        --pokebox-outer-player2: oklch(from var(--pokebox-border-player2) l c h / 90%);
+
+        --pokebox-border-dead: oklch(var(--pokebox-border-lightness) var(--pokebox-border-chroma) var(--pokebox-hue-dead));
+        --pokebox-light-dead: oklch(var(--pokebox-light-lightness) var(--pokebox-light-chroma) calc(var(--pokebox-hue-dead) + var(--pokebox-light-hue-shift)));
+        --pokebox-dark-dead: oklch(var(--pokebox-dark-lightness) var(--pokebox-dark-chroma) calc(var(--pokebox-hue-dead) + var(--pokebox-dark-hue-shift)));
+        --pokebox-inner-dead: transparent;
+        --pokebox-outer-dead: transparent;
+
+        --pokebox-border-inactive: oklch(var(--pokebox-border-lightness) 0 0);
+        --pokebox-light-inactive: oklch(var(--pokebox-light-lightness) 0 0);
+        --pokebox-dark-inactive: oklch(var(--pokebox-dark-lightness) 0 0);
+        --pokebox-inner-inactive: transparent;
+        --pokebox-outer-inactive: transparent;
+    }
+
+    @property --pokebox-border {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: hotpink;
+    }
+
+    @property --pokebox-light {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: hotpink;
+    }
+
+    @property --pokebox-dark {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: hotpink;
+    }
+
+    @property --pokebox-inner {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: hotpink;
+    }
+
+    @property --pokebox-outer {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: hotpink;
+    }
+
+    .player1 {
+        --pokebox-border: var(--pokebox-border-player1);
+        --pokebox-light: var(--pokebox-light-player1);
+        --pokebox-dark: var(--pokebox-dark-player1);
+        --pokebox-inner: var(--pokebox-inner-player1);
+        --pokebox-outer: var(--pokebox-outer-player1);
+    }
+
+    .player2 {
+        --pokebox-border: var(--pokebox-border-player2);
+        --pokebox-light: var(--pokebox-light-player2);
+        --pokebox-dark: var(--pokebox-dark-player2);
+        --pokebox-inner: var(--pokebox-inner-player2);
+        --pokebox-outer: var(--pokebox-outer-player2);
+    }
+
+    .dead {
+        --pokebox-border: var(--pokebox-border-dead);
+        --pokebox-light: var(--pokebox-light-dead);
+        --pokebox-dark: var(--pokebox-dark-dead);
+        --pokebox-inner: var(--pokebox-inner-dead);
+        --pokebox-outer: var(--pokebox-outer-dead);
+    }
+
+    .inactive,
+    :root {
+        --pokebox-border: var(--pokebox-border-inactive);
+        --pokebox-light: var(--pokebox-light-inactive);
+        --pokebox-dark: var(--pokebox-dark-inactive);
+        --pokebox-inner: var(--pokebox-inner-inactive);
+        --pokebox-outer: var(--pokebox-outer-inactive);
+    }
+}
+
 
 body {
     background-color: var(--bg-color);
