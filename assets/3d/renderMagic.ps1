@@ -1,0 +1,1 @@
+ffmpeg -framerate 30 -i "MagicAnimation/frame_%04d.png" -c:v prores_ks -profile:v 4444 -pix_fmt yuva444p10le MagicAnimation.mov
