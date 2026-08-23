@@ -48,7 +48,7 @@ export function parseURL(location = window.location) {
         );
 
     const requestedPage = query.get("page");
-    const requestedStack = query.get("stack").split(",");
+    const requestedStack = query.get("stack")?.split(",");
     const requestedState = query.get("state");
 
     const page = keyForValue(PAGES, requestedPage ?? "");
@@ -58,7 +58,7 @@ export function parseURL(location = window.location) {
 
     /** @type {(keyof typeof STACKS)[]} */
     let stack = []
-    for (const requestedElement of requestedStack) {
+    for (const requestedElement of requestedStack ?? []) {
         const stackElement = keyForValue(STACKS, requestedElement);
         if (!stackElement) {
             throw new Error("400 Stack unknown");
