@@ -1,14 +1,41 @@
-/** @typedef {"left"|"mid"|"right"} BBState   */
+import { css, html } from "../utils.mjs";
 
-export class BattleButton extends HTMLElement { 
+/** @typedef {"left"|"mid"|"right"} BBDir   */
+
+const HTML = html`
+<slot></slot>
+`;
+
+/**
+ * 
+ * @param {BBDir} dir 
+ * @returns 
+ */
+const CSS = (dir) => css`
+:host(*){
+    color: ${
+        dir == "left" ? "orange" :
+        dir == "mid" ? "blue" :
+        dir == "right" ? "green" :
+        "currentColor"
+    };
+}
+`;
+
+export class BattleButton extends HTMLElement {
     /**
-     * 
-     * @param {BBState} [state] 
+     * @param {Object} param0
+     * @param {BBDir} [param0.dir] 
+     * @param {string} [param0.text] 
      */
-    constructor(state){
+    constructor({ dir: location, text }) {
         super();
-        this.attachShadow({mode:"open"});
-        this.state = state??this.dataset.state??"left";
+        this.innerHTML = text ?? this.innerHTML;
+        let shadowRoot = this.attachShadow({ mode: "open" });
+        /** @type {BBDir} */
+        this.location = location ?? /** @type {BBDir} */(this.dataset.state) ?? "left";
+        shadowRoot.innerHTML = HTML;
+        shadowRoot.innerHTML += CSS(this.location);
     }
 }
 customElements.define("battle-button", BattleButton);

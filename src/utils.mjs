@@ -13,3 +13,29 @@ export function downloadObjectAsJson(exportObj, exportName) {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 }
+
+/**
+ * 
+ * @param {TemplateStringsArray} strings 
+ * @param  {...any} args 
+ * @returns 
+ */
+export function css(strings, ...args) {
+    return strings.reduce(
+        (result, string, i) => result + string + (args[i] ?? ''),
+        '<style>'
+    ) + '</style>';
+}
+
+/**
+ * 
+ * @param {TemplateStringsArray} strings 
+ * @param  {...any} args 
+ * @returns 
+ */
+export function html(strings, ...args) {
+    return strings.reduce(
+        (result, string, i) => result + string + (args[i] ?? ''),
+        ''
+    );
+}

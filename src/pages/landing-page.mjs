@@ -1,5 +1,7 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
-const HTML = `
+import { html } from "../utils.mjs";
+
+const HTML = html`
 <video controls width="250">
     <source
         src="https://developer.mozilla.org/shared-assets/videos/flower.webm"
@@ -29,7 +31,7 @@ export class LandingPage extends HTMLElement {
         super();
 
         this.innerHTML = HTML;
-        const battleButtons = new BattleButtons({ left: "", mid: "", right: "" });
+        const battleButtons = new BattleButtons({ left: "Left", mid: "Middle", right: "Right" });
         this.appendChild(battleButtons)
     }
 }
