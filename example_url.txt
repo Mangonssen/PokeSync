@@ -1,0 +1,1 @@
+http://127.0.0.1:5500/?page=dashboard&stack=box,settings&state=ewogICAgICJ0ZXN0Ijo1Cn0=
