@@ -12,16 +12,20 @@ import { parseURL } from "./src/parse.mjs"
 // const _SESSION_STORAGE = window.sessionStorage;
 
 const { page } = parseURL();
+console.log(page)
 
 switch (page) {
-    case "landing":
+    case "landing": {
         document.body.replaceChildren(new LandingPage())
-    case "init":
+    } break;
+    case "init": {
         document.body.replaceChildren(new InitPage())
-    case "load":
+    } break;
+    case "load": {
         document.body.replaceChildren(new LoadingPage())
-    case "home":
+    } break;
+    case "home": {
         document.body.replaceChildren(new HomePage())
-    default:
-        break;
+    } break;
+    default: { } break;
 }

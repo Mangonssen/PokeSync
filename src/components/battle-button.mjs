@@ -7,6 +7,7 @@ export class BattleButton extends HTMLElement {
      */
     constructor(state){
         super();
+        this.attachShadow({mode:"open"});
         this.state = state??this.dataset.state??"left";
     }
 }
