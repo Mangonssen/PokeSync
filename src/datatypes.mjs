@@ -13,6 +13,29 @@ export const LOCAL_STORAGE_KEYS = Object.freeze({
 });
 
 /**
+ * Mapping from logical page to URL Fragment
+ */
+export const PAGES = Object.freeze({
+  landing: "",
+  init: "init",
+  load: "load",
+  home: "dashboard",
+});
+
+/**
+ * Mapping from Stack-name to Query Parameter
+ */
+export const STACKS = Object.freeze({
+  settings: "settings",
+  box: "box",
+  save: "save",
+  import: "import",
+  reset: "reset",
+  localStorageSettings: "ls-settings",
+  localStorageInspect: "ls-inspect",
+});
+
+/**
  * A single entry in the Pokedex.
  *
  * @typedef {Object} PokedexEntry
@@ -32,7 +55,7 @@ export const LOCAL_STORAGE_KEYS = Object.freeze({
 /**
  * Gender of a Pokémon or player.
  *
- * @typedef {"male"|"female"} Gender
+ * @typedef {"male"|"female"|"neuter"} Gender
  */
 
 /**
@@ -56,10 +79,11 @@ export const LOCAL_STORAGE_KEYS = Object.freeze({
 /**
  * The complete game state stored in memory and persisted to localStorage.
  *
- * @typedef {Object} State
+ * @typedef {Object} GameState
  * @property {Player} player1 - First player.
  * @property {Player} player2 - Second player.
  * @property {SyncTuple[]} syncsIsAlive - Array of active sync tuples.
+ * @property {boolean} jokersAllowed - Flag indicating if jokers are enabled.
  * @property {boolean} rerollUsed - Flag indicating if a reroll has been used.
  * @property {boolean} sacrificeUsed - Flag indicating if a sacrifice has been used.
  * @property {boolean} reviveUsed - Flag indicating if a revive has been used.

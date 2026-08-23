@@ -3,67 +3,59 @@
 import { Signal } from "./signal.mjs";
 import { LOCAL_STORAGE_KEYS } from "./datatypes.mjs";
 import { downloadObjectAsJson } from "./utils.mjs";
-/** @import {State, Unsignaled, Signaled} from "./datatypes.mjs" */
+/** @import {GameState, Unsignaled, Signaled} from "./datatypes.mjs" */
+
+/** @type {GameState} */
+export const defaultState = {
+    player1: { name: "Player1", kind: "male" },
+    player2: { name: "Player2", kind: "female" },
+    syncsIsAlive: [],
+    jokersAllowed: true,
+    rerollUsed: false,
+    sacrificeUsed: false,
+    reviveUsed: false,
+    runAlive: true,
+}
+
+export const state = initState();
+// @ts-ignore
+window.state = state;
 
 /**
  * 
- * @param {Partial<State>} [init] 
- * @returns {Signaled<State>}
+ * @param {Partial<GameState>} [init] 
+ * @returns {Signaled<GameState>}
  */
 function initState(init) {
-    return Signal.SubSignal(/** @type {State} */(
+    return Signal.SubSignal(/** @type {GameState} */(
         {
-            player1: { name: "Player1", kind: "male" },
-            player2: { name: "Player2", kind: "female" },
-            syncsIsAlive: [],
-            rerollUsed: false,
-            sacrificeUsed: false,
-            reviveUsed: false,
-            runAlive: true,
+            ...defaultState,
             ...init
         }
     ))
 }
 
-/**
- * 
- * @returns {Signaled<State>}
- */
-export function loadState() {
-    let loaded = localStorage.getItem(LOCAL_STORAGE_KEYS.state);
-    if (loaded) {
-        console.log("state from Local")
-        return /** @type {Signaled<State>} */(Signal.SubSignal(JSON.parse(loaded)));
-    }
-    return initState();
+export function stateToJson(data = state) {
+    return JSON.stringify(Signal.SubSignalValues(data));
 }
 
 /**
- * 
- * @param {*} json 
+ * TODO: validate
+ * @param {string} jsonString
+ * @returns {Signaled<GameState>}
  */
-export function importState(json) {
-    Signal.SubSignal(json)
+export function jsonToState(jsonString) {
+    // @ts-ignore
+    return Signal.SubSignal(JSON.parse(jsonString));
 }
 
-export function saveState() {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.state, JSON.stringify(Signal.SubSignalValues(state)));
-}
-
-export function clearState() {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.state);
+export function stateToBase64(data = state) {
+    return btoa(stateToJson(data));
 }
 
 /**
- * 
- * @param {boolean} [andSave=false] - false by default
+ * @param {string} base64String
  */
-export function exportState(andSave = false) {
-    if (andSave) { saveState() }
-    downloadObjectAsJson(Signal.SubSignalValues(state), `GameState_${new Date().toLocaleDateString()}`)
+export function base64ToState(base64String) {
+    return jsonToState(atob(base64String));
 }
-
-export const state = loadState();
-
-// @ts-ignore
-window.state = state;
