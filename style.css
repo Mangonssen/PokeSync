@@ -1,4 +1,4 @@
-@layer reset, components, layout, pokebox;
+@layer reset, components, layout, pokebox, battle-button;
 
 @font-face {
     font-family: "pokesync";
@@ -127,6 +127,21 @@
     }
 }
 
+@layer battle-button {
+    :root {
+        --bb-orange-light: #ffce63;
+        --bb-orange-dark: #ffb529;
+        --bb-blue-light: #a5deff;
+        --bb-blue-dark: #29bdf7;
+        --bb-green-light: #73ff52;
+        --bb-green-dark: #52ce29;
+
+        --bb-orange: linear-gradient(to bottom, var(--bb-orange-light) 48%, var(--bb-orange-dark) 56%);
+        --bb-blue: linear-gradient(to bottom, var(--bb-blue-light) 48%, var(--bb-blue-dark) 56%);
+        --bb-green: linear-gradient(to bottom, var(--bb-green-light) 48%, var(--bb-green-dark) 56%);
+    }
+}
+
 
 body {
     background-color: var(--bg-color);
@@ -140,117 +155,6 @@ body {
     padding: 1rem;
 }
 
-header,
-footer {
-    flex-grow: 1;
-}
-
-#logo img {
-    height: 5rem;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-inline: auto;
-    gap: 3rem;
-}
-
-#players {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 2rem 1rem;
-
-    h2 {
-        margin-bottom: 1rem;
-    }
-
-    >button {
-        grid-column: 1 / -1;
-    }
-}
-
-#player2pokemon {
-    margin-top: 2rem;
-}
-
-#player1pokemon,
-#player2pokemon {
-    display: grid;
-    grid-auto-rows: 5rem;
-    grid-template-columns: minmax(13rem, 1fr);
-    gap: 0.75rem;
-}
-
-
-aside fieldset {
-    display: grid;
-
-    ul {
-        display: grid;
-        gap: 0.5rem;
-        align-items: center;
-        justify-items: center;
-    }
-
-    img {
-
-        height: 4rem;
-        width: auto;
-    }
-
-    button {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        gap: 0.25rem .5rem;
-
-        &:hover {
-
-            img {
-                animation: wiggle .4s ease-in-out infinite;
-            }
-        }
-
-        &[disabled] {
-            cursor: not-allowed;
-
-            img {
-                opacity: 0.4;
-                filter: grayscale(75%);
-                animation: none;
-            }
-        }
-    }
-
-    button {
-        font-size: 1.25rem;
-        text-align: left;
-    }
-
-    legend {
-        font-size: 1.5rem;
-    }
-}
-
-@keyframes wiggle {
-
-    0%,
-    50%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(2deg);
-    }
-
-    75% {
-        transform: rotate(-2deg);
-    }
-}
 
 .sr-only {
     position: absolute;
@@ -291,64 +195,9 @@ aside fieldset {
             background-color: rgb(from currentColor r g b / 0.5);
         }
     }
-
-    .grid {
-        display: grid;
-    }
-
-    .auto-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(99%, var(--min, 30ch)), 1fr));
-    }
 }
 
-@layer components {
-    [class|="box"] {
-        /* Need to be Given */
-        --_box-color: var(--color, var(--accent-color, blue));
-        --border-width: 2px;
-        --box-cut: min(45%, 1rem);
-
-        /* Calculated */
-        --box-bg-accent: oklch(from var(--_box-color) 45% 0.18794 h / 0.2);
-        --box-bg-color: oklch(from var(--_box-color) 65% 0.3133 h / 0.2);
-        --border-color: oklch(from var(--_box-color) 65% 0.3133 h / 1);
-        --box-cut-height: calc(var(--box-cut) / sqrt(2));
-        --clip-path: polygon(var(--box-cut) 0,
-                calc(100% - var(--box-cut)) 0,
-                100% var(--box-cut),
-                100% calc(100% - var(--box-cut)),
-                calc(100% - var(--box-cut)) 100%,
-                var(--box-cut) 100%,
-                0 calc(100% - var(--box-cut)),
-                0 var(--box-cut));
-
-        /* Styling */
-        background:
-            linear-gradient(45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-45deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-135deg, var(--border-color) var(--box-cut-height), transparent var(--box-cut-height)),
-            linear-gradient(-40deg, var(--box-bg-color) 35%, var(--box-bg-accent) 35%, var(--box-bg-accent) 60%, var(--box-bg-color) 60%);
-        background-clip: border-box;
-        clip-path: var(--clip-path);
-        border-width: var(--border-width);
-        border-style: solid;
-        border-color: var(--border-color);
-
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: .5rem 2rem;
-    }
-
-    .box-gray {
-        --_box-color: gray;
-        --box-bg-accent: oklch(from var(--_box-color) 45% c h / 0.2);
-        --box-bg-color: oklch(from var(--_box-color) 65% c h / 0.2);
-        --border-color: oklch(from var(--_box-color) 65% c h / 1);
-    }
-}
+@layer components {}
 
 @layer reset {
 

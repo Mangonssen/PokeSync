@@ -2,8 +2,26 @@ import { css, html } from "../utils.mjs";
 
 /** @typedef {"left"|"mid"|"right"} BBDir   */
 
-const HTML = html`
-<slot></slot>
+/**
+ * 
+ * @param {BBDir} dir 
+ * @param {"a"|"button"} type 
+ * @returns 
+ */
+const HTML = (dir, type) => html`
+<${type === "a" ? "a" : "button"}${type === "a" ? "" : ` type="button"`}>
+    <span id="text">
+        <slot></slot>
+    </span>
+    <img
+        src="assets/img/Pokemon Action ${dir === "left" ? "Left" :
+        dir === "mid" ? "Center" :
+            dir === "right" ? "Right" :
+                ""
+    }.svg"
+        alt=""
+    />
+</${type === "a" ? "a" : "button"}>
 `;
 
 /**
@@ -12,13 +30,59 @@ const HTML = html`
  * @returns 
  */
 const CSS = (dir) => css`
-:host(*){
-    color: ${
-        dir == "left" ? "orange" :
-        dir == "mid" ? "blue" :
-        dir == "right" ? "green" :
-        "currentColor"
+:host {
+    display: inline-block;
+    transform:
+        translateY(${dir === "mid" ? "2.5rem" : "1rem"})
+        translateX(${dir === "left" ? "-0.5rem" :
+        dir === "right" ? "0.5rem" :
+            "0"
+    });
+}
+
+a,
+button {
+    appearance: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+
+    background: transparent;
+    color: inherit;
+
+    font: inherit;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#text {
+    position: absolute;
+    text-transform: uppercase;
+
+    color: transparent;
+    background: ${dir === "left" ? "var(--bb-orange)" :
+        dir === "mid" ? "var(--bb-blue)" :
+            dir === "right" ? "var(--bb-green)" :
+                "currentColor"
     };
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+
+button:active,
+a:active {
+    transform: scale(0.97);
 }
 `;
 
@@ -27,14 +91,15 @@ export class BattleButton extends HTMLElement {
      * @param {Object} param0
      * @param {BBDir} [param0.dir] 
      * @param {string} [param0.text] 
+     * @param {"a"|"button"} [param0.type] 
      */
-    constructor({ dir: location, text }) {
+    constructor({ dir: location, text, type }) {
         super();
         this.innerHTML = text ?? this.innerHTML;
         let shadowRoot = this.attachShadow({ mode: "open" });
         /** @type {BBDir} */
         this.location = location ?? /** @type {BBDir} */(this.dataset.state) ?? "left";
-        shadowRoot.innerHTML = HTML;
+        shadowRoot.innerHTML = HTML(this.location, type ?? /** @type {"a"|"button"} */(this.dataset.type) ?? "a");
         shadowRoot.innerHTML += CSS(this.location);
     }
 }
