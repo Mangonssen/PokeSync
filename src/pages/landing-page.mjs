@@ -31,7 +31,7 @@ export class LandingPage extends HTMLElement {
         super();
 
         this.innerHTML = HTML;
-        const battleButtons = new BattleButtons({ left: "Left", mid: "Share", right: "Right" });
+        const battleButtons = new BattleButtons({ left: "Load Run", mid: "Share", right: "New Run" });
         this.appendChild(battleButtons)
     }
 }

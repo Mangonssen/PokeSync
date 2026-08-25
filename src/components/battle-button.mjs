@@ -33,9 +33,9 @@ const CSS = (dir) => css`
 :host {
     display: inline-block;
     transform:
-        translateY(${dir === "mid" ? "2.5rem" : "1rem"})
-        translateX(${dir === "left" ? "-0.5rem" :
-        dir === "right" ? "0.5rem" :
+        translateY(${dir === "mid" ? "2.75rem" : "1.5rem"})
+        translateX(${dir === "left" ? "-0.75rem" :
+        dir === "right" ? "0.75rem" :
             "0"
     });
 }
@@ -60,8 +60,15 @@ button {
 
 #text {
     position: absolute;
+    inset: 0;
     text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
+    font-family: "Jaro";
     color: transparent;
     background: ${dir === "left" ? "var(--bb-orange)" :
         dir === "mid" ? "var(--bb-blue)" :
@@ -72,7 +79,14 @@ button {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    translate: ${dir === "left" ? "0.5rem -0.25rem" : dir === "right" ? "-0.5rem -0.25rem" : dir === "mid" ? "0 -0.5rem" : "0 -0.25rem"};
 }
+
+img{
+    height: 6.5em;
+}
+
 
 button:focus-visible,
 a:focus-visible {

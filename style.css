@@ -4,6 +4,10 @@
     font-family: "pokesync";
     src: url("./assets/font/custom/pokesync.ttf") format("truetype");
 }
+@font-face {
+    font-family: "Jaro";
+    src: url("./assets/font/Jaro/Jaro-Regular-VariableFont_opsz.ttf") format("truetype");
+}
 
 
 :root {
