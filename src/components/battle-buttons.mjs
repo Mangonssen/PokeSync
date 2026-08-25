@@ -1,6 +1,8 @@
 import { css } from "../utils.mjs";
 import { BattleButton } from "./battle-button.mjs";
 
+/** @import {BBType} from "./battle-button.mjs" */
+
 const CSS = css`
 :host(*){
     position: fixed;
@@ -18,17 +20,17 @@ export class BattleButtons extends HTMLElement {
     /**
      * 
      * @param {Object} param0 
-     * @param {*} param0.left
-     * @param {*} param0.mid
-     * @param {*} param0.right
+     * @param {{text:string}&BBType} param0.left
+     * @param {{text:string}&BBType} param0.mid
+     * @param {{text:string}&BBType} param0.right
      */
     constructor({ left, mid, right }) {
         super();
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.innerHTML = CSS;
-        shadowRoot.appendChild(new BattleButton({ dir: "left", text: left }));
-        shadowRoot.appendChild(new BattleButton({ dir: "mid", text: mid }));
-        shadowRoot.appendChild(new BattleButton({ dir: "right", text: right }));
+        shadowRoot.appendChild(new BattleButton({ dir: "left", ...left }));
+        shadowRoot.appendChild(new BattleButton({ dir: "mid", ...mid }));
+        shadowRoot.appendChild(new BattleButton({ dir: "right", ...right }));
     }
 }
 customElements.define("battle-buttons", BattleButtons);

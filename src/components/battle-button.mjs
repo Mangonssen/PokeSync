@@ -1,108 +1,164 @@
 import { css, html } from "../utils.mjs";
 
 /** @typedef {"left"|"mid"|"right"} BBDir   */
+/**
+ * @typedef {{
+ *   text: string,
+ *   dir: BBDir
+ * }} BBDataBase
+ */
+
+/**
+ * @typedef {(
+ *   {type: "button", callback: Function} |
+ *   {type: "a", href: string}
+ * )} BBType
+ */
+
+/**
+ * @typedef {BBDataBase & BBType} BBData
+ */
+
+
+/**
+ * @param {BBDir} dir
+ * @param {"a"|"button"} type
+ * @returns {string}
+ */
+const HTML = (dir, type) => {
+    const tag = type === "a" ? "a" : "button";
+    const buttonType = type === "button" ? ` type="button"` : "";
+
+    const image = {
+        left: "Left",
+        mid: "Center",
+        right: "Right"
+    }[dir];
+
+    return html`
+        <${tag}${buttonType}>
+            <span id="text">
+                <slot></slot>
+            </span>
+            <img
+                src="assets/img/Pokemon Action ${image}.svg"
+                alt=""
+            />
+        </${tag}>
+    `;
+};
 
 /**
  * 
  * @param {BBDir} dir 
- * @param {"a"|"button"} type 
  * @returns 
  */
-const HTML = (dir, type) => html`
-<${type === "a" ? "a" : "button"}${type === "a" ? "" : ` type="button"`}>
-    <span id="text">
-        <slot></slot>
-    </span>
-    <img
-        src="assets/img/Pokemon Action ${dir === "left" ? "Left" :
-        dir === "mid" ? "Center" :
-            dir === "right" ? "Right" :
-                ""
-    }.svg"
-        alt=""
-    />
-</${type === "a" ? "a" : "button"}>
-`;
+const CSS = (dir) => {
+    const color = {
+        left: "var(--bb-orange)",
+        mid: "var(--bb-blue)",
+        right: "var(--bb-green)"
+    }[dir];
 
-/**
- * 
- * @param {BBDir} dir 
- * @returns 
- */
-const CSS = (dir) => css`
-:host {
-    display: inline-block;
-    transform:
-        translateY(${dir === "mid" ? "2.75rem" : "1.5rem"})
-        translateX(${dir === "left" ? "-0.75rem" :
-        dir === "right" ? "0.75rem" :
-            "0"
-    });
-}
+    const transform = {
+        left: "0.65rem -0.25rem",
+        mid: "0 -0.5rem",
+        right: "-0.65rem -0.25rem"
+    }[dir];
 
-a,
-button {
-    appearance: none;
-    border: 0;
-    padding: 0;
-    margin: 0;
+    const hostTransform = {
+        left: "translateY(1.5rem) translateX(-0.75rem)",
+        mid: "translateY(2.75rem)",
+        right: "translateY(1.5rem) translateX(0.75rem)"
+    }[dir];
 
-    background: transparent;
-    color: inherit;
+    return css`
+        :host {
+            display: inline-block;
+            transform: ${hostTransform};
+        }
 
-    font: inherit;
-    cursor: pointer;
+        a,
+        button {
+            appearance: none;
+            border: 0;
+            padding: 0;
+            margin: 0;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+            background: transparent;
+            color: inherit;
 
-#text {
-    position: absolute;
-    inset: 0;
-    text-transform: uppercase;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+            font: inherit;
+            cursor: pointer;
 
-    font-family: "Jaro";
-    color: transparent;
-    background: ${dir === "left" ? "var(--bb-orange)" :
-        dir === "mid" ? "var(--bb-blue)" :
-            dir === "right" ? "var(--bb-green)" :
-                "currentColor"
-    };
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+        #text {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
 
-    translate: ${dir === "left" ? "0.5rem -0.25rem" : dir === "right" ? "-0.5rem -0.25rem" : dir === "mid" ? "0 -0.5rem" : "0 -0.25rem"};
-}
+            text-transform: uppercase;
+            text-align: center;
 
-img{
-    height: 6.5em;
-}
-`;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            font-family: "Jaro";
+            color: transparent;
+            background: ${color};
+
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            translate: ${transform};
+        }
+
+        img {
+            height: 6.5em;
+        }
+    `;
+};
 
 export class BattleButton extends HTMLElement {
     /**
-     * @param {Object} param0
-     * @param {BBDir} [param0.dir] 
-     * @param {string} [param0.text] 
-     * @param {"a"|"button"} [param0.type] 
+     * @param {BBData} params
      */
-    constructor({ dir: location, text, type }) {
+    constructor(params) {
         super();
-        this.innerHTML = text ?? this.innerHTML;
+        this.params = params;
+        this.innerHTML = params?.text ?? this.innerHTML;
         let shadowRoot = this.attachShadow({ mode: "open" });
         /** @type {BBDir} */
-        this.location = location ?? /** @type {BBDir} */(this.dataset.state) ?? "left";
-        shadowRoot.innerHTML = HTML(this.location, type ?? /** @type {"a"|"button"} */(this.dataset.type) ?? "a");
-        shadowRoot.innerHTML += CSS(this.location);
+        this.location = params?.dir ?? /** @type {BBDir} */(this.dataset.state) ?? "left";
+        shadowRoot.innerHTML =
+            HTML(this.location, params?.type ?? /** @type {"a"|"button"} */(this.dataset.type) ?? "a")
+            + CSS(this.location);
+
+        if (params?.type === "a") {
+            const link = shadowRoot.querySelector("a");
+
+            if (link) {
+                link.href = params.href;
+            }else {
+                console.error("link not found")
+            }
+
+        } else {
+            const button = shadowRoot.querySelector("button");
+
+            if (button) {
+                button.addEventListener("click", () => {params.callback()});
+            }else {
+                console.error("button not found")
+            }
+        }
     }
 }
 customElements.define("battle-button", BattleButton);
