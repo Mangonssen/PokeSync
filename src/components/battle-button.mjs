@@ -86,18 +86,6 @@ button {
 img{
     height: 6.5em;
 }
-
-
-button:focus-visible,
-a:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 4px;
-}
-
-button:active,
-a:active {
-    transform: scale(0.97);
-}
 `;
 
 export class BattleButton extends HTMLElement {
