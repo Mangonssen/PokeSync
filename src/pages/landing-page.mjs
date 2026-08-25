@@ -1,5 +1,5 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
-import { html } from "../utils.mjs";
+import { css, html } from "../utils.mjs";
 
 const HTML = html`
 <video controls width="250">
@@ -22,21 +22,58 @@ const HTML = html`
 <hgroup>
     <p>Welcome to</p>
     <h1 class="sr-only">PokéSync</h1>
-    <img src="default.svg" alt="PokéSync logo" />
+    <img src="assets/img/logo/pokesync-logo.svg" alt="PokéSync logo" />
 </hgroup>
+`;
+
+const CSS = css`
+landing-page{
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fill-available;
+    height: stretch;
+    video{
+        width: auto;
+        height: auto;
+        aspect-ratio: 1;
+        background-color: white;
+    }
+    hgroup{
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
 `;
 
 export class LandingPage extends HTMLElement {
     constructor() {
         super();
 
-        this.innerHTML = HTML;
-        const battleButtons = new BattleButtons({
-            left: { text: "Load Run", type: "button", callback: () => { console.log("pressed") } },
-            mid: { text: "Google", type: "a", href: "https://google.com" },
-            right: { text: "New Run", type: "button", callback: () => { console.log("pressed") } },
+        this.innerHTML = CSS + HTML;
+        this.battleButtons = new BattleButtons({
+            left: { text: "Load Run", type: "button", callback: () => { console.log("pressed"); } },
+            mid: {
+                text: "Share", type: "button", callback: () => {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'PokéSync',
+                            text: 'Check this out!\n\n',
+                            url: window.location.href
+                        }).catch(console.error);
+                    } else {
+                        // Fallback
+                        navigator.clipboard.writeText(window.location.href);
+                        // TODO: do Toast
+                    }
+
+                }
+            },
+            right: { text: "New Run", type: "button", callback: () => { console.log("pressed"); } },
         });
-        this.appendChild(battleButtons)
+        this.appendChild(this.battleButtons);
     }
 }
 

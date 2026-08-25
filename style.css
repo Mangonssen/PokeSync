@@ -146,16 +146,16 @@
     }
 }
 
+html,body{
+    height:-webkit-fill-available;
+    height:stretch;
+}
 
 body {
     background-color: var(--bg-color);
     background-image: url("./assets/background-grid.svg"), linear-gradient(transparent 50%, oklch(from var(--accent-color) 60% 0.05 h));
     background-repeat: repeat;
     background-blend-mode: soft-light;
-    display: grid;
-    min-height: 100dvh;
-    grid-template-rows: auto 1fr auto;
-    gap: 1rem;
     padding: 1rem;
 }
 

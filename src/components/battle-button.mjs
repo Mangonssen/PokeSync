@@ -138,15 +138,15 @@ export class BattleButton extends HTMLElement {
         /** @type {BBDir} */
         this.location = params?.dir ?? /** @type {BBDir} */(this.dataset.state) ?? "left";
         shadowRoot.innerHTML =
-            HTML(this.location, params?.type ?? /** @type {"a"|"button"} */(this.dataset.type) ?? "a")
-            + CSS(this.location);
+            CSS(this.location)
+            + HTML(this.location, params?.type ?? /** @type {"a"|"button"} */(this.dataset.type) ?? "a");
 
         if (params?.type === "a") {
             const link = shadowRoot.querySelector("a");
 
             if (link) {
                 link.href = params.href;
-            }else {
+            } else {
                 console.error("link not found")
             }
 
@@ -154,8 +154,8 @@ export class BattleButton extends HTMLElement {
             const button = shadowRoot.querySelector("button");
 
             if (button) {
-                button.addEventListener("click", () => {params.callback()});
-            }else {
+                button.addEventListener("click", () => { params.callback() });
+            } else {
                 console.error("button not found")
             }
         }
