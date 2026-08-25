@@ -27,5 +27,8 @@ switch (page) {
     case "home": {
         document.body.replaceChildren(new HomePage())
     } break;
-    default: { } break;
+    default: {
+        /** @type {never} */
+        let _ = page;
+    } break;
 }

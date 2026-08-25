@@ -5,7 +5,7 @@ import { LOCAL_STORAGE_KEYS } from "./datatypes.mjs";
 import { downloadObjectAsJson } from "./utils.mjs";
 /** @import {GameState, Unsignaled, Signaled} from "./datatypes.mjs" */
 
-/** @type {GameState} */
+/** @satisfies {GameState} */
 export const defaultState = {
     player1: { name: "Player1", kind: "male" },
     player2: { name: "Player2", kind: "female" },
@@ -29,7 +29,7 @@ window.state = state;
 function initState(init) {
     return Signal.SubSignal(/** @type {GameState} */(
         {
-            ...defaultState,
+            ...structuredClone(defaultState),
             ...init
         }
     ))

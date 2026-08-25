@@ -39,3 +39,11 @@ export function html(strings, ...args) {
         ''
     );
 }
+
+/**
+ * @param {never} value
+ * @returns {never}
+ */
+export const assertNever = (value) => {
+    throw new Error(`Unhandled kind: ${value}`);
+};

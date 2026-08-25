@@ -2,6 +2,11 @@
 
 /** @import { Signal } from "./signal.mjs" */
 
+export const GAMES = Object.freeze({
+  bw: "Black & White",
+  bw2: "Black & White 2",
+})
+
 /**
  * Keys used for storing data in `localStorage`.
  */
