@@ -39,6 +39,7 @@ const CSS = css`
 init-page {
     display: flex;
     flex-direction: column;
+    gap: 1em;
     height: -webkit-fill-available;
     height: stretch;
     video{
@@ -81,7 +82,9 @@ export class InitPage extends HTMLElement {
         super();
         const state = params?.state ?? structuredClone(defaultInitPageState);
         this.innerHTML = CSS + HTML(state.step);
-        this.appendChild(new SettingsLine())
+        this.appendChild(new SettingsLine());
+        this.appendChild(new SettingsLine());
+        this.appendChild(new SettingsLine());
         this.appendChild(new BattleButtons({
             left: { text: "< Back", type: "a", href: "#" },
             right: { text: "Next >", type: "a", href: "#" },

@@ -20,7 +20,7 @@ const HTML = (kind) => {
 
     switch (kind) {
         case "string": {
-            specific = html`TEST2`;
+            specific = html`<span class="underline">TEST2</span>`;
         } break;
         case "binary": {
             specific = html``;
@@ -44,8 +44,11 @@ const HTML = (kind) => {
 
     return html`
 <div class="host">
-    <p><slot></slot></p>
-    <div>${specific}</div>
+    <p class="title">
+        <slot></slot>
+        <span></span>
+    </p>
+    <div class="content">${specific}</div>
 </div>`;
 };
 
@@ -63,24 +66,66 @@ const CSS = css`
     padding: 0.33rem;
 }
 
-p {
+.title {
+    isolation: isolate;
     height: -webkit-fill-available;
     height: stretch;
     display: flex;
     align-items: center;
     /* TODO: variable */
     color: #42DEE7;
-    /* TODO: variable */
-    background-color: #4A5252;
-    /* TODO: variable */
-    width: 10ch;
-    width: min(calc(fit-content), 140px);
+    min-width: 13ch;
+    width: fit-content;
     margin: 0;
-    /* TODO: arrow clippath */
+    padding: 0.25em;
+    position: relative;
+    text-transform: uppercase;
+
+    > span {
+        z-index: -1;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        border-radius: 0.25em;
+        overflow: hidden;
+        align-items: stretch;
+        align-content: stretch;
+
+        &::before{
+            display: block;
+            flex: 1 1 0;
+            content:'';
+            /* TODO: variable */
+            background-color: #4A5252;
+        }
+        &::after{
+            /* content: url("assets/arrow head.svg"); */
+            content: '';
+            flex: 0 0 auto;
+            aspect-ratio: 12 / 30;
+            background: url("assets/arrow head.svg");
+            background-size: cover;
+            margin-left: -2px;
+
+            /* TODO: variable */
+            fill: #4A5252;
+        }
+    }
 }
 
-div:not(.host) {
+.content {
     flex: 1 1 0;
+    position: relative;
+    .underline::after{
+        content:'';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 0.075em;
+        /* TODO: variable */
+        background-color: #42DEE7;
+    }
 }
 `;
 
@@ -96,7 +141,7 @@ export class SettingsLine extends HTMLElement {
     constructor(params) {
         super();
 
-        this.innerHTML = "TEST";
+        this.innerHTML = "Settings";
 
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.innerHTML = CSS + HTML(params?.kind ?? "string");
