@@ -110,16 +110,16 @@ const HTML = (state) => {
 
         case "file": {
             specific = html`
-                <div class="file">
+                <label class="file">
                     <span class="file-name">
-                        ${state.path ?? "No file selected"}
+                        ${state.path ?? "UPLOAD FILE"}
                     </span>
 
-                    <label class="file-button">
-                        Browse…
+                    <div class="file-button">
+                        <!-- <img src="./assets/upload.svg" /> -->
                         <input type="file" />
-                    </label>
-                </div>
+                    </div>
+                </label>
             `;
         } break;
 
@@ -286,11 +286,20 @@ const CSS = css`
             }
         }
     }
+    .select{
+        appearance: base-select;
+        width: -webkit-fill-available;
+        width: stretch;
+    }
     .file {
         display: flex;
         align-items: center;
-        width: 100%;
-        gap: 1em;
+        width: -webkit-fill-available;
+        width: stretch;
+        gap: 1ch;
+        padding-inline: 2ch;
+        cursor: pointer;
+
         .file-name {
             flex: 1 1 auto;
             min-width: 0;
@@ -298,19 +307,66 @@ const CSS = css`
             text-overflow: ellipsis;
             white-space: nowrap;
             text-align: left;
+            color: #42DEE7;
+            filter:
+                /* TODO: variable */
+                drop-shadow(0px 0.05em 0px #318494)
+                /* TODO: variable */
+                drop-shadow(0.05em 0px 0px #318494)
+                ;
+            text-transform: uppercase;
         }
 
         .file-button {
+            display: flex;
+            align-items:center;
+            justify-content:center;
             flex: 0 0 auto;
-            cursor: pointer;
+            filter:
+                /* TODO: variable */
+                drop-shadow(0px 0.05em 0px #318494)
+                /* TODO: variable */
+                drop-shadow(0.05em 0px 0px #318494)
+                ;
+            &::before {
+                content: "";
+                display: inline-block;
+                width: 0.75em;
+                height: 0.75em;
+
+                /* TODO: variable */
+                background-color: #42DEE7;
+
+                mask: url("./assets/Upload.svg") center / contain no-repeat;
+                -webkit-mask: url("./assets/Upload.svg") center / contain no-repeat;
+            }
         }
 
         .file-button input[type="file"] {
             display: none;
         }
     }
-
-
+    .submenu{
+        width: -webkit-fill-available;
+        width: stretch;
+        border: none;
+        background-color: transparent;
+        text-decoration: none;
+        display: flex;
+        align-items:center;
+        justify-content: space-between;
+        padding-inline: 2ch;
+        text-transform: uppercase;
+        /* TODO: variable */
+        color: #42DEE7;
+        filter:
+            /* TODO: variable */
+            drop-shadow(0px 0.05em 0px #318494)
+            /* TODO: variable */
+            drop-shadow(0.05em 0px 0px #318494)
+            ;
+    }
+}
 `;
 
 
@@ -328,7 +384,7 @@ export class SettingsLine extends HTMLElement {
         this.innerHTML = "Settings";
 
         const shadowRoot = this.attachShadow({ mode: "open" });
-        shadowRoot.innerHTML = CSS + HTML(params ?? { kind: "file" });
+        shadowRoot.innerHTML = CSS + HTML(params ?? { kind: "select", options: ["test", "test2", "test3", "test4",] });
     }
 }
 
