@@ -3,6 +3,7 @@ import { commonHTML, commonCSS } from "../common.mjs";
 
 export class SLText extends HTMLElement {
     static observedAttributes = [
+        "name",
         "title",
         "placeholder",
         "value",
@@ -13,6 +14,7 @@ export class SLText extends HTMLElement {
 
         this.shadow = this.attachShadow({ mode: "open" });
 
+        this.name = this.getAttribute("name") ?? "";
         this.value = this.getAttribute("value") ?? "";
         this.placeholder = this.getAttribute("placeholder") ?? "";
     }
@@ -23,6 +25,7 @@ export class SLText extends HTMLElement {
                 type="text"
                 placeholder="${this.placeholder}"
                 value="${this.value}"
+                name="${this.name}"
             >
         `);
     }
@@ -68,6 +71,16 @@ export class SLText extends HTMLElement {
 
         if (name === "title") {
             this.title = newValue ?? "";
+            if (this.titleEl) {
+                this.titleEl.innerText = newValue;
+            }
+        }
+
+        if (name === "name") {
+            this.name = newValue ?? "";
+            if (this.input) {
+                this.input.name = newValue ?? "";
+            }
         }
 
         if (name === "placeholder") {
@@ -94,7 +107,8 @@ export class SLText extends HTMLElement {
     render() {
         this.shadow.innerHTML = this.CSS + this.HTML;
 
-        this.input = this.shadow.querySelector("input");
+        this.input = /** @type {HTMLInputElement} */(this.shadow.querySelector("input"));
+        this.titleEl = /** @type {HTMLSpanElement} */(this.shadow.querySelector(".title"));
 
         this.input?.addEventListener("input", this.#onInput);
         this.input?.addEventListener("change", this.#onChange);

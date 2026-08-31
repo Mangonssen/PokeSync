@@ -1,5 +1,5 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
-import { SettingsLine } from "../components/settings-line.mjs";
+import {  } from "../components/settings-line/index.mjs";
 import { GAMES } from "../datatypes.mjs";
 import { css, html } from "../utils.mjs";
 
@@ -33,6 +33,16 @@ const HTML = (step) => html`
         <img src="assets/img/logo/pokesync-logo.svg" alt="PokéSync logo" />
         <p>Run Settings${step === "metadata" ? " - Meta Data" : step === "player" ? " - Players" : ""}</p>
     </hgroup>
+    <settings-text title="GAME" value="TESTing"></settings-text>
+    <settings-select title="GAME" placeholder="Select Game Version">
+        <option value="v1">Version 1</option>
+        <option value="v2">Version 2</option>
+        <option value="v3">Version 3</option>
+    </settings-select>
+    <settings-radio title="Jokers?">
+        <option value="">Yes</option>
+        <option value="false">No</option>
+    </settings-radio>
 </div>
 `;
 const CSS = css`
@@ -82,9 +92,6 @@ export class InitPage extends HTMLElement {
         super();
         const state = params?.state ?? structuredClone(defaultInitPageState);
         this.innerHTML = CSS + HTML(state.step);
-        this.appendChild(new SettingsLine());
-        this.appendChild(new SettingsLine());
-        this.appendChild(new SettingsLine());
         this.appendChild(new BattleButtons({
             left: { text: "< Back", type: "a", href: "#" },
             right: { text: "Next >", type: "a", href: "#" },

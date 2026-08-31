@@ -3,9 +3,9 @@ import { commonHTML, commonCSS } from "../common.mjs";
 
 export class SLSelect extends HTMLElement {
     static observedAttributes = [
+        "name",
         "title",
         "placeholder",
-        "value",
     ];
 
     constructor() {
@@ -13,14 +13,15 @@ export class SLSelect extends HTMLElement {
 
         this.shadow = this.attachShadow({ mode: "open" });
 
-        this.value = this.getAttribute("value") ?? "";
-        this.placeholder = this.getAttribute("placeholder") ?? "";
+        this.name = this.getAttribute("name") ?? crypto.randomUUID();
+        this.placeholder = this.getAttribute("placeholder");
     }
 
     get HTML() {
         return commonHTML(this.title, html`
-            <select>
-                ${ this.innerHTML }
+            <select name="${this.name}">
+                ${this.placeholder ? `<option value="">-- ${this.placeholder} --</option>` : ""}
+                ${this.innerHTML}
             </select>
         `);
     }
@@ -60,22 +61,35 @@ export class SLSelect extends HTMLElement {
             return;
         }
 
+        if (name === "name") {
+            this.name = newValue ?? "";
+            if (this.select) {
+                this.select.name = newValue ?? "";
+            }
+        }
+
         if (name === "title") {
             this.title = newValue ?? "";
+            if (this.titleEl) {
+                this.titleEl.innerText = newValue;
+            }
         }
 
         if (name === "placeholder") {
             this.placeholder = newValue ?? "";
+            let placeholderOption = this.select?.querySelector("option[value='']");
+            if (placeholderOption) {
+                placeholderOption.innerHTML = `-- ${newValue} --`;
+            } else if (this.select) {
+                this.render()
+            }
         }
-
-        if (name === "value") {
-            this.value = newValue ?? "";
-        }
-
     }
 
     render() {
         this.shadow.innerHTML = this.CSS + this.HTML;
+        this.titleEl = /** @type {HTMLSpanElement} */(this.shadow.querySelector(".title"));
+        this.select = /** @type {HTMLSelectElement} */(this.shadow.querySelector("select"));
     }
 }
 

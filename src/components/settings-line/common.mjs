@@ -8,10 +8,10 @@ import { css, html } from "../../utils.mjs";
  */
 export const commonHTML = (title, specific) => html`
     <div class="host">
-        <p class="title">
-            ${title}
-            <span></span>
-        </p>
+        <div class="label">
+            <span class="title">${title}</span>
+            <span class="arrow"></span>
+        </div>
 
         <div class="content">
             ${specific}
@@ -33,7 +33,7 @@ export const commonCSS = css`
     padding: 0.33rem;
 }
 
-.title {
+.label {
     isolation: isolate;
     height: -webkit-fill-available;
     height: stretch;
@@ -48,7 +48,7 @@ export const commonCSS = css`
     position: relative;
     text-transform: uppercase;
 
-    > span {
+    .arrow {
         z-index: -1;
         position: absolute;
         inset: 0;
