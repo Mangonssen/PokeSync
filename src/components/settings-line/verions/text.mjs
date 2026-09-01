@@ -204,12 +204,11 @@ export class SLText extends HTMLElement {
         this.input?.focus();
     }
 
-
     get name() {
         return this.getAttribute("name");
     }
     set name(val) {
-        if (val == null) {
+        if (!val) {
             this.removeAttribute("name");
         } else {
             this.setAttribute("name", val);
@@ -221,7 +220,7 @@ export class SLText extends HTMLElement {
         return this.getAttribute("value");
     }
     set value(val) {
-        if (val == null) {
+        if (!val) {
             this.removeAttribute("value");
         } else {
             this.setAttribute("value", val);
@@ -234,36 +233,46 @@ export class SLText extends HTMLElement {
         return this.getAttribute("placeholder");
     }
     set placeholder(val) {
-        this.setAttribute("placeholder", val ?? "");
-        this.#syncValidity()
+        if (!val) {
+            this.removeAttribute("placeholder");
+        } else {
+            this.setAttribute("placeholder", val);
+        }
+
+        this.#syncValidity();
     }
     get pattern() {
         return this.getAttribute("pattern");
     }
     set pattern(val) {
-        this.setAttribute("pattern", val ?? "");
-        this.#syncValidity()
+        if (!val) {
+            this.removeAttribute("pattern");
+        } else {
+            this.setAttribute("pattern", val);
+        }
+
+        this.#syncValidity();
     }
     get readOnly() {
         return this.hasAttribute("readonly");
     }
     set readOnly(val) {
-        this.toggleAttribute("readonly", val);
-        this.#syncValidity()
+        this.toggleAttribute("readonly", !!val);
+        this.#syncValidity();
     }
     get disabled() {
         return this.hasAttribute("disabled");
     }
     set disabled(val) {
-        this.toggleAttribute("disabled", val);
-        this.#syncValidity()
+        this.toggleAttribute("disabled", !!val);
+        this.#syncValidity();
     }
     get required() {
         return this.hasAttribute("required");
     }
     set required(val) {
-        this.toggleAttribute("required", val);
-        this.#syncValidity()
+        this.toggleAttribute("required", !!val);
+        this.#syncValidity();
     }
 }
 
