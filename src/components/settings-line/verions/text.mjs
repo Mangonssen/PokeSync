@@ -146,8 +146,8 @@ export class SLText extends HTMLElement {
         this.input = /** @type {HTMLInputElement} */(this.shadow.querySelector("input"));
         this.titleEl = /** @type {HTMLSpanElement} */(this.shadow.querySelector(".title"));
 
-        this.input?.addEventListener("input", this.#onInput);
-        this.input?.addEventListener("change", this.#onChange);
+        this.input.addEventListener("input", this.#onInput);
+        this.input.addEventListener("change", this.#onChange);
         this.#syncValidity();
     }
 
