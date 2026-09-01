@@ -10,25 +10,30 @@
 </head>
 
 <body>
-    <settings-text title="GAME" value="TESTing"></settings-text>
-    <settings-select title="GAME" placeholder="Select Game Version">
-        <option value="v1">Version 1</option>
-        <option value="v2">Version 2</option>
-        <option value="v3">Version 3</option>
-    </settings-select>
-    <settings-radio title="Jokers?">
-        <option value="">Yes</option>
-        <option value="false">No</option>
-    </settings-radio>
-    <settings-radio title="Text Speed">
-        <option value="slow">Slow</option>
-        <option value="medium">Medium</option>
-        <option value="fast">Fast</option>
-    </settings-radio>
-    <!-- <input type="file" name="" id=""> -->
-    <settings-file title="File"></settings-file>
-    <settings-a title="Search">Google</settings-a>
-    <settings-button title="Hello" onclick="console.log('Hello World!')">World!</settings-button>
+    <form action="">
+        <settings-text title="GAME" placeholder="Place holding"></settings-text>
+        <settings-text title="GAME" name="game" required></settings-text>
+        <settings-text title="GAME" value="TESTing"></settings-text>
+        <settings-select title="GAME" placeholder="Select Game Version">
+            <option value="v1">Version 1</option>
+            <option value="v2">Version 2</option>
+            <option value="v3">Version 3</option>
+        </settings-select>
+        <settings-radio title="Jokers?">
+            <option value="">Yes</option>
+            <option value="false">No</option>
+        </settings-radio>
+        <settings-radio title="Text Speed">
+            <option value="slow">Slow</option>
+            <option value="medium">Medium</option>
+            <option value="fast">Fast</option>
+        </settings-radio>
+        <!-- <input type="file" name="" id=""> -->
+        <settings-file title="File"></settings-file>
+        <settings-a title="Search">Google</settings-a>
+        <settings-button title="Hello" onclick="console.log('Hello World!')">World!</settings-button>
+        <button>Submit</button>
+    </form>
 </body>
 
 </html>

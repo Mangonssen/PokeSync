@@ -2,32 +2,51 @@ import { css, html } from "../../../utils.mjs";
 import { commonHTML, commonCSS } from "../common.mjs";
 
 export class SLText extends HTMLElement {
+    static formAssociated = true;
     static observedAttributes = [
         "name",
-        "title",
-        "placeholder",
         "value",
+        "placeholder",
+        "required",
+        "disabled",
+        "readonly",
+        "pattern",
+        "title",
     ];
+
 
     constructor() {
         super();
+        this.tabIndex = -1;
 
+        this.internals_ = this.attachInternals();
         this.shadow = this.attachShadow({ mode: "open" });
-
-        this.name = this.getAttribute("name") ?? "";
-        this.value = this.getAttribute("value") ?? "";
-        this.placeholder = this.getAttribute("placeholder") ?? "";
     }
 
     get HTML() {
-        return commonHTML(this.title, html`
-            <input
-                type="text"
-                placeholder="${this.placeholder}"
-                value="${this.value}"
-                name="${this.name}"
-            >
-        `);
+        const input = document.createElement("input");
+        if (this.name) {
+            input.name = this.name;
+        }
+        if (this.value) {
+            input.defaultValue = this.value;
+        }
+        if (this.placeholder) {
+            input.placeholder = this.placeholder;
+        }
+        if (this.required) {
+            input.required = this.required;
+        }
+        if (this.pattern) {
+            input.pattern = this.pattern;
+        }
+        if (this.readOnly) {
+            input.readOnly = this.readOnly;
+        }
+        if (this.disabled) {
+            input.disabled = this.disabled;
+        }
+        return commonHTML(this.title, input.outerHTML);
     }
 
     get CSS() {
@@ -54,55 +73,72 @@ export class SLText extends HTMLElement {
     }
 
     connectedCallback() {
+        if (this.name) {
+            this.value = new URLSearchParams(window.location.search).get(this.name);
+        }
         this.render();
     }
 
     /**
      * 
      * @param {string} name 
-     * @param {string} oldValue 
-     * @param {string} newValue 
+     * @param {string|null} oldValue 
+     * @param {string|null} newValue 
      * @returns 
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue === newValue) {
             return;
         }
+        this.internals_.setFormValue(this.value ?? "");
 
-        if (name === "title") {
-            this.title = newValue ?? "";
-            if (this.titleEl) {
-                this.titleEl.innerText = newValue;
-            }
+        if (!this.input) {
+            return;
         }
 
-        if (name === "name") {
-            this.name = newValue ?? "";
-            if (this.input) {
+        switch (name) {
+            case "name":
                 this.input.name = newValue ?? "";
-            }
+                break;
+
+            case "value":
+                this.input.value = newValue ?? "";
+                break;
+
+            case "placeholder":
+                this.input.placeholder = newValue ?? "";
+                break;
+
+            case "pattern":
+                if (newValue === null) {
+                    this.input.removeAttribute("pattern");
+                } else {
+                    this.input.pattern = newValue;
+                }
+                break;
+
+            case "required":
+                this.input.required = newValue !== null;
+                break;
+
+            case "readonly":
+                this.input.readOnly = newValue !== null;
+                break;
+
+            case "disabled":
+                this.input.disabled = newValue !== null;
+                break;
+
+            case "title":
+                if (this.titleEl) {
+                    this.titleEl.innerText = newValue ?? "";
+                }
+                break;
         }
 
-        if (name === "placeholder") {
-            this.placeholder = newValue ?? "";
-        }
-
-        if (name === "value") {
-            this.value = newValue ?? "";
-
-            // If already rendered, keep the actual input in sync.
-            if (this.input && this.input.value !== this.value) {
-                this.input.value = this.value;
-            }
-        }
-
-        // Title/placeholder changes require no full re-render.
-        if (this.input) {
-            if (name === "placeholder") {
-                this.input.placeholder = this.placeholder;
-            }
-        }
+        this.#syncValidity();
     }
+
 
     render() {
         this.shadow.innerHTML = this.CSS + this.HTML;
@@ -112,6 +148,7 @@ export class SLText extends HTMLElement {
 
         this.input?.addEventListener("input", this.#onInput);
         this.input?.addEventListener("change", this.#onChange);
+        this.#syncValidity();
     }
 
     /**
@@ -124,17 +161,110 @@ export class SLText extends HTMLElement {
 
         // Keep the public HTML attribute synchronized.
         this.setAttribute("value", this.value);
+        this.internals_.setFormValue(input.value);
 
+        this.#syncValidity();
         this.dispatchEvent(new Event("input", {
             bubbles: true,
         }));
     };
 
-    #onChange = () => {
+    /**
+     * 
+     * @param {Event} event 
+     */
+    #onChange = (event) => {
+        const input = /** @type {HTMLInputElement} */ (event.target);
+        this.internals_.setFormValue(input.value);
+        this.#syncValidity();
         this.dispatchEvent(new Event("change", {
             bubbles: true,
         }));
     };
+
+    #syncValidity() {
+        if (!this.input) {
+            return;
+        }
+
+        const { validity, validationMessage } = this.input;
+
+        if (validity.valid) {
+            this.internals_.setValidity({});
+        } else {
+            this.internals_.setValidity(
+                validity,
+                validationMessage || 'Please enter a valid value.',
+                this.input
+            );
+        }
+    }
+    /** @override */
+    focus() {
+        this.input?.focus();
+    }
+
+
+    get name() {
+        return this.getAttribute("name");
+    }
+    set name(val) {
+        if (val == null) {
+            this.removeAttribute("name");
+        } else {
+            this.setAttribute("name", val);
+        }
+
+        this.#syncValidity();
+    }
+    get value() {
+        return this.getAttribute("value");
+    }
+    set value(val) {
+        if (val == null) {
+            this.removeAttribute("value");
+        } else {
+            this.setAttribute("value", val);
+        }
+
+        this.internals_.setFormValue(val ?? "");
+        this.#syncValidity();
+    }
+    get placeholder() {
+        return this.getAttribute("placeholder");
+    }
+    set placeholder(val) {
+        this.setAttribute("placeholder", val ?? "");
+        this.#syncValidity()
+    }
+    get pattern() {
+        return this.getAttribute("pattern");
+    }
+    set pattern(val) {
+        this.setAttribute("pattern", val ?? "");
+        this.#syncValidity()
+    }
+    get readOnly() {
+        return this.hasAttribute("readonly");
+    }
+    set readOnly(val) {
+        this.toggleAttribute("readonly", val);
+        this.#syncValidity()
+    }
+    get disabled() {
+        return this.hasAttribute("disabled");
+    }
+    set disabled(val) {
+        this.toggleAttribute("disabled", val);
+        this.#syncValidity()
+    }
+    get required() {
+        return this.hasAttribute("required");
+    }
+    set required(val) {
+        this.toggleAttribute("required", val);
+        this.#syncValidity()
+    }
 }
 
 customElements.define("settings-text", SLText);
