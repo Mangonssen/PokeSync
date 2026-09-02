@@ -2,40 +2,47 @@ import { css, html } from "../../../utils.mjs";
 import { commonHTML, commonCSS } from "../common.mjs";
 
 export class SLFile extends HTMLElement {
+    static formAssociated = true;
     static observedAttributes = [
         "name",
-        "title",
         "placeholder",
-        "value",
+        "required",
+        "disabled",
+        "title",
     ];
 
     constructor() {
         super();
 
+        this.internals_ = this.attachInternals();
         this.shadow = this.attachShadow({ mode: "open" });
-
-        this.name = this.getAttribute("name") ?? "";
-        this.value = this.getAttribute("value") ?? "";
-        this.placeholder =
-            this.getAttribute("placeholder") ?? "UPLOAD FILE";
-
-        this.file = null;
     }
 
     get HTML() {
+        const input = document.createElement("input");
+        input.type = "file";
+        if (this.name) {
+            input.name = this.name;
+        }
+        if (this.placeholder) {
+            input.placeholder = this.placeholder;
+        }
+        if (this.required) {
+            input.required = this.required;
+        }
+        if (this.disabled) {
+            input.disabled = this.disabled;
+        }
         return commonHTML(
             this.title,
             html`
                 <label class="file">
                     <span class="file-name">
-                        ${this.value || this.placeholder}
+                        ${this.file?.name || this.placeholder}
                     </span>
 
                     <div class="file-button">
-                        <input
-                            type="file"
-                            name="${this.name}"
-                        />
+                        ${input.outerHTML}
                     </div>
                 </label>
             `,
@@ -117,38 +124,36 @@ export class SLFile extends HTMLElement {
             return;
         }
 
-        switch (name) {
-            case "title":
-                this.title = newValue ?? "";
+        this.internals_.setFormValue(this.input?.files?.[0] ?? null);
 
+        if (!this.input) {
+            return;
+        }
+
+        switch (name) {
+            case "name": {
+                this.input.name = newValue ?? "";
+            } break;
+            case "placeholder": {
+                if (this.fileNameEl) this.fileNameEl.textContent = newValue ?? "";
+                this.input.placeholder = newValue ?? "";
+            } break;
+            case "required": {
+                this.input.required = newValue !== null;
+            } break;
+            case "disabled": {
+                this.input.disabled = newValue !== null;
+            } break;
+            case "title": {
                 if (this.titleEl) {
                     this.titleEl.innerText = newValue ?? "";
                 }
-                break;
-
-            case "name":
-                this.name = newValue ?? "";
-
-                if (this.input) {
-                    this.input.name = this.name;
-                }
-                break;
-
-            case "placeholder":
-                this.placeholder = newValue ?? "UPLOAD FILE";
-
-                this.#updateFileName();
-                break;
-
-            case "value":
-                this.value = newValue ?? "";
-
-                // IMPORTANT:
-                // Never assign this.value to input.value for type="file".
-                // Browsers only allow file inputs to be cleared programmatically.
-                this.#updateFileName();
+            } break;
+            default:
                 break;
         }
+
+        this.#syncValidity()
     }
 
     render() {
@@ -167,10 +172,11 @@ export class SLFile extends HTMLElement {
         );
 
         if (this.input) {
-            this.input.name = this.name;
+            if (this.name) this.input.name = this.name;
             this.input.addEventListener("change", this.#onChange);
         }
 
+        this.#syncValidity();
         this.#updateFileName();
     }
 
@@ -180,26 +186,23 @@ export class SLFile extends HTMLElement {
         }
 
         this.fileNameEl.textContent =
-            this.value || this.placeholder;
+            this.file?.name || this.placeholder;
     }
 
     #onChange = () => {
-        const file = this.input?.files?.[0] ?? null;
 
-        this.file = file;
-
-        if (!file) {
-            // User cancelled the file picker.
+        if (!this.file) {
+            this.internals_.setFormValue(null);
+            this.#syncValidity();
             return;
         }
 
-        this.value = file.name;
+        // Make the selected file the value submitted by the form.
+        this.internals_.setFormValue(this.file);
+        this.value = this.file.name;
 
-        // Keep the component's reflected value in sync.
-        this.setAttribute("value", file.name);
-
-        // Update the visible filename immediately.
         this.#updateFileName();
+        this.#syncValidity();
 
         this.dispatchEvent(
             new Event("change", {
@@ -208,6 +211,76 @@ export class SLFile extends HTMLElement {
             }),
         );
     };
+    #syncValidity() {
+        if (!this.input) {
+            return;
+        }
+
+        const { validity, validationMessage } = this.input;
+
+        if (validity.valid) {
+            this.internals_.setValidity({});
+        } else {
+            this.internals_.setValidity(
+                validity,
+                validationMessage || 'Please enter a valid file.',
+                this.input
+            );
+        }
+    }
+
+    get name() {
+        return this.getAttribute("name");
+    }
+    set name(value) {
+        if (value) {
+            this.setAttribute("name", value);
+        } else {
+            this.removeAttribute("name");
+        }
+    }
+    get value() {
+        return this.getAttribute("value");
+    }
+    set value(value) {
+        if (value) {
+            this.setAttribute("value", value);
+        } else {
+            this.removeAttribute("value");
+        }
+    }
+    get placeholder() {
+        return this.getAttribute("placeholder");
+    }
+    set placeholder(value) {
+        if (value) {
+            this.setAttribute("placeholder", value);
+        } else {
+            this.removeAttribute("placeholder");
+        }
+    }
+    get required() {
+        return this.hasAttribute("required");
+    }
+    set required(val) {
+        this.toggleAttribute("required", !!val);
+    }
+    get disabled() {
+        return this.hasAttribute("disabled");
+    }
+    set disabled(val) {
+        this.toggleAttribute("disabled", !!val);
+    }
+    get files() {
+        return this.input?.files
+    }
+    get file() {
+        return this.input?.files?.[0]
+    }
+    /** @override */
+    focus() {
+        this.input?.focus();
+    }
 }
 
 customElements.define("settings-file", SLFile);

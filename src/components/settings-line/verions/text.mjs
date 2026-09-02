@@ -160,7 +160,7 @@ export class SLText extends HTMLElement {
         this.value = input.value;
 
         // Keep the public HTML attribute synchronized.
-        this.setAttribute("value", this.value);
+        this.setAttribute("value", this.value??"");
         this.internals_.setFormValue(input.value);
 
         this.#syncValidity();
