@@ -2,27 +2,49 @@ import { css, html } from "../../../utils.mjs";
 import { commonHTML, commonCSS } from "../common.mjs";
 
 export class SLRadio extends HTMLElement {
+    static formAssociated = true;
     static observedAttributes = [
         "name",
+        "value",
+        "required",
+        "disabled",
         "title",
     ];
 
     constructor() {
         super();
 
+        this.tabIndex = -1;
+
+        this.internals_ = this.attachInternals();
         this.shadow = this.attachShadow({ mode: "open" });
 
-        this.name = this.getAttribute("name") ?? crypto.randomUUID();
+        this.name = this.getAttribute("name") ?? SLRadio.newName();
     }
 
     get HTML() {
+        const name = this.name;
+        const required = this.required;
+        const disabled = this.disabled;
         const options = [...this.children].filter(el => el instanceof HTMLOptionElement);
+        const inputs = /** @type {[HTMLInputElement,string][]} */(options.map((opt) => {
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = name;
+            input.value = opt.value;
+            input.required = required;
+            input.disabled = disabled;
+            if (opt.value === this.value) {
+                input.setAttribute("checked", "");
+            }
+            return [input, opt.textContent];
+        }))
 
         return commonHTML(this.title, html`
-                ${options.map(el =>
+                ${inputs.map(([input, label]) =>
             html`<label>
-                    <input type="radio" name="${this.name}" value="${el.value}" />
-                    <span>${el.innerText}</span>
+                    ${input.outerHTML}
+                    <span>${label}</span>
                 </label>`
         ).join("\n")}
         `);
@@ -76,40 +98,136 @@ export class SLRadio extends HTMLElement {
     }
 
     connectedCallback() {
+        this.value = new URLSearchParams(window.location.search).get(this.name);
         this.render();
     }
 
     /**
      * 
      * @param {string} name 
-     * @param {string} oldValue 
-     * @param {string} newValue 
+     * @param {string|null} oldValue 
+     * @param {string|null} newValue 
      * @returns 
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue === newValue) {
             return;
         }
+        this.internals_.setFormValue(this.value ?? "");
 
-        if (name === "name") {
-            this.name = newValue;
-            if (this.select) {
-                this.select.name = newValue ?? "";
-            }
+        if (this.inputs.length === 0) {
+            return
         }
 
-        if (name === "title") {
-            this.title = newValue;
-            if (this.titleEl) {
-                this.titleEl.innerText = newValue;
-            }
+        switch (name) {
+            case "name": {
+                const val = newValue || SLRadio.newName();
+                this.name = val;
+                this.inputs.forEach((el) => el.name = val);
+            } break;
+            case "value": {
+                this.inputs.forEach((el) => el.checked = false);
+                [...this.inputs].filter((el) => el.value == newValue).forEach((el) => el.checked = true);
+            } break;
+            case "required": {
+                this.inputs.forEach((el) => el.required = newValue !== null);
+            } break;
+            case "disabled": {
+                this.inputs.forEach((el) => el.disabled = newValue !== null);
+            } break;
+            case "title": {
+                if (this.titleEl) {
+                    this.titleEl.innerText = newValue ?? "";
+                }
+            } break;
+            default:
+                break;
         }
+
+        this.#syncValidity();
     }
 
     render() {
         this.shadow.innerHTML = this.CSS + this.HTML;
         this.titleEl = /** @type {HTMLSpanElement} */(this.shadow.querySelector(".title"));
-        this.select = /** @type {HTMLSelectElement} */(this.shadow.querySelector("select"));
+        this.inputs.forEach((el) => el.addEventListener("change", this.#onChange))
+        this.#syncValidity();
+    }
+
+    /**
+     * 
+     * @param {Event} event 
+     */
+    #onChange = (event) => {
+        const input = /** @type {HTMLInputElement} */ (event.target);
+        this.internals_.setFormValue(input.value);
+        this.value = input.value;
+        this.#syncValidity();
+        this.dispatchEvent(new Event("change", {
+            bubbles: true,
+        }));
+    };
+
+    #syncValidity() {
+        if (!this.inputs || !this.inputs[0]) {
+            return;
+        }
+
+        const { validity, validationMessage } = this.inputs[0];
+
+        if (validity.valid) {
+            this.internals_.setValidity({});
+        } else {
+            this.internals_.setValidity(
+                validity,
+                validationMessage || 'Please enter a valid value.',
+                this.inputs[0]
+            );
+        }
+    }
+    /** @override */
+    focus() {
+        this.inputs[0]?.focus();
+    }
+
+    static newName() {
+        return encodeURIComponent(crypto.randomUUID());
+    }
+
+    get inputs() {
+        return this.shadow.querySelectorAll("input")
+    }
+    get name() {
+        return this.getAttribute("name") || (() => { const val = SLRadio.newName(); this.name = val; return val })();
+    }
+    set name(val) {
+        this.setAttribute("name", val || SLRadio.newName());
+        this.#syncValidity();
+    }
+    get value() {
+        return this.getAttribute("value");
+    }
+    set value(val) {
+        if (val) {
+            this.setAttribute("value", val);
+        } else {
+            this.removeAttribute("value");
+        }
+        this.#syncValidity();
+    }
+    get disabled() {
+        return this.hasAttribute("disabled");
+    }
+    set disabled(val) {
+        this.toggleAttribute("disabled", !!val);
+        this.#syncValidity();
+    }
+    get required() {
+        return this.hasAttribute("required");
+    }
+    set required(val) {
+        this.toggleAttribute("required", !!val);
+        this.#syncValidity();
     }
 }
 

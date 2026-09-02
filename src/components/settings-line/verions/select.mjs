@@ -182,6 +182,7 @@ export class SLSelect extends HTMLElement {
         } else {
             this.removeAttribute("name");
         }
+        this.#syncValidity();
     }
     get value() {
         return this.getAttribute("value");
@@ -192,6 +193,7 @@ export class SLSelect extends HTMLElement {
         } else {
             this.removeAttribute("value");
         }
+        this.#syncValidity();
     }
     get placeholder() {
         return this.getAttribute("placeholder");
@@ -202,18 +204,21 @@ export class SLSelect extends HTMLElement {
         } else {
             this.removeAttribute("placeholder");
         }
+        this.#syncValidity();
     }
     get required() {
         return this.hasAttribute("required");
     }
     set required(val) {
         this.toggleAttribute("required", !!val);
+        this.#syncValidity();
     }
     get disabled() {
         return this.hasAttribute("disabled");
     }
     set disabled(val) {
         this.toggleAttribute("disabled", !!val);
+        this.#syncValidity();
     }
 }
 
