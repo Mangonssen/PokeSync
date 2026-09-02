@@ -31,7 +31,7 @@ export const commonCSS = css`
     background-color: #293131;
     /* TODO: variables border color, width */
     border: 2px solid #63B5B5;
-    padding: 0.33em;
+    padding: 0.15em 0.25em;
 }
 
 .label {

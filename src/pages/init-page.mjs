@@ -104,6 +104,10 @@ export class InitPage extends HTMLElement {
                     display: grid;
                     grid-template-rows: auto 1fr auto;
                 }
+                hgroup p{
+                    font-size: 1.2rem;
+                    text-transform: uppercase;
+                }
                 hgroup img{
                     height: 2rem;
                 }

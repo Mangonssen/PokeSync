@@ -17,6 +17,7 @@
     --bg-color: oklch(from var(--main-color) 12% 0.011 h);
     --accent-color: #95e1f6;
 
+    --dark: #050609;
     --gray: #808080;
 
     /* --accent-color: red; */
@@ -152,11 +153,39 @@ html,body{
 }
 
 body {
-    background-color: var(--bg-color);
-    background-image: url("./assets/background-grid.svg"), linear-gradient(transparent 50%, oklch(from var(--accent-color) 60% 0.05 h));
-    background-repeat: repeat;
-    background-blend-mode: soft-light;
+    --bg-px: 32px;
+    --bg-scale: 1.5;
+
+    position: relative;
+    background: var(--bg-color);
     padding: 1rem;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background: url("./assets/background-grid.svg");
+    background-size: calc(var(--bg-px) * var(--bg-scale));
+    opacity: 0.05;
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background: linear-gradient(transparent 50%,
+            #ff0000bd);
+
+    mix-blend-mode: saturation;
+
+    pointer-events: none;
+    z-index: -1;
 }
 
 
