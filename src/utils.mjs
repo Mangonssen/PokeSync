@@ -47,3 +47,17 @@ export function html(strings, ...args) {
 export const assertNever = (value) => {
     throw new Error(`Unhandled kind: ${value}`);
 };
+
+/**
+ * Escape a value
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+export function escapeHTML(value) {
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+}
