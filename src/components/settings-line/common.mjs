@@ -21,6 +21,7 @@ export const commonHTML = (title, specific) => html`
 
 export const commonCSS = css`
 .host {
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
     gap: 1ch;
@@ -30,7 +31,7 @@ export const commonCSS = css`
     background-color: #293131;
     /* TODO: variables border color, width */
     border: 2px solid #63B5B5;
-    padding: 0.33rem;
+    padding: 0.33em;
 }
 
 .label {
@@ -44,7 +45,7 @@ export const commonCSS = css`
     min-width: 13ch;
     width: fit-content;
     margin: 0;
-    padding: 0.25em;
+    padding: 0 0.25em;
     position: relative;
     text-transform: uppercase;
 

@@ -1,5 +1,5 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
-import {  } from "../components/settings-line/index.mjs";
+import { } from "../components/settings-line/index.mjs";
 import { GAMES } from "../datatypes.mjs";
 import { css, html } from "../utils.mjs";
 
@@ -27,22 +27,26 @@ const HTML = (step) => html`
     <a href="https://developer.mozilla.org/shared-assets/videos/flower.mp4">MP4</a>
     video.
 </video>
-<div>
+<div class="content">
     <hgroup>
         <h1 class="sr-only">PokéSync</h1>
         <img src="assets/img/logo/pokesync-logo.svg" alt="PokéSync logo" />
         <p>Run Settings${step === "metadata" ? " - Meta Data" : step === "player" ? " - Players" : ""}</p>
     </hgroup>
-    <settings-text title="GAME" value="TESTing"></settings-text>
-    <settings-select title="GAME" placeholder="Select Game Version">
-        <option value="v1">Version 1</option>
-        <option value="v2">Version 2</option>
-        <option value="v3">Version 3</option>
-    </settings-select>
-    <settings-radio title="Jokers?">
-        <option value="">Yes</option>
-        <option value="false">No</option>
-    </settings-radio>
+    <div class="settings">
+        <settings-select title="Game" placeholder="Select Option" name="game" required>
+            <option value="v1">Version 1</option>
+            <option value="v2">Version 2</option>
+            <option value="v3">Version 3</option>
+        </settings-select>
+        <settings-text title="Run Name" name="name" required></settings-text>
+        <settings-radio title="Use Jokers" name="jokers" required>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </settings-radio>
+    </div>
+    <!-- TODO: get overlap with battle buttons -->
+    <div style="height: 5rem" class="bottom-spacer"></div>
 </div>
 `;
 const CSS = css`
@@ -57,6 +61,21 @@ init-page {
         height: auto;
         aspect-ratio: 1;
         background-color: white;
+    }
+    .content{
+        height:-webkit-fill-available;
+        height:stretch;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+    }
+    hgroup img{
+        height: 2rem;
+    }
+    .settings{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
     }
 }
 `;
