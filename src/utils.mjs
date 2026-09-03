@@ -61,3 +61,34 @@ export function escapeHTML(value) {
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
 }
+
+export function showToast(message) {
+    const toast = document.createElement('div');
+
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #222;
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    `;
+
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 200);
+    }, 2500);
+}

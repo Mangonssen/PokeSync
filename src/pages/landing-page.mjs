@@ -1,5 +1,5 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
-import { css, html } from "../utils.mjs";
+import { css, html, showToast } from "../utils.mjs";
 
 const HTML = html`
 <video controls width="250">
@@ -53,10 +53,10 @@ export class LandingPage extends HTMLElement {
         super();
 
         this.innerHTML = CSS + HTML;
-        this.battleButtons = new BattleButtons({
-            left: { text: "Load Run", type: "button", callback: () => { console.log("pressed"); } },
+        this.battleButtons =  BattleButtons.create({
+            left: { text: "Load Run", kind: "button", callback: () => { console.log("pressed"); } },
             mid: {
-                text: "Share", type: "button", callback: () => {
+                text: "Share", kind: "button", callback: () => {
                     if (navigator.share) {
                         navigator.share({
                             title: 'PokéSync',
@@ -65,13 +65,18 @@ export class LandingPage extends HTMLElement {
                         }).catch(console.error);
                     } else {
                         // Fallback
-                        navigator.clipboard.writeText(window.location.href);
-                        // TODO: do Toast
+                        navigator.clipboard.writeText(window.location.href)
+                            .then(() => {
+                                showToast('Link copied to clipboard!');
+                            })
+                            .catch(() => {
+                                showToast('Could not copy link.');
+                            });
                     }
 
                 }
             },
-            right: { text: "New Run", type: "button", callback: () => { console.log("pressed"); } },
+            right: { text: "New Run", kind: "a", href:"?page=init" },
         });
         this.appendChild(this.battleButtons);
     }

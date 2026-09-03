@@ -1,4 +1,5 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
+import { BattleButton } from "../components/battle-button.mjs";
 import { } from "../components/settings-line/index.mjs";
 import { GAMES } from "../datatypes.mjs";
 import { css, html } from "../utils.mjs";
@@ -29,20 +30,81 @@ export const defaultInitPageState = {
  */
 
 export class InitPage extends HTMLElement {
-    /**
-     * @param {InitPageParams} [params] 
-     */
-    constructor(params) {
+    static observedAttributes = [
+        "allow-jokers",
+        "game-version",
+        "run-name",
+        "player-1-name",
+        "player-1-gender",
+        "player-2-name",
+        "player-2-gender",
+    ]
+    constructor() {
         super();
-        this.state = params?.state ?? structuredClone(defaultInitPageState);
-        this.innerHTML = this.CSS + this.HTML;
-        this.appendChild(BattleButtons.create({
-            left: { text: "< Back", kind: "a", href: "#" },
-            right: { text: "Next >", kind: "a", href: "#" },
-        }))
+        // this.appendChild(BattleButtons.create({
+        //     left: { text: "< Back", kind: "a", href: "#" },
+        //     right: { text: "Next >", kind: "a", href: "#" },
+        // }))
     }
 
+    connectedCallback(){
+        this.render();
+    }
+
+    render(){
+        this.innerHTML = this.CSS + this.HTML;
+        this.next = /** @type {BattleButton} */(this.querySelector("battle-button[slot='right'"));
+        this.next.onclick = ()=>{this.#onNext()}
+    }
+
+    #onNext(){
+        debugger
+        if (this.step === "metadata") {
+            this.step = "player-data";
+            alert(1);
+        } else {
+            window.navigation.navigate("?page=dashboard");
+        }
+    }
+
+
     get HTML() {
+
+        const step = this.step;
+        const subtitle = {
+            metadata: "Run Settings - Meta Data",
+            "player-data": "Run Settings - Player Data",
+        }[step];
+        const next = {
+            metadata: "Next &gt",
+            "player-data": "Begin &gt",
+        }[step];
+        const settings = {
+            metadata: html`
+                <settings-select title="Game" placeholder="Select Option" name="game" required>
+                    <option value="v1">Version 1</option>
+                    <option value="v2">Version 2</option>
+                    <option value="v3">Version 3</option>
+                </settings-select>
+                <settings-text title="Run Name" name="name" required></settings-text>
+                <settings-radio title="Use Jokers" name="jokers" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </settings-radio>`,
+            "player-data": html`
+                <settings-text title="Player 1" name="player1name" required></settings-text>
+                <settings-radio title="Player 1" name="player1gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </settings-radio>
+                <settings-text title="Player 2" name="player2name" required></settings-text>
+                <settings-radio title="Player 2" name="player2gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </settings-radio>
+            `,
+        }[step];
+
         return html`
             <video controls width="250">
                 <source
@@ -64,23 +126,18 @@ export class InitPage extends HTMLElement {
                 <hgroup>
                     <h1 class="sr-only">PokéSync</h1>
                     <img src="assets/img/logo/pokesync-logo.svg" alt="PokéSync logo" />
-                    <p>Run Settings${this.state.step === "metadata" ? " - Meta Data" : this.state.step === "player" ? " - Players" : ""}</p>
+                    <p>${subtitle}</p>
                 </hgroup>
                 <div class="settings">
-                    <settings-select title="Game" placeholder="Select Option" name="game" required>
-                        <option value="v1">Version 1</option>
-                        <option value="v2">Version 2</option>
-                        <option value="v3">Version 3</option>
-                    </settings-select>
-                    <settings-text title="Run Name" name="name" required></settings-text>
-                    <settings-radio title="Use Jokers" name="jokers" required>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </settings-radio>
+                    ${settings}
                 </div>
                 <!-- TODO: get overlap with battle buttons -->
                 <div style="height: 5rem" class="bottom-spacer"></div>
             </div>
+            <battle-buttons>
+                <battle-button slot="left" location="left" >&lt Back</battle-button>
+                <battle-button slot="right" location="right" >${next}</battle-button>
+            </battle-buttons>
         `;
     }
 
@@ -119,6 +176,88 @@ export class InitPage extends HTMLElement {
                 }
             }
         `;
+    }
+
+    get step(){
+        return this.getAttribute("step") ?? "metadata"
+    }
+    set step(val) {
+        if (val==="player-data"&&this.jokers&&this.gameVersion&&this.runName) {
+            this.setAttribute("step",val);
+        }
+        else if (val==="metadata") {
+            this.setAttribute("step", val);
+        }
+    }
+    get jokers(){
+        return this.getAttribute("allow-jokers");
+    }
+    set jokers(val) {
+        if (val) {
+            this.setAttribute("allow-jokers",val);
+        }else {
+            this.removeAttribute("allow-jokers");
+        }
+    }
+    get gameVersion(){
+        return this.getAttribute("game-version")
+    }
+    set gameVersion(val){
+        if (val) {
+            this.setAttribute("game-version",val);
+        }else {
+            this.removeAttribute("game-version");
+        }
+    }
+    get runName(){
+        return this.getAttribute("game-version")
+    }
+    set runName(val){
+        if (val) {
+            this.setAttribute("game-version",val);
+        }else {
+            this.removeAttribute("game-version");
+        }
+    }
+    get player1Name(){
+        return this.getAttribute("game-version")
+    }
+    set player1Name(val){
+        if (val) {
+            this.setAttribute("game-version",val);
+        }else {
+            this.removeAttribute("game-version");
+        }
+    }
+    get player1Gender(){
+        return this.getAttribute("player-1-gender")
+    }
+    set player1Gender(val){
+        if (val) {
+            this.setAttribute("player-1-gender",val);
+        }else {
+            this.removeAttribute("player-1-gender");
+        }
+    }
+    get player2Name(){
+        return this.getAttribute("player-2-name")
+    }
+    set player2Name(val){
+        if (val) {
+            this.setAttribute("player-2-name",val);
+        }else {
+            this.removeAttribute("player-2-name");
+        }
+    }
+    get player2Gender(){
+        return this.getAttribute("player-2-gender")
+    }
+    set player2Gender(val){
+        if (val) {
+            this.setAttribute("player-2-gender",val);
+        }else {
+            this.removeAttribute("player-2-gender");
+        }
     }
 }
 

@@ -60,18 +60,23 @@ export class SLRadio extends HTMLElement {
 
                 input {
                     appearance: none;
-                    width: 0.5ch;
-                    height: 0.5em;
+                    width: 0.75ch;
+                    height: 0.65em;
                     /* TODO: variable */
                     background-color: #73debd;
                     /* TODO: variable */
                     border: 0.05em solid #212129;
                     cursor: pointer;
+                    margin: 0;
                 }
 
                 label {
                     text-transform: uppercase;
                     cursor: pointer;
+                    display: flex;
+                    gap: 1ch;
+                    align-items: center;
+                    justify-content: center;
 
                     &:has(:checked) {
                         /* TODO: variable */
