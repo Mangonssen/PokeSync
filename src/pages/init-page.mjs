@@ -1,6 +1,6 @@
 import { BattleButtons } from "../components/battle-buttons.mjs";
 import { BattleButton } from "../components/battle-button.mjs";
-import { } from "../components/settings-line/index.mjs";
+import { SLRadio, SLSelect, SLText } from "../components/settings-line/index.mjs";
 import { GAMES } from "../datatypes.mjs";
 import { css, html } from "../utils.mjs";
 
@@ -31,6 +31,7 @@ export const defaultInitPageState = {
 
 export class InitPage extends HTMLElement {
     static observedAttributes = [
+        "step",
         "allow-jokers",
         "game-version",
         "run-name",
@@ -47,26 +48,84 @@ export class InitPage extends HTMLElement {
         // }))
     }
 
-    connectedCallback(){
+    connectedCallback() {
         this.render();
     }
 
-    render(){
-        this.innerHTML = this.CSS + this.HTML;
-        this.next = /** @type {BattleButton} */(this.querySelector("battle-button[slot='right'"));
-        this.next.onclick = ()=>{this.#onNext()}
+    /**
+     * 
+     * @param {string} name 
+     * @param {string|null} oldValue 
+     * @param {string|null} newValue 
+     * @returns 
+     */
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue === newValue) {
+            return;
+        }
+
+        switch (name) {
+            case "step": {
+                this.render()
+            } break;
+
+            default:
+                break;
+        }
     }
 
-    #onNext(){
-        debugger
+    render() {
+        this.innerHTML = this.CSS + this.HTML;
+        this.settingsElements = {
+            game: /** @type {SLSelect | null} */(this.querySelector("[name='game']")),
+            run: /** @type {SLText | null} */(this.querySelector("[name='name']")),
+            jokers: /** @type {SLRadio | null} */(this.querySelector("[name='jokers']")),
+            player1Name: /** @type {SLText | null} */(this.querySelector("[name='player1name']")),
+            player1Gender: /** @type {SLRadio | null} */(this.querySelector("[name='player1gender']")),
+            player2Name: /** @type {SLText | null} */(this.querySelector("[name='player2name']")),
+            player2Gender: /** @type {SLRadio | null} */(this.querySelector("[name='player2gender']")),
+        };
+        this.settingsElements.game?.addEventListener("change", () => {
+            this.gameVersion = this.settingsElements?.game?.value ?? null
+        });
+        this.settingsElements.run?.addEventListener("input", () => {
+            this.runName = this.settingsElements?.run?.value ?? null
+        });
+        this.settingsElements.jokers?.addEventListener("change", () => {
+            this.jokers = this.settingsElements?.jokers?.value ?? null
+        });
+        this.settingsElements.player1Name?.addEventListener("input", () => {
+            this.player1Name = this.settingsElements?.player1Name?.value ?? null
+        });
+        this.settingsElements.player1Gender?.addEventListener("change", () => {
+            this.player1Gender = this.settingsElements?.player1Gender?.value ?? null
+        });
+        this.settingsElements.player2Name?.addEventListener("input", () => {
+            this.player2Name = this.settingsElements?.player2Name?.value ?? null
+        });
+        this.settingsElements.player2Gender?.addEventListener("change", () => {
+            this.player2Gender = this.settingsElements?.player2Gender?.value ?? null
+        });
+        this.back = /** @type {BattleButton} */(this.querySelector("battle-button[slot='left'"));
+        this.back.onclick = () => { this.#onBack() }
+        this.next = /** @type {BattleButton} */(this.querySelector("battle-button[slot='right'"));
+        this.next.onclick = () => { this.#onNext() }
+    }
+
+    #onBack() {
+        if (this.step === "player-data") {
+            this.step = "metadata";
+        } else {
+            window.navigation.navigate("?page=");
+        }
+    }
+    #onNext() {
         if (this.step === "metadata") {
             this.step = "player-data";
-            alert(1);
         } else {
             window.navigation.navigate("?page=dashboard");
         }
     }
-
 
     get HTML() {
 
@@ -178,84 +237,84 @@ export class InitPage extends HTMLElement {
         `;
     }
 
-    get step(){
+    get step() {
         return this.getAttribute("step") ?? "metadata"
     }
     set step(val) {
-        if (val==="player-data"&&this.jokers&&this.gameVersion&&this.runName) {
-            this.setAttribute("step",val);
+        if (val === "player-data" && this.jokers && this.gameVersion && this.runName) {
+            this.setAttribute("step", val);
         }
-        else if (val==="metadata") {
+        else if (val === "metadata") {
             this.setAttribute("step", val);
         }
     }
-    get jokers(){
+    get jokers() {
         return this.getAttribute("allow-jokers");
     }
     set jokers(val) {
         if (val) {
-            this.setAttribute("allow-jokers",val);
-        }else {
+            this.setAttribute("allow-jokers", val);
+        } else {
             this.removeAttribute("allow-jokers");
         }
     }
-    get gameVersion(){
+    get gameVersion() {
         return this.getAttribute("game-version")
     }
-    set gameVersion(val){
+    set gameVersion(val) {
         if (val) {
-            this.setAttribute("game-version",val);
-        }else {
+            this.setAttribute("game-version", val);
+        } else {
             this.removeAttribute("game-version");
         }
     }
-    get runName(){
-        return this.getAttribute("game-version")
+    get runName() {
+        return this.getAttribute("run-name")
     }
-    set runName(val){
+    set runName(val) {
         if (val) {
-            this.setAttribute("game-version",val);
-        }else {
-            this.removeAttribute("game-version");
+            this.setAttribute("run-name", val);
+        } else {
+            this.removeAttribute("run-name");
         }
     }
-    get player1Name(){
-        return this.getAttribute("game-version")
+    get player1Name() {
+        return this.getAttribute("player-1-name")
     }
-    set player1Name(val){
+    set player1Name(val) {
         if (val) {
-            this.setAttribute("game-version",val);
-        }else {
-            this.removeAttribute("game-version");
+            this.setAttribute("player-1-name", val);
+        } else {
+            this.removeAttribute("player-1-name");
         }
     }
-    get player1Gender(){
+    get player1Gender() {
         return this.getAttribute("player-1-gender")
     }
-    set player1Gender(val){
+    set player1Gender(val) {
         if (val) {
-            this.setAttribute("player-1-gender",val);
-        }else {
+            this.setAttribute("player-1-gender", val);
+        } else {
             this.removeAttribute("player-1-gender");
         }
     }
-    get player2Name(){
+    get player2Name() {
         return this.getAttribute("player-2-name")
     }
-    set player2Name(val){
+    set player2Name(val) {
         if (val) {
-            this.setAttribute("player-2-name",val);
-        }else {
+            this.setAttribute("player-2-name", val);
+        } else {
             this.removeAttribute("player-2-name");
         }
     }
-    get player2Gender(){
+    get player2Gender() {
         return this.getAttribute("player-2-gender")
     }
-    set player2Gender(val){
+    set player2Gender(val) {
         if (val) {
-            this.setAttribute("player-2-gender",val);
-        }else {
+            this.setAttribute("player-2-gender", val);
+        } else {
             this.removeAttribute("player-2-gender");
         }
     }
