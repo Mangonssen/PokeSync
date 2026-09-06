@@ -6,13 +6,13 @@ export PAGE_URL="${PAGE_URL:-http://pokesync/}"
 
 SCREEN_WIDTH="${SCREEN_WIDTH:-1920}"
 SCREEN_HEIGHT="${SCREEN_HEIGHT:-1080}"
-SCREEN_DEPTH="${SCREEN_DEPTH:-24}"
+SCREEN_COLOR_DEPTH="${SCREEN_COLOR_DEPTH:-24}"
 
 echo "======================================"
 echo " Starting browser environment"
 echo "======================================"
 echo "DISPLAY:      ${DISPLAY}"
-echo "Screen:       ${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}"
+echo "Screen:       ${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_COLOR_DEPTH}"
 echo "Page:         ${PAGE_URL}"
 echo "======================================"
 
@@ -24,7 +24,7 @@ rm -f "/tmp/.X11-unix/X${DISPLAY#:}"
 echo "Starting Xvfb..."
 
 Xvfb "$DISPLAY" \
-    -screen 0 "${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}" \
+    -screen 0 "${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_COLOR_DEPTH}" \
     -ac \
     +extension GLX \
     +render \

@@ -25,7 +25,7 @@ services:
       PAGE_URL: "http://pokesync/"
       SCREEN_WIDTH: "1920"
       SCREEN_HEIGHT: "1080"
-      SCREEN_DEPTH: "24"
+      SCREEN_COLOR_DEPTH: "24"
       WEB_WIDTH: "390"
       WEB_HEIGHT: "844"
       IS_MOBILE: "true"
