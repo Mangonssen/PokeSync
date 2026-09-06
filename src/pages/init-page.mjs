@@ -72,6 +72,7 @@ export class InitPage extends HTMLElement {
             default:
                 break;
         }
+        this.#updateNext();
     }
 
     render() {
@@ -106,10 +107,11 @@ export class InitPage extends HTMLElement {
         this.settingsElements.player2Gender?.addEventListener("change", () => {
             this.player2Gender = this.settingsElements?.player2Gender?.value ?? null
         });
-        this.back = /** @type {BattleButton} */(this.querySelector("battle-button[slot='left'"));
+        this.back = /** @type {BattleButton} */(this.querySelector("battle-button[slot='left']"));
         this.back.onclick = () => { this.#onBack() }
-        this.next = /** @type {BattleButton} */(this.querySelector("battle-button[slot='right'"));
+        this.next = /** @type {BattleButton} */(this.querySelector("battle-button[slot='right']"));
         this.next.onclick = () => { this.#onNext() }
+        this.#updateNext()
     }
 
     #onBack() {
@@ -124,6 +126,37 @@ export class InitPage extends HTMLElement {
             this.step = "player-data";
         } else {
             window.navigation.navigate("?page=dashboard");
+        }
+    }
+
+    canGoNext() {
+        const step = this.step;
+
+        if (step === "metadata" && (this.jokers && this.runName && this.gameVersion)) {
+            return true;
+        } else if (step === "player-data"
+            && (this.jokers && this.runName && this.gameVersion)
+            && (this.player1Name && this.player1Gender && this.player2Name && this.player2Gender)
+        ) {
+            return true;
+        }
+
+        if (step !== "metadata" && step !== "player-data") {
+            console.error("InitPage.step was bad")
+        }
+        return false;
+    }
+    #updateNext(){
+        const bButton = this.next
+        if (!bButton) {
+            return
+        }
+
+        const can = this.canGoNext();
+        if (can) {
+            bButton.disabled = false;
+        } else {
+            bButton.disabled = true;
         }
     }
 
@@ -247,6 +280,7 @@ export class InitPage extends HTMLElement {
         else if (val === "metadata") {
             this.setAttribute("step", val);
         }
+        this.#updateNext();
     }
     get jokers() {
         return this.getAttribute("allow-jokers");
@@ -257,6 +291,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("allow-jokers");
         }
+        this.#updateNext();
     }
     get gameVersion() {
         return this.getAttribute("game-version")
@@ -267,6 +302,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("game-version");
         }
+        this.#updateNext();
     }
     get runName() {
         return this.getAttribute("run-name")
@@ -277,6 +313,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("run-name");
         }
+        this.#updateNext();
     }
     get player1Name() {
         return this.getAttribute("player-1-name")
@@ -287,6 +324,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("player-1-name");
         }
+        this.#updateNext();
     }
     get player1Gender() {
         return this.getAttribute("player-1-gender")
@@ -297,6 +335,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("player-1-gender");
         }
+        this.#updateNext();
     }
     get player2Name() {
         return this.getAttribute("player-2-name")
@@ -307,6 +346,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("player-2-name");
         }
+        this.#updateNext();
     }
     get player2Gender() {
         return this.getAttribute("player-2-gender")
@@ -317,6 +357,7 @@ export class InitPage extends HTMLElement {
         } else {
             this.removeAttribute("player-2-gender");
         }
+        this.#updateNext();
     }
 }
 

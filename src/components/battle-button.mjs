@@ -20,7 +20,7 @@ import { css, escapeHTML, html } from "../utils.mjs";
  */
 
 export class BattleButton extends HTMLElement {
-    static observedAttributes = ["location", "kind", "href", "onclick", "target"];
+    static observedAttributes = ["location", "kind", "href", "onclick", "target", "disabled"];
 
     constructor() {
         super();
@@ -65,6 +65,7 @@ export class BattleButton extends HTMLElement {
             case "href":
             case "target":
             case "onclick":
+            case "disabled":
                 this.render();
                 break;
         }
@@ -79,7 +80,30 @@ export class BattleButton extends HTMLElement {
             return;
         }
 
+        if (this.disabled) {
+            // Native disabled state for <button>
+            if (element instanceof HTMLButtonElement) {
+                element.disabled = true;
+            }
+
+            // <a> has no native disabled state, so block activation manually.
+            element.addEventListener("click", this.#preventDisabledClick, true);
+        }
     }
+
+    /**
+     * 
+     * @param {Event} event 
+     * @returns 
+     */
+    #preventDisabledClick = (event) => {
+        if (!this.disabled) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    };
 
     /** @type {BBDir} */
     get location() {
@@ -159,6 +183,13 @@ export class BattleButton extends HTMLElement {
         }
     }
 
+    get disabled() {
+        return this.hasAttribute("disabled")
+    }
+    set disabled(val) {
+        this.toggleAttribute("disabled", !!val);
+    }
+
     get HTML() {
         const dir = this.location;
         const type = this.type;
@@ -220,12 +251,12 @@ export class BattleButton extends HTMLElement {
 
         return css`
             :host {
-                display: inline-block;
-                transform: ${hostTransform};
+                display: contents;
             }
 
             a,
             button {
+                transform: ${hostTransform};
                 appearance: none;
                 border: 0;
                 padding: 0;
@@ -240,6 +271,13 @@ export class BattleButton extends HTMLElement {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
+            }
+
+            :host([disabled]) a,
+            :host([disabled]) button {
+                cursor: not-allowed;
+                filter: grayscale(0.25);
+                opacity: 0.5;
             }
 
             #text {
