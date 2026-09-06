@@ -3,5 +3,7 @@
         "pokedex",
         "pokemon",
         "Webcomponent"
-    ]
+    ],
+    "fiveServer.host": "0.0.0.0",
+    "fiveServer.port": 5555
 }

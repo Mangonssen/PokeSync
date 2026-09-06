@@ -1,0 +1,41 @@
+services:
+  nginx:
+    image: docker.io/library/nginx:alpine
+    container_name: pokesync-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ../:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      testnet:
+        aliases:
+          - pokesync
+
+  browsers:
+    build:
+      context: ./browsers
+    container_name: pokesync-browsers
+    volumes:
+      - ./browsers/run-browsers.js:/app/run-browsers.js
+    depends_on:
+      - nginx
+    environment:
+      DISPLAY: ":99"
+      PAGE_URL: "http://pokesync/"
+      SCREEN_WIDTH: "1920"
+      SCREEN_HEIGHT: "1080"
+      SCREEN_DEPTH: "24"
+      WEB_WIDTH: "390"
+      WEB_HEIGHT: "844"
+      IS_MOBILE: "true"
+    ports:
+      - "5900:5900"
+      - "6080:6080"
+    networks:
+      - testnet
+    shm_size: "2gb"
+
+networks:
+  testnet:
+    driver: bridge

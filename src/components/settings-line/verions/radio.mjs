@@ -62,6 +62,7 @@ export class SLRadio extends HTMLElement {
                     appearance: none;
                     width: 0.75ch;
                     height: 0.65em;
+                    border-radius: 0;
                     /* TODO: variable */
                     background-color: #73debd;
                     /* TODO: variable */

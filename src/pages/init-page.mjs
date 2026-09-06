@@ -146,7 +146,7 @@ export class InitPage extends HTMLElement {
         }
         return false;
     }
-    #updateNext(){
+    #updateNext() {
         const bButton = this.next
         if (!bButton) {
             return
@@ -248,10 +248,9 @@ export class InitPage extends HTMLElement {
                     background-color: white;
                 }
                 .content{
-                    height:-webkit-fill-available;
-                    height:stretch;
-                    display: grid;
-                    grid-template-rows: auto 1fr auto;
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
                 }
                 hgroup p{
                     font-size: 1.2rem;
@@ -264,6 +263,7 @@ export class InitPage extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     gap: 0.5rem;
+                    flex-grow: 1;
                     justify-content: center;
                 }
             }

@@ -71,6 +71,8 @@ export const commonCSS = css`
             content: '';
             flex: 0 0 auto;
             aspect-ratio: 12 / 30;
+            width: auto;
+            height: 100%;
             background: url("assets/arrow head.svg");
             background-size: cover;
             margin-left: -2px;

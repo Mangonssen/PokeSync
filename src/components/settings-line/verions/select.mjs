@@ -58,6 +58,7 @@ export class SLSelect extends HTMLElement {
                 appearance: base-select;
                 width: -webkit-fill-available;
                 width: stretch;
+                height: 1.25em;
                 background: transparent;
                 border: none;
                 outline: none;

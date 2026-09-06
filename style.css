@@ -4,6 +4,7 @@
     font-family: "pokesync";
     src: url("./assets/font/custom/pokesync.ttf") format("truetype");
 }
+
 @font-face {
     font-family: "Jaro";
     src: url("./assets/font/Jaro/Jaro-Regular-VariableFont_opsz.ttf") format("truetype");
@@ -147,9 +148,15 @@
     }
 }
 
-html,body{
-    height:-webkit-fill-available;
-    height:stretch;
+html,
+body {
+    height: -webkit-fill-available;
+    height: stretch;
+    overscroll-behavior-y: none;
+}
+
+html{
+    background: var(--bg-color);
 }
 
 body {
@@ -157,6 +164,8 @@ body {
     --bg-scale: 1.5;
 
     position: relative;
+    z-index: 0;
+
     background: var(--bg-color);
     padding: 1rem;
 }
