@@ -62,6 +62,10 @@ export function escapeHTML(value) {
         .replaceAll(">", "&gt;");
 }
 
+/**
+ * 
+ * @param {string} message 
+ */
 export function showToast(message) {
     const toast = document.createElement('div');
 
@@ -91,4 +95,20 @@ export function showToast(message) {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 200);
     }, 2500);
+}
+
+/**
+ * 
+ * @param {string} str 
+ * @returns 
+ */
+export function capitalize(str, allWords = true) {
+    if (allWords) {
+        return str
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    }
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

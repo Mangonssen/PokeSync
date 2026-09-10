@@ -78,13 +78,29 @@ export async function getPokedexEntries() {
     }
 }
 
+export const pokedex = await getPokedexEntries();
+
+/**
+ * 
+ * @param {string} name 
+ */
+export function pokedexMonFromKindName(name) {
+    return pokedex.find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
+}
+/**
+ * 
+ * @param {number} number 
+ */
+export function pokedexMonFromKindNum(number) {
+    return pokedex.find(pokemon => pokemon.number === number)
+}
+
 /**
  * 
  * @param {Pokemon} pokemon 
- * @returns {Promise<undefined|PokedexEntry>}
+ * @returns {undefined|PokedexEntry}
  */
-export async function getPokemonKind(pokemon) {
-    let pokedex = await getPokedexEntries();
+export function getPokemonKind(pokemon) {
     return pokedex[pokemon.kind]
 }
 

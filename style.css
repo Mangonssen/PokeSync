@@ -153,6 +153,7 @@ body {
     height: -webkit-fill-available;
     height: stretch;
     overscroll-behavior-y: none;
+    overflow: hidden;
 }
 
 html{
