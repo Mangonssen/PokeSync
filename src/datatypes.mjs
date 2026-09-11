@@ -7,6 +7,14 @@ export const GAMES = Object.freeze({
   bw2: "Black & White 2",
 })
 
+export const INDEXED_DBS = Object.freeze({
+  spriteData: {
+    DBName: "pokemon-cache",
+    version: 1,
+    storeName: "sprites"
+  }
+});
+
 /**
  * Keys used for storing data in `localStorage`.
  */

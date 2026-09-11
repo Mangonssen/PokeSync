@@ -1,4 +1,4 @@
-import { pokedexMonFromKindName, pokedexMonFromKindNum } from "../pokeapi.mjs";
+import { getSpriteURL, pokedexMonFromKindName, pokedexMonFromKindNum } from "../pokeapi.mjs";
 import { capitalize, css, html } from "../utils.mjs";
 
 export class PokemonBox extends HTMLElement {
@@ -17,19 +17,20 @@ export class PokemonBox extends HTMLElement {
         this.shadow = this.attachShadow({ mode: "open" });
     }
 
-    get HTML() {
+    async HTML() {
         const kind = this.kind?.trim() ?? "";
-        const num = Number.parseInt(kind, 10);
+        let num = Number.parseInt(kind, 10);
         let kindName;
 
         if (!Number.isNaN(num) && String(num) === kind) {
             kindName = pokedexMonFromKindNum(num)?.name ?? "";
         } else {
             kindName = pokedexMonFromKindName(kind)?.name ?? "";
+            num = pokedexMonFromKindName(kind)?.number ?? 0
         }
 
         return html`<div class="host">
-            <img class="sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/1.gif">
+            <img class="sprite" src="${(await getSpriteURL(num))??""}">
             <div class="text-content">
                 <div class="row 1"><p class="nickname">${this.nickname}</p><img class="gender" /></div>
                 <div class="row 2"><p class="kind">${capitalize(kindName)}</p><p class="catch-id">${this.catchID}</p></div>
@@ -45,7 +46,7 @@ export class PokemonBox extends HTMLElement {
             .host {
                 height: -webkit-fill-available;
                 height: stretch;
-                background-color: var(--pokebox-inner);
+                background-color: var(--pokebox-dark);
                 display: flex;
                 gap: 1ch;
                 padding: 1.5ch 2ch;
@@ -55,8 +56,10 @@ export class PokemonBox extends HTMLElement {
                 flex: 0 0 auto;
                 width: auto;
                 height: auto;
+                max-height: 3em;
                 aspect-ratio: 1;
                 object-fit: contain;
+                image-rendering: pixelated;
             }
 
             .text-content {
@@ -99,8 +102,18 @@ export class PokemonBox extends HTMLElement {
 
     }
 
-    render() {
-        this.shadow.innerHTML = this.CSS + this.HTML;
+    async render() {
+        if (this.isValid()) {
+            this.classList.remove("inactive")
+        } else {
+            this.classList.add("inactive")
+        }
+        const HTML = await this.HTML()
+        this.shadow.innerHTML = this.CSS + HTML;
+    }
+
+    isValid(){
+        return (!!this.kind && !!this.nickname)
     }
 
     /**
