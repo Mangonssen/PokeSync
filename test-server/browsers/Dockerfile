@@ -29,6 +29,9 @@ RUN npm init -y && \
 COPY run-browsers.js /app/run-browsers.js
 COPY start.sh /start.sh
 
-RUN chmod +x /start.sh
+# Normalize Windows CRLF line endings to Unix LF
+# and make the startup script executable.
+RUN sed -i 's/\r$//' /start.sh && \
+    chmod +x /start.sh
 
 CMD ["/start.sh"]
