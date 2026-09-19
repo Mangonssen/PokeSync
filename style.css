@@ -28,9 +28,9 @@
 
 @layer pokebox {
     :root {
-        --pokebox-hue-player1: 241.1594deg;
-        --pokebox-hue-player2: 90.31deg;
-        --pokebox-hue-dead: 22.54deg;
+        --pokebox-hue-player1: 241.15deg;
+        --pokebox-hue-player2: 90.30deg;
+        --pokebox-hue-dead: 22.55deg;
 
         --pokebox-border-lightness: 0.797;
         --pokebox-border-chroma: 0.113;
